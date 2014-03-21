@@ -124,6 +124,25 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// writes data to xml
+        /// </summary>
+        /// <param name="doc">document to add</param>
+        /// <param name="root">root to add</param>
+        public void WriteXml(XmlDocument doc, XmlNode root)
+        {
+            XmlElement newProduct = doc.CreateElement("Product");
+            XmlElement newId = doc.CreateElement("id");
+            XmlText identifier = doc.CreateTextNode(this.id.ToString());
+            newId.AppendChild(identifier);
+            XmlElement newPrice = doc.CreateElement("price");
+            XmlText cost = doc.CreateTextNode(this.price.ToString());
+            newPrice.AppendChild(cost);
+            newProduct.AppendChild(newId);
+            newProduct.AppendChild(newPrice);
+            root.InsertAfter(newProduct, root.LastChild);
+        }
+
+        /// <summary>
         /// Writes data to console.
         /// </summary>
         public void Write()
