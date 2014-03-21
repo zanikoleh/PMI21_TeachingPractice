@@ -54,6 +54,17 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Product" /> class with values from 2 parameters of constructor.
+        /// </summary>
+        /// <param name="id">ID of product.</param>
+        /// <param name="price">Price of product.</param>
+        public Product(int id, double price)
+        {
+            this.id = id;
+            this.price = price;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Product" /> class with values from Product from parameters box.
         /// </summary>
         /// <param name="p">Object of class Product.</param>
@@ -77,6 +88,38 @@ namespace PMI21_TeachingPractice
             set
             {
                 this.id = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets name.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+
+            set
+            {
+                this.name = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets price.
+        /// </summary>
+        public double Price
+        {
+            get
+            {
+                return this.price;
+            }
+
+            set
+            {
+                this.price = value;
             }
         }
 
