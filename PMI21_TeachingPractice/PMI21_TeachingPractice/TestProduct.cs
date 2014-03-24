@@ -21,7 +21,7 @@ namespace PMI21_TeachingPractice
         public static void Run()
         {
             Product p = new Product();
-            XmlTextReader reader = new XmlTextReader(@"C:\Users\Oleh\Documents\Visual Studio 2012\Projects\ОБЧ\ОБЧ\XMLFile1.xml");
+            XmlTextReader reader = new XmlTextReader(@"../../data/XMLFile1.xml");
             p.Read(reader);
             p.Write();
             XmlTextWriter writer = new XmlTextWriter("result.xml", Encoding.UTF8);
