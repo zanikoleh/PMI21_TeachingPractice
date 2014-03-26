@@ -1,6 +1,4 @@
-﻿
-
-namespace UsersProj
+﻿namespace UsersProj
 {
     using System;
     using System.Collections.Generic;
@@ -8,26 +6,26 @@ namespace UsersProj
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// class User represents a user =)
+    /// </summary>
     class User
     {
         private string password;
-        private int id;
         public string Login { get; private set; }
-        public string Role { get; private set; }
+        public Role Role { get; private set; }
 
         public User()
         {
             this.password = "nopas";
-            this.id = -1;
             this.Login = "nologin";
-            this.Role = "norole";
+            this.Role = null;
         }
-        public User(string password, int id, string login, string role)
+        public User(string password, string login, Role role)
         {
             this.password = password;
-            this.id = id;
             this.Login = login;
-            this.Role = role;
+            this.Role = new Role(role.Id,role.Duty);
         }
     }
 }
