@@ -13,7 +13,7 @@
     {
         public static void Main(string[] args)
         {
-            string[] buf = File.ReadAllLines("Data.txt");
+            string[] buf = File.ReadAllLines(@"../../data/Data.txt");
             int size = buf.Length;
             List<Order> orders = new List<Order>();
             for (int i = 0; i < buf.Length; i++)
@@ -29,7 +29,7 @@
                 orders[i].Write();
             }
 
-            string curFile = @"Result.xml";
+            string curFile = @"../../data/Result.xml";
             if (!File.Exists(curFile))
             {
                 XmlWriter fs = XmlWriter.Create(curFile);
@@ -47,8 +47,8 @@
             {
                 orders[i].SaveOrder(document);
             }
-            
-            document.Save("Result.xml");
+
+            document.Save(@"../../data/Result.txt");
             Console.ReadKey();
         }
     }
