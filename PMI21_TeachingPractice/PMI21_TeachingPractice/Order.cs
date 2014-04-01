@@ -121,7 +121,7 @@ namespace PMI21_TeachingPractice
         public void AddProduct(int id)
         {
             Product temp = new Product();
-            XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
+            XmlTextReader reader = new XmlTextReader(@"../../data/XMLFile1.xml");
             temp.Id = id;
             temp.Price = temp.PriceById(id, reader);
             this.products.Add(temp);
