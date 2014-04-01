@@ -89,7 +89,6 @@ namespace PMI21_TeachingPractice
         public void MakeOrder(string fullOrder)
         {
             int productID;
-            string productName;
             double productPrice;
             int counter = 0;
             this.id = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
@@ -105,11 +104,9 @@ namespace PMI21_TeachingPractice
                 {
                     productID = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    productName = fullOrder.Substring(0, fullOrder.IndexOf(' '));
-                    fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
                     productPrice = double.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    Product temp = new Product(productID, productName, productPrice);
+                    Product temp = new Product(productID, string.Empty, productPrice);
                     this.products.Add(temp);
                     counter = 0;
                     i = -1;
@@ -118,14 +115,47 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Adds product to order
+        /// </summary>
+        /// <param name="id">id of product</param>
+        public void AddProduct(int id)
+        {
+            Product temp = new Product();
+            XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
+            temp.Id = id;
+            temp.Price = temp.PriceById(id, reader);
+            this.products.Add(temp);
+        }
+
+        /// <summary>
+        /// Removes product with id
+        /// </summary>
+        /// <param name="id">id of product to remove</param>
+        /// <returns>true if removed product with id exists false if it does not exist</returns>
+        public bool RemoveProduct(int id)
+        {
+            for (int i = 0; i < this.products.Count; i++)
+            {
+                if (this.products[i].Id == id)
+                {
+                    this.products.RemoveAt(i);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// writes to console
         /// </summary>
         public void Write()
         {
-            Console.Write(this.id);
+            Console.Write("{0}\r\n", this.id);
             for (int i = 0; i < this.products.Count; i++)
             {
                 ((Product)this.products[i]).Write();
+                Console.Write("\r\n");
             }
         }
 
@@ -133,7 +163,7 @@ namespace PMI21_TeachingPractice
         /// writes to xml document
         /// </summary>
         /// <param name="doc"> xml document</param>
-        public void Write(XmlDocument doc)
+        public void SaveOrder(XmlDocument doc)
         {
             XmlNode root = doc.DocumentElement;
             XmlElement newID = doc.CreateElement("userId");
