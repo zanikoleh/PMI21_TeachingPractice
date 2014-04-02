@@ -9,22 +9,22 @@
     /// <summary>
     /// class Role represents a role and id of a user
     /// </summary>
-    class Role
+    public class RoleAndId
     {
-        public int Id { get; private set; }
-        public string Duty { get; private set; }
-
-        public Role()
+        public RoleAndId()
         {
             this.Id = -1;
-            this.Duty = "norole";
+            this.Duty = Constants.Roles.NoRole;
         }
 
-        public Role(int id, string duty)
+        public RoleAndId(int id, Constants.Roles duty)
         {
             this.Id = id;
             this.Duty = duty;
         }
+
+        public int Id { get; private set; }
+
+        public Constants.Roles Duty { get; private set; }
     }
 }
-

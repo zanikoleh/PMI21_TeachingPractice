@@ -9,23 +9,33 @@
     /// <summary>
     /// class User represents a user =)
     /// </summary>
-    class User
+    public class User
     {
-        private string password;
-        public string Login { get; private set; }
-        public Role Role { get; private set; }
-
         public User()
         {
-            this.password = "nopas";
+            this.Password = "nopas";
             this.Login = "nologin";
             this.Role = null;
         }
-        public User(string password, string login, Role role)
+
+        public User(string password, string login, RoleAndId role)
         {
-            this.password = password;
+            this.Password = password;
             this.Login = login;
-            this.Role = new Role(role.Id,role.Duty);
+            this.Role = new RoleAndId(role.Id, role.Duty);
         }
+
+        public User(User p)
+        {
+            this.Password = p.Password;
+            this.Login = p.Login;
+            this.Role = p.Role;
+        }
+
+        public string Password { get; private set; }
+
+        public string Login { get; private set; }
+
+        public RoleAndId Role { get; private set; }
     }
 }
