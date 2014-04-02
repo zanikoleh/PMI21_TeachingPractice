@@ -141,27 +141,23 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// Gets price by id
         /// </summary>
-        /// <param name="id"> id of searching product</param>
+        /// <param name="identifier"> id of searching product</param>
         /// <param name="reader">fie to read</param>
         /// <returns>price of product with searching id</returns>
-        public double PriceById(int id, XmlTextReader reader)
+        public double PriceById(int identifier, XmlTextReader reader)
         {
+            int tempId = 0;
             while (reader.Read())
             {
                 if (reader.Name == "id")
                 {
-                    this.id = reader.ReadElementContentAsInt();
-                }
-
-                if (reader.Name == "name")
-                {
-                    this.name = reader.ReadElementContentAsString();
+                    tempId = reader.ReadElementContentAsInt();
                 }
 
                 if (reader.Name == "price")
                 {
                     this.price = reader.ReadElementContentAsDouble();
-                    if (id == this.id)
+                    if (identifier == tempId)
                     {
                         return this.price;
                     }
