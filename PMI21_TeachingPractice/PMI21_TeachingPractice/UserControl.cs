@@ -131,6 +131,30 @@
 
             return true;
         }
+
+        public bool ChangeRole(int id, Constants.Roles role)
+        {
+            System.Collections.Generic.List<User> users;
+            System.Collections.Generic.List<User> changed = new System.Collections.Generic.List<User>();
+            Constants.Roles temp;
+            if (this.LoadDatabase(out users))
+            {
+                for (int i = 0; i < users.Count; i++)
+                {
+                    if (users[i].Role.Id == id)
+                    {
+                        temp = role;
+                    }
+                    else
+                    {
+                        temp = users[i].Role.Duty;
+                    }
+                    changed.Add(new User(users[i].Login, users[i].Password, new RoleAndId(users[i].Role.Id, temp)));
+                }
+            }
+            this.RenewDatabase(changed);
+            return false;
+        }
         
         /// <summary>
         /// Looks for an appropriate login in the file
@@ -296,16 +320,46 @@
             this.UsersNumberIncreaser(Convert.ToInt32(generatedId));
         }
 
-        public void LoadDatabase(out System.Collections.Generic.List<User> contToLoad, System.IO.StreamReader users, System.IO.StreamReader ids)
+        private bool LoadDatabase(out System.Collections.Generic.List<User> contToLoad)
         {
-            contToLoad = new System.Collections.Generic.List<User>();
-            string temp1, temp2;
-            while (!users.EndOfStream && !ids.EndOfStream)
+            System.IO.StreamReader users = null;
+            System.IO.StreamReader ids = null;
+            contToLoad = null;
+            try
             {
-                temp1 = users.ReadLine();
-                temp2 = ids.ReadLine();
-                contToLoad.Add(new User(this.CreateUserForList(temp1, temp2)));
+                users = new System.IO.StreamReader(Constants.BaseFile);
+                ids = new System.IO.StreamReader(Constants.IdRegistry);
+                contToLoad = new System.Collections.Generic.List<User>();
+                string temp1, temp2;
+                while (!users.EndOfStream && !ids.EndOfStream)
+                {
+                    temp1 = users.ReadLine();
+                    temp2 = ids.ReadLine();
+                    contToLoad.Add(new User(this.CreateUserForList(temp1, temp2)));
+                }
             }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            finally
+            {
+                if (users != null)
+                {
+                    users.Close();
+                }
+                if (ids != null)
+                {
+                    ids.Close();
+                }
+            }
+            return true;
         }
 
         private User CreateUserForList(string part1, string part2)
@@ -344,6 +398,67 @@
             }
 
             return new User(tempPassword, tempLogin, new RoleAndId (tempId, tempRole));
+        }
+
+        private bool RenewDatabase(System.Collections.Generic.List<User> contToExport)
+        {
+            System.IO.StreamWriter users = null;
+            System.IO.StreamWriter ids = null;
+            System.IO.StreamWriter numberOfUsers = null;
+            int num = 0;
+            string forUsersFile, forIdRoleFile;
+            try
+            {
+                users = new System.IO.StreamWriter(Constants.BaseFile);
+                ids = new System.IO.StreamWriter(Constants.IdRegistry);
+                foreach (User x in contToExport)
+                {
+                    forUsersFile = this.LoginIdPasswordToExport(x);
+                    forIdRoleFile = this.IdRoleToExport(x);
+                    users.WriteLine(forUsersFile);
+                    ids.WriteLine(forIdRoleFile);
+                    num++;
+                }
+
+                numberOfUsers = new System.IO.StreamWriter(Constants.UsersNumber);
+                numberOfUsers.WriteLine(num);
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            finally
+            {
+                if (users != null)
+                {
+                    users.Close();
+                }
+                if (ids != null)
+                {
+                    ids.Close();
+                }
+                if (numberOfUsers != null)
+                {
+                    numberOfUsers.Close();
+                }
+            }
+            return true;
+        }
+
+        private string LoginIdPasswordToExport(User toExport)
+        {
+            return toExport.Login + "," + toExport.Role.Id + "," + toExport.Password;
+        }
+
+        private string IdRoleToExport(User toExport)
+        {
+            return toExport.Role.Id + "," + (int)toExport.Role.Duty;
         }
     }
 }
