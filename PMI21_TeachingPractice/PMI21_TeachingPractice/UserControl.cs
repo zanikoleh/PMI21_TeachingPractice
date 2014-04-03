@@ -191,18 +191,12 @@
             while (temp != nameToCheck && !reader.EndOfStream)
             {
                 temp = reader.ReadLine();
-                temp = temp.Substring(temp.IndexOf(',') + 1, temp.IndexOf(',', temp.IndexOf(',') + Constants.One));
+                temp = temp.Substring(temp.IndexOf(',') + 1, temp.IndexOf(',', temp.IndexOf(',') + 1) - Constants.Two);
             }
 
             reader.Close();
-            if (temp == nameToCheck)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            return temp == nameToCheck;
         }
 
         /// <summary>
