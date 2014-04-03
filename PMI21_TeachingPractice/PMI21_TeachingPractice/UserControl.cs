@@ -91,7 +91,7 @@
         }
 
         /// <summary>
-        /// Get user from user base by its Id.
+        /// Get user from users base by its Id.
         /// </summary>
         /// <param name="userId">User's Id</param>
         /// <returns>User if exist, null pointer otherwise</returns>
@@ -113,6 +113,36 @@
             if (Convert.ToString(userId) == idReader)
             {
                 return this.CreateUser(textLine);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get role from roles base by its Id.
+        /// </summary>
+        /// <param name="roleId">Role's Id</param>
+        /// <returns>Role if exist, null pointer otherwise</returns>
+        public Role GetRoleById(int roleId)
+        {
+            System.IO.StreamReader baseRoles = new System.IO.StreamReader(Constants.BaseRoles);
+
+            string textLine = string.Empty;
+            string idReader = string.Empty;
+
+            while (Convert.ToString(roleId) != idReader && !baseRoles.EndOfStream)
+            {
+                textLine = baseRoles.ReadLine();
+                idReader = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
+            }
+
+            baseRoles.Close();
+
+            if (Convert.ToString(roleId) == idReader)
+            {
+                return new Role(Convert.ToInt32(idReader), textLine.Substring(textLine.IndexOf(',') + 1));
             }
             else
             {
