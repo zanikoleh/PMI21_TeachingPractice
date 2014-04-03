@@ -74,7 +74,7 @@
                     return false;
                 }
 
-                this.AddToDatabase(newName, newPassword);
+                this.AddToBaseUsers(newName, newPassword);
             }
             catch (FileNotFoundException p)
             {
@@ -88,6 +88,36 @@
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Get user from user base by its Id.
+        /// </summary>
+        /// <param name="userId">User's Id</param>
+        /// <returns>User if exist, null pointer otherwise</returns>
+        public User GetUserById(int userId)
+        {
+            System.IO.StreamReader baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
+
+            string textLine = string.Empty;
+            string idReader = string.Empty;
+
+            while (Convert.ToString(userId) != idReader && !baseUsers.EndOfStream)
+            {
+                textLine = baseUsers.ReadLine();
+                idReader = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
+            }
+
+            baseUsers.Close();
+
+            if (Convert.ToString(userId) == idReader)
+            {
+                return this.CreateUser(textLine);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -227,7 +257,7 @@
         /// </summary>
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
-        private void AddToDatabase(string newName, string newPassword)
+        private void AddToBaseUsers(string newName, string newPassword)
         {
             string generatedId = Convert.ToString(this.IdGenerator());
             string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DEFAULT_ROLE_ID;
