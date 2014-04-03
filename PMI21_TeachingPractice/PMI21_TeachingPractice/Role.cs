@@ -1,4 +1,4 @@
-﻿namespace UsersProj
+﻿namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -17,14 +17,19 @@
             this.Name = "Default";
         }
 
-        public Role(int id, Constants.Roles duty)
+        public Role(int id, string name)
         {
             this.Id = id;
-            this.Duty = duty;
+            this.Name = name;
         }
 
         public int Id { get; private set; }
 
         public string Name { get; private set; }
+
+        public override string ToString()
+        {
+            return this.Id + " " + this.Name;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace UsersProj
+﻿namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -7,35 +7,54 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// class User represents a user =)
+    /// Class User represents a user =)
     /// </summary>
     public class User
     {
         public User()
         {
-            this.Password = "nopas";
+            this.Id = 0;
             this.Login = "nologin";
-            this.Role = null;
+            this.Password = "nopas";
+            this.RolesId = new List<int>();
         }
 
-        public User(string password, string login, RoleAndId role)
+        public User(int Id, string login, string password, List<int> roleId)
         {
-            this.Password = password;
+            this.Id = Id;
             this.Login = login;
-            this.Role = new RoleAndId(role.Id, role.Duty);
+            this.Password = password;
+            this.RolesId = roleId;
         }
 
         public User(User p)
         {
-            this.Password = p.Password;
+            this.Id = p.Id;
             this.Login = p.Login;
-            this.Role = p.Role;
+            this.Password = p.Password;
+            this.RolesId = p.RolesId;
         }
 
-        public string Password { get; private set; }
+        public int Id { get; private set; }
 
         public string Login { get; private set; }
 
-        public RoleAndId Role { get; private set; }
+        public string Password { get; private set; }
+
+        /// <summary>
+        /// List of IDes of roles.
+        /// </summary>
+        public List<int> RolesId { get; private set; }
+
+        public override string ToString()
+        {
+            string textLine = string.Empty;
+
+            textLine = this.Id + " " + this.Login + " " + this.Password;
+            foreach (int i in this.RolesId)
+                textLine += (" " + i);
+
+            return textLine;
+        }
     }
 }

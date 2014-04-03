@@ -21,7 +21,11 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {
-            TestProduct.Run();
+            UserControl uc = new UserControl();
+
+            uc.AddNewUser("login6", "password6");
+            User u = uc.Identify("login6", "password6");
+            Console.WriteLine(u);
         }
     }
 }

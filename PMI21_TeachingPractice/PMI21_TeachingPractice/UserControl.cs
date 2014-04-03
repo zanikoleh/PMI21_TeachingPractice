@@ -1,4 +1,4 @@
-﻿namespace UsersProj
+﻿namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -10,40 +10,34 @@
     public class UserControl
     {
         /// <summary>
-        /// This method performs logging in
+        /// This method performs logging in.
         /// </summary>
-        /// <param name="forLogin">login that the current user has entered</param>
-        /// <param name="forPassword">password that the current user has entered</param>
-        /// <returns>true if user is logged in</returns>
+        /// <param name="forLogin">Login that the current user has entered.</param>
+        /// <param name="forPassword">Password that the current user has entered.</param>
+        /// <returns>True if user is logged in.</returns>
         public User Identify(string forLogin, string forPassword)
         {
-            System.IO.StreamReader namepasfile = null;
-            System.IO.StreamReader idrolefile = null;
+            System.IO.StreamReader baseUsers = null;
             try
             {
-                namepasfile = new System.IO.StreamReader(Constants.BaseFile);
-                idrolefile = new System.IO.StreamReader(Constants.IdRegistry);
-                string namepasreader = null;
-                string idrplereader = null;
+                baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
 
-                if (this.IdentifyLogin(ref namepasreader, forLogin, namepasfile))
+                string lineReader = null;
+
+                if (this.IdentifyLogin(ref lineReader, forLogin, baseUsers))
                 {
-                    if (this.IdentifyPassword(ref namepasreader, forPassword))
+                    if (this.IdentifyPassword(lineReader, forPassword))
                     {
-                        int tempId = this.IdentifyId(ref namepasreader);
-
-                        RoleAndId tempRole = new RoleAndId(tempId, this.IdentifyRole(ref idrplereader, tempId, idrolefile));
-
-                        return new User(forPassword, forLogin, tempRole);
+                        return this.CreateUser(lineReader);
                     }
                     else
                     {
-                        return new User();
+                        return null;
                     }
                 }
                 else
                 {
-                    return new User();
+                    return null;
                 }
             }
             catch (System.IO.FileNotFoundException p)
@@ -58,14 +52,9 @@
             }
             finally
             {
-                if (namepasfile != null)
+                if (baseUsers != null)
                 {
-                    namepasfile.Close();
-                }
-
-                if (idrolefile != null)
-                {
-                    idrolefile.Close();
+                    baseUsers.Close();
                 }
             }
         }
@@ -75,14 +64,9 @@
         /// </summary>
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
-        /// <returns>true if the name is not found in database</returns>
+        /// <returns>True if user was successfully added, false otherwise</returns>
         public bool AddNewUser(string newName, string newPassword)
         {
-            System.IO.FileStream toBase = null;
-            System.IO.FileStream toIdRegistry = null;
-            System.IO.StreamWriter baseFileWriter = null;
-            System.IO.StreamWriter idRegistryWriter = null;
-
             try
             {
                 if (this.CheckNameExistence(newName))
@@ -90,11 +74,7 @@
                     return false;
                 }
 
-                toBase = new System.IO.FileStream(Constants.BaseFile, System.IO.FileMode.Append);
-                toIdRegistry = new System.IO.FileStream(Constants.IdRegistry, System.IO.FileMode.Append);
-                baseFileWriter = new System.IO.StreamWriter(toBase);
-                idRegistryWriter = new System.IO.StreamWriter(toIdRegistry);
-                this.AddToDatabase(newName, newPassword, baseFileWriter, idRegistryWriter);
+                this.AddToDatabase(newName, newPassword);
             }
             catch (FileNotFoundException p)
             {
@@ -106,56 +86,10 @@
                 Console.WriteLine(p.Message);
                 return false;
             }
-            finally
-            {
-                if (baseFileWriter != null)
-                {
-                    baseFileWriter.Close();
-                }
-
-                if (idRegistryWriter != null)
-                {
-                    idRegistryWriter.Close();
-                }
-
-                if (toBase != null)
-                {
-                    toBase.Close();
-                }
-
-                if (toIdRegistry != null)
-                {
-                    toIdRegistry.Close();
-                }
-            }
 
             return true;
         }
 
-        public bool ChangeRole(int id, Constants.Roles role)
-        {
-            System.Collections.Generic.List<User> users;
-            System.Collections.Generic.List<User> changed = new System.Collections.Generic.List<User>();
-            Constants.Roles temp;
-            if (this.LoadDatabase(out users))
-            {
-                for (int i = 0; i < users.Count; i++)
-                {
-                    if (users[i].Role.Id == id)
-                    {
-                        temp = role;
-                    }
-                    else
-                    {
-                        temp = users[i].Role.Duty;
-                    }
-                    changed.Add(new User(users[i].Login, users[i].Password, new RoleAndId(users[i].Role.Id, temp)));
-                }
-            }
-            this.RenewDatabase(changed);
-            return false;
-        }
-        
         /// <summary>
         /// Looks for an appropriate login in the file
         /// </summary>
@@ -169,16 +103,10 @@
             while (tempLogin != login && !infile.EndOfStream)
             {
                 allContent = infile.ReadLine();
-                tempLogin = allContent.Substring(Constants.Zero, allContent.IndexOf(','));
+                tempLogin = allContent.Substring(allContent.IndexOf(',') + Constants.One, allContent.IndexOf(',', allContent.IndexOf(',') + Constants.One) - (allContent.IndexOf(',') + Constants.One));
             }
 
-            if (tempLogin != login)
-            {
-                return false;
-            }
-
-            allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
-            return true;
+            return login == tempLogin;
         }
 
         /// <summary>
@@ -187,69 +115,68 @@
         /// <param name="allContent">line</param>
         /// <param name="password">password that the user has entered</param>
         /// <returns>true if the password is correct</returns>
-        private bool IdentifyPassword(ref string allContent, string password) 
+        private bool IdentifyPassword(string allContent, string password) 
         {
-            string tempPassword = allContent.Substring(allContent.IndexOf(',') + Constants.One, allContent.Length - Constants.Two);
-            if (tempPassword != password)
-            {
-                return false;
-            }
+            allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
+            allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
+            string tempPassword = allContent.Substring(Constants.Zero, allContent.IndexOf(','));
 
-            allContent = allContent.Remove(allContent.IndexOf(','), allContent.Length - Constants.One);
-            return true;
+            return password == tempPassword;
         }
 
         /// <summary>
-        /// Method parses current line and get it's string representation
+        /// Create new instance of User class, using information from textline.
         /// </summary>
-        /// <param name="allContent">contents of the line</param>
-        /// <returns>user's ID in an integer form</returns>
-        private int IdentifyId(ref string allContent) 
+        /// <param name="textLine">Information about new instance of User class</param>
+        /// <returns>User if OK, else null pointer</returns>
+        private User CreateUser(string textLine)
         {
-            return Convert.ToInt32(allContent);
-        }
-
-        /// <summary>
-        /// Adds a role
-        /// </summary>
-        /// <param name="allIds">all IDs, line that is read by 'infile'</param>
-        /// <param name="id">current id</param>
-        /// <param name="infile">input file</param>
-        /// <returns>appropriate role</returns>
-        private Constants.Roles IdentifyRole(ref string allIds, int id, System.IO.StreamReader infile) // працює аналогічно bool findLogin, добавляє роль
-        {
-            int tempId = -1;
-            while (tempId != id && !infile.EndOfStream)
+            try
             {
-                allIds = infile.ReadLine();
-                tempId = Convert.ToInt32(allIds.Substring(Constants.Zero, allIds.IndexOf(',')));
-            }
+                int id = 0;
+                string login = String.Empty;
+                string password = String.Empty;
+                int amountOfRoles = 0;
+                List<int> rolesId = new List<int>();
 
-            if (tempId != id)
-            {
-                return Constants.Roles.NoRole;
-            }
+                id = Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(',')));
+                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
 
-            allIds = allIds.Remove(Constants.Zero, allIds.IndexOf(',') + Constants.One);
+                login = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
+                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
 
-            int codeOfRole = this.IdentifyId(ref allIds);
-            //// if code == 1 that is Admin
-            if (codeOfRole == (int)Constants.Roles.Admin)
-            {
-                return Constants.Roles.Admin;
-            }
-            //// if code == 2 that is Client
-            if (codeOfRole == (int)Constants.Roles.Client)
-            {
-                return Constants.Roles.Client;
-            }
-            //// if code == 3 that is Trade agent
-            if (codeOfRole == (int)Constants.Roles.TradeAgent)
-            {
-                return Constants.Roles.TradeAgent;
-            }
+                password = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
+                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
 
-            return Constants.Roles.NoRole;
+                amountOfRoles = Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(',')));
+                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+
+                for (int i = 0; i < amountOfRoles - 1; i++)
+                {
+                    rolesId.Add(Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(','))));
+                    textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                }
+
+                rolesId.Add(Convert.ToInt32(textLine));
+
+                return new User(id, login, password, rolesId);
+            }
+            catch (System.NullReferenceException)
+            {
+                return null;
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+                return null;
+            }
+            catch (System.FormatException)
+            {
+                return null;
+            }
+            catch (System.ArgumentException)
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -259,12 +186,12 @@
         /// <returns>true if the name is found</returns>
         private bool CheckNameExistence(string nameToCheck)
         {
-            System.IO.StreamReader reader = new System.IO.StreamReader(Constants.BaseFile);
+            System.IO.StreamReader reader = new System.IO.StreamReader(Constants.BaseUsers);
             string temp = null;
             while (temp != nameToCheck && !reader.EndOfStream)
             {
                 temp = reader.ReadLine();
-                temp = temp.Substring(Constants.Zero, temp.IndexOf(','));
+                temp = temp.Substring(temp.IndexOf(',') + 1, temp.IndexOf(',', temp.IndexOf(',') + Constants.One));
             }
 
             reader.Close();
@@ -284,23 +211,21 @@
         /// <returns>new user's id</returns>
         private int IdGenerator()
         {
-            int temp;
-            System.IO.StreamReader reader = new System.IO.StreamReader(Constants.UsersNumber);
-            temp = int.Parse(reader.ReadLine());
-            temp++;
-            reader.Close();
-            return temp;
-        }
+            int id;
+            string line = string.Empty;
 
-        /// <summary>
-        /// Adds new user to the list of previous users
-        /// </summary>
-        /// <param name="num"></param>
-        private void UsersNumberIncreaser(int num)
-        {
-            System.IO.StreamWriter writer = new System.IO.StreamWriter(new System.IO.FileStream(Constants.UsersNumber, FileMode.Truncate));
-            writer.WriteLine(num);
-            writer.Close();
+            System.IO.StreamReader baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
+
+            while (!baseUsers.EndOfStream)
+            {
+                line = baseUsers.ReadLine();
+            }
+
+            baseUsers.Close();
+
+            id = Convert.ToInt32(line.Substring(Constants.Zero, line.IndexOf(','))) + 1;
+
+            return id;
         }
 
         /// <summary>
@@ -308,34 +233,40 @@
         /// </summary>
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
-        /// <param name="baseFileWriter"></param>
-        /// <param name="idRegistryWriter"></param>
-        private void AddToDatabase(string newName, string newPassword, System.IO.StreamWriter baseFileWriter, System.IO.StreamWriter idRegistryWriter)
+        private void AddToDatabase(string newName, string newPassword)
         {
             string generatedId = Convert.ToString(this.IdGenerator());
-            string forBaseFile = newName + "," + generatedId + "," + newPassword;
-            string forIdRegistry = generatedId + "," + Convert.ToString(Constants.Two);
-            baseFileWriter.WriteLine(forBaseFile);
-            idRegistryWriter.WriteLine(forIdRegistry);
-            this.UsersNumberIncreaser(Convert.ToInt32(generatedId));
+            string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DEFAULT_ROLE_ID;
+
+            System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
+            System.IO.StreamWriter baseUsersFileWriter = new System.IO.StreamWriter(baseUsers);
+
+            baseUsersFileWriter.WriteLine(forBaseUsers);
+
+            baseUsersFileWriter.Close();
+            baseUsers.Close();
         }
 
-        private bool LoadDatabase(out System.Collections.Generic.List<User> contToLoad)
+        /// <summary>
+        /// Load all users from database.
+        /// </summary>
+        /// <param name="contentToLoad">Content load to.</param>
+        /// <returns>True if loaded, false othewise.</returns>
+        private bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
         {
-            System.IO.StreamReader users = null;
-            System.IO.StreamReader ids = null;
-            contToLoad = null;
+            System.IO.StreamReader baseUsers = null;
+            contentToLoad = null;
             try
             {
-                users = new System.IO.StreamReader(Constants.BaseFile);
-                ids = new System.IO.StreamReader(Constants.IdRegistry);
-                contToLoad = new System.Collections.Generic.List<User>();
-                string temp1, temp2;
-                while (!users.EndOfStream && !ids.EndOfStream)
+                baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
+                contentToLoad = new System.Collections.Generic.List<User>();
+
+                string textLine = String.Empty;
+
+                while (!baseUsers.EndOfStream)
                 {
-                    temp1 = users.ReadLine();
-                    temp2 = ids.ReadLine();
-                    contToLoad.Add(new User(this.CreateUserForList(temp1, temp2)));
+                    textLine = baseUsers.ReadLine();
+                    contentToLoad.Add(this.CreateUser(textLine));
                 }
             }
             catch (FileNotFoundException p)
@@ -350,115 +281,12 @@
             }
             finally
             {
-                if (users != null)
+                if (baseUsers != null)
                 {
-                    users.Close();
-                }
-                if (ids != null)
-                {
-                    ids.Close();
+                    baseUsers.Close();
                 }
             }
             return true;
-        }
-
-        private User CreateUserForList(string part1, string part2)
-        {
-            string tempLogin, tempPassword;
-            int tempId, codeOfRole;
-            Constants.Roles tempRole;
-
-            tempLogin = part1.Substring(0, part1.IndexOf(','));
-            part1 = part1.Remove(Constants.Zero, part1.IndexOf(',') + Constants.One);
-            tempId = Convert.ToInt32(part1.Substring(0, part1.IndexOf(',')));
-            part1 = part1.Remove(Constants.Zero, part1.IndexOf(',') + Constants.One);
-            tempPassword = part1;
-            part2 = part2.Remove(Constants.Zero, part2.IndexOf(',') + Constants.One);
-
-            codeOfRole = Convert.ToInt32(part2);
-
-            //// if code == 1 that is Admin
-            if (codeOfRole == (int)Constants.Roles.Admin)
-            {
-                tempRole =  Constants.Roles.Admin;
-            }
-            //// if code == 2 that is Client
-            else if (codeOfRole == (int)Constants.Roles.Client)
-            {
-                tempRole = Constants.Roles.Client;
-            }
-            //// if code == 3 that is Trade agent
-            else if (codeOfRole == (int)Constants.Roles.TradeAgent)
-            {
-                tempRole = Constants.Roles.TradeAgent;
-            }
-            else
-            {
-                tempRole = Constants.Roles.NoRole;
-            }
-
-            return new User(tempPassword, tempLogin, new RoleAndId (tempId, tempRole));
-        }
-
-        private bool RenewDatabase(System.Collections.Generic.List<User> contToExport)
-        {
-            System.IO.StreamWriter users = null;
-            System.IO.StreamWriter ids = null;
-            System.IO.StreamWriter numberOfUsers = null;
-            int num = 0;
-            string forUsersFile, forIdRoleFile;
-            try
-            {
-                users = new System.IO.StreamWriter(Constants.BaseFile);
-                ids = new System.IO.StreamWriter(Constants.IdRegistry);
-                foreach (User x in contToExport)
-                {
-                    forUsersFile = this.LoginIdPasswordToExport(x);
-                    forIdRoleFile = this.IdRoleToExport(x);
-                    users.WriteLine(forUsersFile);
-                    ids.WriteLine(forIdRoleFile);
-                    num++;
-                }
-
-                numberOfUsers = new System.IO.StreamWriter(Constants.UsersNumber);
-                numberOfUsers.WriteLine(num);
-            }
-            catch (FileNotFoundException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            catch (IOException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            finally
-            {
-                if (users != null)
-                {
-                    users.Close();
-                }
-                if (ids != null)
-                {
-                    ids.Close();
-                }
-                if (numberOfUsers != null)
-                {
-                    numberOfUsers.Close();
-                }
-            }
-            return true;
-        }
-
-        private string LoginIdPasswordToExport(User toExport)
-        {
-            return toExport.Login + "," + toExport.Role.Id + "," + toExport.Password;
-        }
-
-        private string IdRoleToExport(User toExport)
-        {
-            return toExport.Role.Id + "," + (int)toExport.Role.Duty;
         }
     }
 }

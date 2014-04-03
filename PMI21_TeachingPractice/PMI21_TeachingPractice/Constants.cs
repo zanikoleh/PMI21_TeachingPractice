@@ -1,4 +1,4 @@
-﻿namespace UsersProj
+﻿namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -11,17 +11,12 @@
     /// </summary>
     public class Constants
     {
-        public const string BaseFile = "Base.csv";
-        public const string IdRegistry = "Idbase.csv";
-        public const string UsersNumber = "UsersNumber.csv";
+        public const string BaseUsers = "BaseUsers.csv";
+        public const string BaseId = "BaseId.csv";
+        public const int DEFAULT_ROLE_ID = 0;
         public const int Zero = 0;
         public const int One = 1;
         public const int Two = 2;
         public const int Three = 3;
-
-        public enum Roles 
-        { 
-            Admin = 1, Client, TradeAgent, NoRole 
-        }
     }
 }
