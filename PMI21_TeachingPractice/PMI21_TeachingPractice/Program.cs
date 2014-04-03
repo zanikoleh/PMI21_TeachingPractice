@@ -23,9 +23,7 @@ namespace PMI21_TeachingPractice
         {
             UserControl uc = new UserControl();
 
-            uc.AddNewUser("login6", "password6");
-            User u = uc.Identify("login6", "password6");
-            Console.WriteLine(u);
+            Console.WriteLine(uc.GetRoleById(2));
         }
     }
 }
