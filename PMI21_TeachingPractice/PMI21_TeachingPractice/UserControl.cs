@@ -150,6 +150,24 @@
             }
         }
 
+        public bool DeleteUser(int userId)
+        {
+            System.Collections.Generic.List<User> baseUsers = null;
+            bool success = false;
+            this.LoadBaseUsers(out baseUsers);
+            foreach (User x in baseUsers)
+            {
+                if (x.Id == userId)
+                {
+                    baseUsers.Remove(x);
+                    success = true;
+                    break;
+                }
+            }
+            this.ExportBaseUsers(baseUsers);
+            return success;
+        }
+
         /// <summary>
         /// Looks for an appropriate login in the file
         /// </summary>
@@ -239,6 +257,16 @@
             }
         }
 
+        private string CreateLineUserRepresentation(User user)
+        {
+            string toReturn = user.Id + "," + user.Login + "," + user.Password + "," + user.RolesId.Count;
+            foreach (int x in user.RolesId)
+            {
+                toReturn += "," + x;
+            }
+            return toReturn;
+        }
+
         /// <summary>
         /// Checks if the current name is in the database
         /// </summary>
@@ -321,6 +349,68 @@
                 {
                     textLine = baseUsers.ReadLine();
                     contentToLoad.Add(this.CreateUser(textLine));
+                }
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            finally
+            {
+                if (baseUsers != null)
+                {
+                    baseUsers.Close();
+                }
+            }
+            return true;
+        }
+
+        private bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
+        {
+            System.IO.StreamWriter baseUsers = null;
+            try
+            {
+                baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
+                foreach (User x in contentToExport)
+                {
+                    baseUsers.WriteLine(x);
+                }
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            finally
+            {
+                if (baseUsers != null)
+                {
+                    baseUsers.Close();
+                }
+            }
+            return true;
+        }
+
+        private bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
+        {
+            System.IO.StreamWriter baseUsers = null;
+            try
+            {
+                baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
+                foreach (User x in contentToExport)
+                {
+                    baseUsers.WriteLine(this.CreateLineUserRepresentation(x));
                 }
             }
             catch (FileNotFoundException p)
