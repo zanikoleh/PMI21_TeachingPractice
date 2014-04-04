@@ -91,6 +91,61 @@
         }
 
         /// <summary>
+        /// Method adds new role to the user's role list
+        /// </summary>
+        /// <param name="userId">User's Id</param>
+        /// <param name="roleId">The role's id to add</param>
+        /// <returns>True if role was successfully added</returns>
+        public bool AddUsersRole(int userId, int roleId)
+        {
+            System.Collections.Generic.List<User> baseUsers = null;
+            bool success = false;
+            this.LoadBaseUsers(out baseUsers);
+
+            foreach (User x in baseUsers)
+            {
+                if (x.Id == userId && !x.RolesId.Contains(roleId))
+                {
+                    x.RolesId.Add(roleId);
+                    success = true;
+                    break;
+                }
+            }
+
+            this.ExportBaseUsers(baseUsers);
+            return success;
+        }
+
+        /// <summary>
+        /// Method removes user's role 
+        /// </summary>
+        /// <param name="userId">User's Id</param>
+        /// <param name="roleId">The role's id to remove</param>
+        /// <returns>True if role was successfully removed </returns>
+        public bool RemoveUsersRole(int userId, int roleId)
+        {
+            System.Collections.Generic.List<User> baseUsers = null;
+            bool success = false;
+            this.LoadBaseUsers(out baseUsers);
+
+            foreach (User x in baseUsers)
+            {
+                if (x.Id == userId)
+                {
+                    if ((x.RolesId.Count > Constants.One) && x.RolesId.Contains(roleId))
+                    {
+                        x.RolesId.Remove(roleId);
+                        success = true;
+                        break;
+                    }
+                }
+            }
+
+            this.ExportBaseUsers(baseUsers);
+            return success;
+        }
+
+        /// <summary>
         /// Get user from users base by its Id.
         /// </summary>
         /// <param name="userId">User's Id</param>
