@@ -420,7 +420,7 @@
                 baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
                 foreach (User x in contentToExport)
                 {
-                    baseUsers.WriteLine(x);
+                    baseUsers.WriteLine(this.CreateLineUserRepresentation(x));
                 }
             }
             catch (FileNotFoundException p)
