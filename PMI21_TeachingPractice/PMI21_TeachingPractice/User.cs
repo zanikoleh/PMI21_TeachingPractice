@@ -11,6 +11,9 @@
     /// </summary>
     public class User
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public User()
         {
             this.Id = 0;
@@ -19,6 +22,13 @@
             this.RolesId = new List<int>();
         }
 
+        /// <summary>
+        /// Instance constructor
+        /// </summary>
+        /// <param name="Id">user's id</param>
+        /// <param name="login">user's login</param>
+        /// <param name="password">user's password</param>
+        /// <param name="roleId">the list of roles' ids'</param>
         public User(int Id, string login, string password, List<int> roleId)
         {
             this.Id = Id;
@@ -27,6 +37,10 @@
             this.RolesId = roleId;
         }
 
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="p">the instance of class User</param>
         public User(User p)
         {
             this.Id = p.Id;
@@ -35,10 +49,19 @@
             this.RolesId = p.RolesId;
         }
 
+        /// <summary>
+        /// gets or sets user's id
+        /// </summary>
         public int Id { get; private set; }
 
+        /// <summary>
+        /// gets or sets user's login
+        /// </summary>
         public string Login { get; private set; }
 
+        /// <summary>
+        /// gets or sets user's password
+        /// </summary>
         public string Password { get; private set; }
 
         /// <summary>
@@ -46,6 +69,10 @@
         /// </summary>
         public List<int> RolesId { get; private set; }
 
+        /// <summary>
+        /// Method converts an object to its string representation so that it is suitable for display
+        /// </summary>
+        /// <returns>a string that represents the current object</returns>
         public override string ToString()
         {
             string textLine = string.Empty;

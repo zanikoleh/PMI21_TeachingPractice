@@ -11,22 +11,40 @@
     /// </summary>
     public class Role
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Role()
         {
             this.Id = -1;
             this.Name = "Default";
         }
 
+        /// <summary>
+        /// Instance constructor
+        /// </summary>
+        /// <param name="id">user's id</param>
+        /// <param name="name">user's role</param>
         public Role(int id, string name)
         {
             this.Id = id;
             this.Name = name;
         }
 
+        /// <summary>
+        /// gets or sets role's id
+        /// </summary>
         public int Id { get; private set; }
 
+        /// <summary>
+        /// gets or sets role
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Method converts an object to its string representation so that it is suitable for display
+        /// </summary>
+        /// <returns>a string that represents the current object</returns>
         public override string ToString()
         {
             return this.Id + " " + this.Name;

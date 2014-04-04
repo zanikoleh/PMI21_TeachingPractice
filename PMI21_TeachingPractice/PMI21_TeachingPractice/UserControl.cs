@@ -121,6 +121,32 @@
         }
 
         /// <summary>
+        /// Return a list of users by the role
+        /// </summary>
+        /// <param name="roleId">The role's id to check by</param>
+        /// <returns>A list of users by the role</returns>
+        public System.Collections.Generic.List<User> GetUsersByRole(int roleId)
+        {
+            System.IO.StreamReader baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
+            System.Collections.Generic.List<User> toReturn = new System.Collections.Generic.List<User>();
+
+            string textLine = string.Empty;
+            User temp;
+            while (!baseUsers.EndOfStream)
+            {
+                textLine = baseUsers.ReadLine();
+                temp = new User(this.CreateUser(textLine));
+                if (temp.RolesId.Contains(roleId))
+                {
+                    toReturn.Add(temp);
+                }
+            }
+
+            baseUsers.Close();
+            return toReturn;
+        }
+
+        /// <summary>
         /// Get role from roles base by its Id.
         /// </summary>
         /// <param name="roleId">Role's Id</param>
@@ -150,6 +176,11 @@
             }
         }
 
+        /// <summary>
+        /// Deletes a user from the database
+        /// </summary>
+        /// <param name="userId">id of the user to delete</param>
+        /// <returns>false if there is no such user in the database</returns>
         public bool DeleteUser(int userId)
         {
             System.Collections.Generic.List<User> baseUsers = null;
@@ -175,7 +206,7 @@
         /// <param name="login">login that the user has entered</param>
         /// <param name="infile">input file</param>
         /// <returns>true if the login is found</returns>
-        private bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader infile) 
+        private bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader infile)
         {
             string tempLogin = null;
             while (tempLogin != login && !infile.EndOfStream)
@@ -193,7 +224,7 @@
         /// <param name="allContent">line</param>
         /// <param name="password">password that the user has entered</param>
         /// <returns>true if the password is correct</returns>
-        private bool IdentifyPassword(string allContent, string password) 
+        private bool IdentifyPassword(string allContent, string password)
         {
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
@@ -257,6 +288,11 @@
             }
         }
 
+        /// <summary>
+        /// Creates a string which contains all the information about the user
+        /// </summary>
+        /// <param name="user">user</param>
+        /// <returns>a string which contains all the information about the user</returns>
         private string CreateLineUserRepresentation(User user)
         {
             string toReturn = user.Id + "," + user.Login + "," + user.Password + "," + user.RolesId.Count;
@@ -371,6 +407,11 @@
             return true;
         }
 
+        /// <summary>
+        /// Loads information from the list into the file
+        /// </summary>
+        /// <param name="contentToExport">list with users</param>
+        /// <returns>true if operation was successful</returns>
         private bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
         {
             System.IO.StreamWriter baseUsers = null;
@@ -380,37 +421,6 @@
                 foreach (User x in contentToExport)
                 {
                     baseUsers.WriteLine(x);
-                }
-            }
-            catch (FileNotFoundException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            catch (IOException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            finally
-            {
-                if (baseUsers != null)
-                {
-                    baseUsers.Close();
-                }
-            }
-            return true;
-        }
-
-        private bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
-        {
-            System.IO.StreamWriter baseUsers = null;
-            try
-            {
-                baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
-                foreach (User x in contentToExport)
-                {
-                    baseUsers.WriteLine(this.CreateLineUserRepresentation(x));
                 }
             }
             catch (FileNotFoundException p)
