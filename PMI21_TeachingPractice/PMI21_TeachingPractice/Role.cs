@@ -23,8 +23,8 @@
         /// <summary>
         /// Instance constructor
         /// </summary>
-        /// <param name="id">user's id</param>
-        /// <param name="name">user's role</param>
+        /// <param name="id">role's id</param>
+        /// <param name="name">role's name</param>
         public Role(int id, string name)
         {
             this.Id = id;
@@ -37,7 +37,7 @@
         public int Id { get; private set; }
 
         /// <summary>
-        /// gets or sets role
+        /// gets or sets role name
         /// </summary>
         public string Name { get; private set; }
 
