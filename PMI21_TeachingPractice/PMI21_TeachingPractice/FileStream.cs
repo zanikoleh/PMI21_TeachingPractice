@@ -28,17 +28,12 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// stream of file with identification data to read
         /// </summary>
-        private StreamReader readBase;
+        private StreamReader readBaseUsers;
 
         /// <summary>
         /// stream of file with id and roles to read
         /// </summary>
-        private StreamReader readIdBase; 
-
-        /// <summary>
-        /// stream of file with current id of user to read
-        /// </summary>
-        private StreamReader readUsersNumber;
+        private StreamReader readBaseRoles; 
 
         /// <summary>
         /// stream of xml file with orders to read
@@ -61,9 +56,8 @@ namespace PMI21_TeachingPractice
         public FileStream()
         {
             this.readProducts = new XmlTextReader(@"../../data/XMLFile1.xml");
-            this.readBase = new StreamReader(@"../../data/Base.csv");
-            this.readIdBase = new StreamReader(@"../../data/Idbase.csv");
-            this.readUsersNumber = new StreamReader(@"../../data/UsersNumber.csv");
+            this.readBaseUsers = new StreamReader(@"../../data/BaseUsers.csv");
+            this.readBaseRoles = new StreamReader(@"../../data/BaseRoles.csv");
             this.readResult = new XmlTextReader(@"../../data/Result.xml");
             this.readData = @"../../data/Data.txt";
             this.writeResult = new XmlDocument();
@@ -84,33 +78,22 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// Gets a stream of file with identification data to read
         /// </summary>
-        public StreamReader ReadBase
+        public StreamReader ReadBaseUsers
         {
             get
             {
-                return this.readBase;
+                return this.readBaseUsers;
             }
         }
 
         /// <summary>
         /// Gets a stream of file with id and roles to read
         /// </summary>
-        public StreamReader ReadIdBase
+        public StreamReader ReadBaseRoles
         {
             get
             {
-                return this.readIdBase;
-            }
-        }
-
-        /// <summary>
-        /// Gets a stream of file with current id of user to read
-        /// </summary>
-        public StreamReader ReadUsersNumber
-        {
-            get
-            {
-                return this.readUsersNumber;
+                return this.readBaseRoles;
             }
         }
         
