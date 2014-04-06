@@ -1,4 +1,10 @@
-﻿namespace PMI21_TeachingPractice
+//-----------------------------------------------------------------------
+// <copyright file="User.cs" company="MyCompane">
+//     Copyright PMI21.Fostyak.RationalNumber. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -7,12 +13,12 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Class User represents a user =)
+    /// Class User represents a user
     /// </summary>
     public class User
     {
         /// <summary>
-        /// Default constructor
+        /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         public User()
         {
@@ -23,24 +29,25 @@
         }
 
         /// <summary>
-        /// Instance constructor
+        /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
-        /// <param name="Id">user's id</param>
+        /// <param name="idNumber">user's id</param>
         /// <param name="login">user's login</param>
         /// <param name="password">user's password</param>
         /// <param name="roleId">the list of roles' ids'</param>
-        public User(int Id, string login, string password, List<int> roleId)
+        public User(int idNumber, string login, string password, List<int> roleId)
         {
-            this.Id = Id;
+            this.Id = idNumber;
             this.Login = login;
             this.Password = password;
             this.RolesId = roleId;
         }
 
         /// <summary>
-        /// Copy constructor
+        /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="p">the instance of class User</param>
+       /// <see cref="User" /> class
         public User(User p)
         {
             this.Id = p.Id;
@@ -50,22 +57,22 @@
         }
 
         /// <summary>
-        /// gets or sets user's id
+        /// Gets, sets user's id
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// gets or sets user's login
+        /// Gets, sets user's login
         /// </summary>
         public string Login { get; private set; }
 
         /// <summary>
-        /// gets or sets user's password
+        /// Gets, sets user's password
         /// </summary>
         public string Password { get; private set; }
 
         /// <summary>
-        /// List of IDes of roles.
+        /// Gets List of IDes of roles.
         /// </summary>
         public List<int> RolesId { get; private set; }
 
@@ -79,7 +86,9 @@
 
             textLine = this.Id + " " + this.Login + " " + this.Password;
             foreach (int i in this.RolesId)
-                textLine += (" " + i);
+            {
+                textLine += " " + i;
+            }
 
             return textLine;
         }
