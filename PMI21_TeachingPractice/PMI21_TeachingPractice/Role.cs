@@ -1,4 +1,10 @@
-﻿namespace PMI21_TeachingPractice
+//-----------------------------------------------------------------------
+// <copyright file="Role.cs" company="MyCompane">
+//     Copyright PMI21.Fostyak.RationalNumber. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -7,12 +13,12 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// class Role represents a role and id of a user
+    /// class Role
     /// </summary>
     public class Role
     {
         /// <summary>
-        /// Default constructor
+        /// Initializes a new instance of the <see cref="Role"/> class.
         /// </summary>
         public Role()
         {
@@ -21,7 +27,7 @@
         }
 
         /// <summary>
-        /// Instance constructor
+        ///  Initializes a new instance of the <see cref="Role"/> class.
         /// </summary>
         /// <param name="id">role's id</param>
         /// <param name="name">role's name</param>
@@ -32,12 +38,12 @@
         }
 
         /// <summary>
-        /// gets or sets role's id
+        /// Gets, sets role's id
         /// </summary>
         public int Id { get; private set; }
 
         /// <summary>
-        /// gets or sets role name
+        /// Gets, sets role name
         /// </summary>
         public string Name { get; private set; }
 
