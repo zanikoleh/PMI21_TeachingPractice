@@ -1,4 +1,10 @@
-﻿namespace PMI21_TeachingPractice
+//-----------------------------------------------------------------------
+// <copyright file="Constants.cs" company="MyCompane">
+//     Copyright PMI21.Fostyak.RationalNumber. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -11,12 +17,39 @@
     /// </summary>
     public class Constants
     {
+        /// <summary>
+        /// constant field base users
+        /// </summary>
         public const string BaseUsers = "BaseUsers.csv";
+        
+        /// <summary>
+        /// constant field base roles
+        /// </summary>
         public const string BaseRoles = "BaseRoles.csv";
-        public const int DEFAULT_ROLE_ID = 0;
+        
+        /// <summary>
+        /// constant field default roleId
+        /// </summary>
+        public const int DefaultRoleId = 0;
+        
+        /// <summary>
+        /// constant field zero
+        /// </summary>
         public const int Zero = 0;
+        
+        /// <summary>
+        /// constant field one
+        /// </summary>
         public const int One = 1;
+        
+        /// <summary>
+        /// constant field two
+        /// </summary>
         public const int Two = 2;
+        
+        /// <summary>
+        /// constant field three
+        /// </summary>
         public const int Three = 3;
     }
 }
