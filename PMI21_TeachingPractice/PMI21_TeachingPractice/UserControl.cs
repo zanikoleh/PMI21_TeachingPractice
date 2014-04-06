@@ -1,4 +1,10 @@
-﻿namespace PMI21_TeachingPractice
+//-----------------------------------------------------------------------
+// <copyright file="UserControl.cs" company="MyCompane">
+//     Copyright PMI21.Fostyak.RationalNumber. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +13,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// class user control
+    /// </summary>
     public class UserControl
     {
         /// <summary>
@@ -93,7 +102,7 @@
         /// <summary>
         /// Method adds new role to the user's role list
         /// </summary>
-        /// <param name="userId">User's Id</param>
+        /// <param name="userId">User's idNumber</param>
         /// <param name="roleId">The role's id to add</param>
         /// <returns>True if role was successfully added</returns>
         public bool AddUsersRole(int userId, int roleId)
@@ -119,7 +128,7 @@
         /// <summary>
         /// Method removes user's role 
         /// </summary>
-        /// <param name="userId">User's Id</param>
+        /// <param name="userId">User's idNumber</param>
         /// <param name="roleId">The role's id to remove</param>
         /// <returns>True if role was successfully removed </returns>
         public bool RemoveUsersRole(int userId, int roleId)
@@ -146,9 +155,9 @@
         }
 
         /// <summary>
-        /// Get user from users base by its Id.
+        /// Get user from users base by its idNumber.
         /// </summary>
-        /// <param name="userId">User's Id</param>
+        /// <param name="userId">User's idNumber</param>
         /// <returns>User if exist, null pointer otherwise</returns>
         public User GetUserById(int userId)
         {
@@ -202,9 +211,9 @@
         }
 
         /// <summary>
-        /// Get role from roles base by its Id.
+        /// Get role from roles base by its idNumber.
         /// </summary>
-        /// <param name="roleId">Role's Id</param>
+        /// <param name="roleId">Role's idNumber</param>
         /// <returns>Role if exist, null pointer otherwise</returns>
         public Role GetRoleById(int roleId)
         {
@@ -250,6 +259,7 @@
                     break;
                 }
             }
+
             this.ExportBaseUsers(baseUsers);
             return success;
         }
@@ -257,16 +267,16 @@
         /// <summary>
         /// Looks for an appropriate login in the file
         /// </summary>
-        /// <param name="allContent">current line that 'infile' reads</param>
+        /// <param name="allContent">current line that 'inFile' reads</param>
         /// <param name="login">login that the user has entered</param>
-        /// <param name="infile">input file</param>
+        /// <param name="inFile">input file</param>
         /// <returns>true if the login is found</returns>
-        private bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader infile)
+        private bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader inFile)
         {
             string tempLogin = null;
-            while (tempLogin != login && !infile.EndOfStream)
+            while (tempLogin != login && !inFile.EndOfStream)
             {
-                allContent = infile.ReadLine();
+                allContent = inFile.ReadLine();
                 tempLogin = allContent.Substring(allContent.IndexOf(',') + Constants.One, allContent.IndexOf(',', allContent.IndexOf(',') + Constants.One) - (allContent.IndexOf(',') + Constants.One));
             }
 
@@ -274,54 +284,54 @@
         }
 
         /// <summary>
-        /// Method parses current line and checks if the password is correct
+        /// /// Method parses current line and checks if the password is correct
         /// </summary>
-        /// <param name="allContent">line</param>
-        /// <param name="password">password that the user has entered</param>
-        /// <returns>true if the password is correct</returns>
+        /// <param name="allContent">The source of the event.</param>
+        /// <param name="password">The <see cref="password"/> instance containing the event data.</param>
+        /// <returns> true if the password is correct </returns>
         private bool IdentifyPassword(string allContent, string password)
         {
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
-            string tempPassword = allContent.Substring(Constants.Zero, allContent.IndexOf(','));
+            string tempPassword = allContent.Substring(Constants.Zero, allContent.IndexOf(','));          
 
             return password == tempPassword;
         }
 
         /// <summary>
-        /// Create new instance of User class, using information from textline.
+        /// Create new instance of User class, using information from text line.
         /// </summary>
-        /// <param name="textLine">Information about new instance of User class</param>
+        /// <param name="tape">Information about new instance of User class</param>
         /// <returns>User if OK, else null pointer</returns>
-        private User CreateUser(string textLine)
+        private User CreateUser(string tape)
         {
             try
             {
                 int id = 0;
-                string login = String.Empty;
-                string password = String.Empty;
+                string login = string.Empty;
+                string password = string.Empty;
                 int amountOfRoles = 0;
                 List<int> rolesId = new List<int>();
 
-                id = Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(',')));
-                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                id = Convert.ToInt32(tape.Substring(Constants.Zero, tape.IndexOf(',')));
+                tape = tape.Remove(Constants.Zero, tape.IndexOf(',') + 1);
 
-                login = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
-                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                login = tape.Substring(Constants.Zero, tape.IndexOf(','));
+                tape = tape.Remove(Constants.Zero, tape.IndexOf(',') + 1);
 
-                password = textLine.Substring(Constants.Zero, textLine.IndexOf(','));
-                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                password = tape.Substring(Constants.Zero, tape.IndexOf(','));
+                tape = tape.Remove(Constants.Zero, tape.IndexOf(',') + 1);
 
-                amountOfRoles = Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(',')));
-                textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                amountOfRoles = Convert.ToInt32(tape.Substring(Constants.Zero, tape.IndexOf(',')));
+                tape = tape.Remove(Constants.Zero, tape.IndexOf(',') + 1);
 
                 for (int i = 0; i < amountOfRoles - 1; i++)
                 {
-                    rolesId.Add(Convert.ToInt32(textLine.Substring(Constants.Zero, textLine.IndexOf(','))));
-                    textLine = textLine.Remove(Constants.Zero, textLine.IndexOf(',') + 1);
+                    rolesId.Add(Convert.ToInt32(tape.Substring(Constants.Zero, tape.IndexOf(','))));
+                    tape = tape.Remove(Constants.Zero, tape.IndexOf(',') + 1);
                 }
 
-                rolesId.Add(Convert.ToInt32(textLine));
+                rolesId.Add(Convert.ToInt32(tape));
 
                 return new User(id, login, password, rolesId);
             }
@@ -346,7 +356,7 @@
         /// <summary>
         /// Creates a string which contains all the information about the user
         /// </summary>
-        /// <param name="user">user</param>
+        /// <param name="user">The <see cref="user"/> .</param>
         /// <returns>a string which contains all the information about the user</returns>
         private string CreateLineUserRepresentation(User user)
         {
@@ -355,6 +365,7 @@
             {
                 toReturn += "," + x;
             }
+
             return toReturn;
         }
 
@@ -409,7 +420,7 @@
         private void AddToBaseUsers(string newName, string newPassword)
         {
             string generatedId = Convert.ToString(this.IdGenerator());
-            string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DEFAULT_ROLE_ID;
+            string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DefaultRoleId;
 
             System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
             System.IO.StreamWriter baseUsersFileWriter = new System.IO.StreamWriter(baseUsers);
@@ -424,7 +435,7 @@
         /// Load all users from database.
         /// </summary>
         /// <param name="contentToLoad">Content load to.</param>
-        /// <returns>True if loaded, false othewise.</returns>
+        /// <returns>True if loaded, false otherwise</returns>
         private bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
         {
             System.IO.StreamReader baseUsers = null;
@@ -434,7 +445,7 @@
                 baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
                 contentToLoad = new System.Collections.Generic.List<User>();
 
-                string textLine = String.Empty;
+                string textLine = string.Empty;
 
                 while (!baseUsers.EndOfStream)
                 {
@@ -459,6 +470,7 @@
                     baseUsers.Close();
                 }
             }
+
             return true;
         }
 
@@ -495,6 +507,7 @@
                     baseUsers.Close();
                 }
             }
+
             return true;
         }
     }
