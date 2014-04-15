@@ -106,7 +106,7 @@ namespace PMI21_TeachingPractice
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
                     productPrice = double.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    Product temp = new Product(productID, string.Empty, productPrice);
+                    Product temp = new Product(productID, string.Empty, productPrice,0);
                     this.products.Add(temp);
                     counter = 0;
                     i = -1;
