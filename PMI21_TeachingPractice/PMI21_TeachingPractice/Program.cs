@@ -17,27 +17,17 @@ namespace PMI21_TeachingPractice
     /// </summary>
     public class Program
     {
+        void WorkFlow()
+        {
+            try
+            {
+
         /// <summary>
         /// Main function
         /// </summary>
         public static void Main()
         {
             UserControl uc = new UserControl();
-
-            Console.WriteLine(uc.GetRoleById(2));
-            Product p = new Product();
-            XmlTextReader reader = new XmlTextReader(@"../../data/XMLFile1.xml");
-            p.Read(reader);
-            p.Write();
-            XmlTextWriter writer = new XmlTextWriter("result.xml", Encoding.UTF8);
-            p.Write(writer);
-            Product n = new Product();
-            p.Read(reader);
-            p.Write();
-            p.Write(writer);
-            writer.Close();
-            Console.WriteLine("\nPress any key to continue");
-            System.Console.ReadKey();
         }
     }
 }

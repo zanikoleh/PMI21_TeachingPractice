@@ -31,6 +31,11 @@ namespace PMI21_TeachingPractice
         private double price;
 
         /// <summary>
+        /// Available amount of product.
+        /// </summary>
+        private int amount;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Product" /> class with default values: (0, "Product", 0).
         /// </summary>
         public Product()
@@ -38,6 +43,7 @@ namespace PMI21_TeachingPractice
             this.id = 0;
             this.name = "Product";
             this.price = 0;
+            this.amount = 0;
         }
 
         /// <summary>
@@ -46,11 +52,12 @@ namespace PMI21_TeachingPractice
         /// <param name="id">ID of product.</param>
         /// <param name="name">Name of product.</param>
         /// <param name="price">Price of product.</param>
-        public Product(int id, string name, double price)
+        public Product(int id, string name, double price, int amount)
         {
             this.id = id;
             this.name = name;
             this.price = price;
+            this.amount = amount;
         }
 
         /// <summary>
@@ -62,6 +69,7 @@ namespace PMI21_TeachingPractice
             this.id = p.id;
             this.name = p.name;
             this.price = p.price;
+            this.amount = p.amount;
         }
 
         /// <summary>
@@ -93,6 +101,22 @@ namespace PMI21_TeachingPractice
             set
             {
                 this.price = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets amount of product.
+        /// </summary>
+        public int Amount
+        {
+            get
+            {
+                return this.amount;
+            }
+
+            set
+            {
+                this.amount = value;
             }
         }
 
@@ -133,6 +157,12 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "price")
                 {
                     this.price = reader.ReadElementContentAsDouble();
+                    break;
+                }
+
+                if (reader.Name == "amount")
+                {
+                    this.amount = reader.ReadElementContentAsInt();
                     break;
                 }
             }
@@ -182,6 +212,9 @@ namespace PMI21_TeachingPractice
             writer.WriteStartElement("price");
             writer.WriteValue(this.price);
             writer.WriteEndElement();
+            writer.WriteStartElement("amount");
+            writer.WriteValue(this.amount);
+            writer.WriteEndElement();
         }
 
         /// <summary>
@@ -200,6 +233,12 @@ namespace PMI21_TeachingPractice
             newPrice.AppendChild(cost);
             newProduct.AppendChild(newId);
             newProduct.AppendChild(newPrice);
+            //// Next 4 lines were added, when new field "amount" was added. Could be mistakes. © Taras Romanchuk.
+            XmlElement newAmount = doc.CreateElement("amount");
+            XmlText amountStr = doc.CreateTextNode(this.amount.ToString());
+            newAmount.AppendChild(amountStr);
+            newProduct.AppendChild(newAmount);
+
             root.InsertAfter(newProduct, root.LastChild);
         }
 
@@ -211,6 +250,16 @@ namespace PMI21_TeachingPractice
             Console.Write("{0} ", this.id);
             Console.Write(this.name);
             Console.Write("{0} ", this.price);
+            Console.Write(this.amount);
+        }
+
+        /// <summary>
+        /// Method converts an object to its string representation so that it is suitable for display.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return this.id.ToString() + " " + this.name + " " + this.price.ToString() + " " + this.amount.ToString();
         }
     }
 }
