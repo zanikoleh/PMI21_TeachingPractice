@@ -62,8 +62,9 @@ namespace PMI21_TeachingPractice
                 if (count < 3)
                 {
                     Console.WriteLine(e.Message);
-                    Console.WriteLine("Type 1 to try again or 0 to exit");
-                    string message = "You have only" + (3 - count).ToString() + "more attempts";
+                    Console.WriteLine("Type 0 to exit");
+                    string message = "You have only " + (3 - count).ToString() + " more attempts";
+                    Console.WriteLine(message);
                     int choice = Convert.ToInt32(Console.ReadLine());
                     switch (choice)
                     {
