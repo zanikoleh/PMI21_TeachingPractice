@@ -20,12 +20,12 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// constant field base users
         /// </summary>
-        public const string BaseUsers = "BaseUsers.csv";
+        public const string BaseUsers = @"../../data/BaseUsers.csv";
         
         /// <summary>
         /// constant field base roles
         /// </summary>
-        public const string BaseRoles = "BaseRoles.csv";
+        public const string BaseRoles = @"../../data/BaseRoles.csv";
         
         /// <summary>
         /// constant field default roleId
