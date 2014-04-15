@@ -217,7 +217,7 @@ namespace PMI21_TeachingPractice
         /// <returns>Role if exist, null pointer otherwise</returns>
         public Role GetRoleById(int roleId)
         {
-            System.IO.StreamReader baseRoles = new System.IO.StreamReader(@Constants.BaseRoles);
+            System.IO.StreamReader baseRoles = new System.IO.StreamReader(Constants.BaseRoles);
 
             string textLine = string.Empty;
             string idReader = string.Empty;
