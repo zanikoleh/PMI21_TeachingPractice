@@ -12,11 +12,13 @@ namespace History_TP
     using System.Threading.Tasks;
     using System.Xml;
     using System.Xml.Linq;
+    using PMI21_TeachingPractice;
 
+    //// Changed public class History to public class History, because of debuging error. - © Taras Romanchuk
     /// <summary>
     /// Class to read info from lists of orders and to create list of clients with their orders
     /// </summary>
-    private class History
+    public class History
     {
         /// <summary>
         /// Dictionary of client's id-orders
@@ -82,7 +84,8 @@ namespace History_TP
                 if (raeder.Name == "price")
                 {
                     prodPrice = raeder.ReadElementContentAsInt();
-                    this.ordersList[id].Add(new Product(prodID, "unknown_name", prodPrice));
+                    //// Changes in class Product. Added new field. 0 is default, needs to be modified.
+                    this.ordersList[id].Add(new Product(prodID, "unknown_name", prodPrice, 0));
                 }
             }
         }
@@ -116,7 +119,8 @@ namespace History_TP
                 if (reader.Name == "price")
                 {
                     prodPrice = reader.ReadElementContentAsInt();
-                    this.ordersList[id].Add(new Product(prodID, "unknown_name", prodPrice));
+                    //// Changes in class Product. Added new field. 0 is default, needs to be modified.
+                    this.ordersList[id].Add(new Product(prodID, "unknown_name", prodPrice, 0));
                 }
             }
         }

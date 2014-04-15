@@ -67,15 +67,14 @@ namespace PMI21_TeachingPractice
                     int choice = Convert.ToInt32(Console.ReadLine());
                     switch (choice)
                     {
-                        case 1:
-                            {
-                                return Login(uc, 0);
-                            }
                         case 0:
                             {
                                 Environment.Exit(0);
-                                return new User();
-       
+                                return new User();       
+                            }
+                        default:
+                            {
+                                return Login(uc, 0);
                             }
                     }
                 }
