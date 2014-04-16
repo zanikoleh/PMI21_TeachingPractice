@@ -14,7 +14,7 @@ namespace PMI21_TeachingPractice
     using System.Xml;
     using System.Xml.Linq;
     using PMI21_TeachingPractice;
-    
+
     /// <summary>
     /// describes order of products
     /// </summary>
@@ -88,8 +88,7 @@ namespace PMI21_TeachingPractice
         /// <param name="fullOrder">line of order </param>
         public void MakeOrder(string fullOrder)
         {
-            int productID;
-            double productPrice;
+            int productID, productAmount;
             int counter = 0;
             this.id = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
             fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
@@ -102,11 +101,13 @@ namespace PMI21_TeachingPractice
 
                 if (counter == 2)
                 {
+                    XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
                     productID = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    productPrice = double.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
+                    productAmount = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    Product temp = new Product(productID, string.Empty, productPrice,0);
+                    Product temp = new Product(productID, string.Empty, 0, productAmount);
+                    temp.Price = temp.PriceById(productID, reader);
                     this.products.Add(temp);
                     counter = 0;
                     i = -1;
@@ -118,12 +119,14 @@ namespace PMI21_TeachingPractice
         /// Adds product to order
         /// </summary>
         /// <param name="identifier">id of product</param>
-        public void AddProduct(int identifier)
+        /// <param name="amount">amount of product`s</param>
+        public void AddProduct(int identifier, int amount)
         {
             Product temp = new Product();
             XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
             temp.Price = temp.PriceById(identifier, reader);
             temp.Id = identifier;
+            temp.Amount = amount;
             this.products.Add(temp);
         }
 
@@ -186,26 +189,31 @@ namespace PMI21_TeachingPractice
         {
             int id = -1;
             int prodID = 0;
-            XmlTextReader raeder = new XmlTextReader("Result.xml");
+            int prodAmount = 0;
+            XmlTextReader reader = new XmlTextReader("Result.xml");
             Order tempOrder = new Order();
             tempOrder.ID = identifier;
-            while (raeder.Read())
+            while (reader.Read())
             {
-                if (raeder.Name == "userId" && raeder.HasAttributes)
+                if (reader.Name == "userId" && reader.HasAttributes)
                 {
-                    id = Convert.ToInt32(raeder.GetAttribute("name_id"));
+                    id = Convert.ToInt32(reader.GetAttribute("name_id"));
                     if (id == identifier)
                     {
-                        while (raeder.Read())
+                        while (reader.Read())
                         {
-                            if (raeder.Name == "id")
+                            if (reader.Name == "id")
                             {
-                                prodID = raeder.ReadElementContentAsInt();
-                                
-                                tempOrder.AddProduct(prodID);
+                                prodID = reader.ReadElementContentAsInt();
                             }
 
-                            if (raeder.Name == "userId")
+                            if (reader.Name == "amount")
+                            {
+                                prodAmount = reader.ReadElementContentAsInt();
+                                tempOrder.AddProduct(prodID, prodAmount);
+                            }
+
+                            if (reader.Name == "userId")
                             {
                                 return tempOrder;
                             }
