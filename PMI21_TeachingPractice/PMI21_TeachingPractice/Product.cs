@@ -52,6 +52,7 @@ namespace PMI21_TeachingPractice
         /// <param name="id">ID of product.</param>
         /// <param name="name">Name of product.</param>
         /// <param name="price">Price of product.</param>
+        /// <param name="amount">Amount of product</param>
         public Product(int id, string name, double price, int amount)
         {
             this.id = id;
@@ -233,7 +234,6 @@ namespace PMI21_TeachingPractice
             newPrice.AppendChild(cost);
             newProduct.AppendChild(newId);
             newProduct.AppendChild(newPrice);
-            //// Next 4 lines were added, when new field "amount" was added. Could be mistakes. © Taras Romanchuk.
             XmlElement newAmount = doc.CreateElement("amount");
             XmlText amountStr = doc.CreateTextNode(this.amount.ToString());
             newAmount.AppendChild(amountStr);
