@@ -56,6 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
+    <Compile Include="Check.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="FileStream.cs" />
     <Compile Include="History.cs" />
