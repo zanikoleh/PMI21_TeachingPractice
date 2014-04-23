@@ -159,7 +159,47 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void AddNewUser()
         {
+            string login;
+            string password;
+            Console.WriteLine("Write login for new user:");
+            login = Console.ReadLine();
+            Console.WriteLine("Password: ");
+            password = Console.ReadLine();
+            UserControl.AddNewUser(login, password);
+            User user = UserControl.Identify(login, password);
+            bool adding = true;
+            while (adding)
+            {
+                Console.WriteLine("Enter 0 to stop adding 1 to add new role to user any other symbol to show available roles");
+                int c = Console.Read();
+                switch (c)
+                {
+                    case 0:
+                        {
+                            adding = false;
+                            break;
+                        }
+                    case 1:
+                        {
+                            Console.WriteLine("Enter roles id:");
+                            int roleid = Convert.ToInt32(Console.ReadLine());
+                            if (UserControl.AddUsersRole(user.Id, roleid))
+                            {
+                                Console.WriteLine("Role added successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Something went wrong maybe id is incorrect");
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
 
+            }
         }
 
         private static void DeleteUserFromBase()
