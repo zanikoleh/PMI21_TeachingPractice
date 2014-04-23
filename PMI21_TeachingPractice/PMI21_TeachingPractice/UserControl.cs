@@ -16,7 +16,7 @@ namespace PMI21_TeachingPractice
     /// <summary>
     /// class user control
     /// </summary>
-    public class UserControl
+    public static class UserControl
     {
         /// <summary>
         /// This method performs logging in.
@@ -24,7 +24,7 @@ namespace PMI21_TeachingPractice
         /// <param name="forLogin">Login that the current user has entered.</param>
         /// <param name="forPassword">Password that the current user has entered.</param>
         /// <returns>True if user is logged in.</returns>
-        public User Identify(string forLogin, string forPassword)
+        public static User Identify(string forLogin, string forPassword)
         {
             System.IO.StreamReader baseUsers = null;
             try
@@ -33,11 +33,11 @@ namespace PMI21_TeachingPractice
 
                 string lineReader = null;
 
-                if (this.IdentifyLogin(ref lineReader, forLogin, baseUsers))
+                if (UserControl.IdentifyLogin(ref lineReader, forLogin, baseUsers))
                 {
-                    if (this.IdentifyPassword(lineReader, forPassword))
+                    if (UserControl.IdentifyPassword(lineReader, forPassword))
                     {
-                        return this.CreateUser(lineReader);
+                        return UserControl.CreateUser(lineReader);
                     }
                     else
                     {
@@ -74,16 +74,16 @@ namespace PMI21_TeachingPractice
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
         /// <returns>True if user was successfully added, false otherwise</returns>
-        public bool AddNewUser(string newName, string newPassword)
+        public static bool AddNewUser(string newName, string newPassword)
         {
             try
             {
-                if (this.CheckNameExistence(newName))
+                if (UserControl.CheckNameExistence(newName))
                 {
                     return false;
                 }
 
-                this.AddToBaseUsers(newName, newPassword);
+                UserControl.AddToBaseUsers(newName, newPassword);
             }
             catch (FileNotFoundException p)
             {
@@ -105,11 +105,11 @@ namespace PMI21_TeachingPractice
         /// <param name="userId">User's idNumber</param>
         /// <param name="roleId">The role's id to add</param>
         /// <returns>True if role was successfully added</returns>
-        public bool AddUsersRole(int userId, int roleId)
+        public static bool AddUsersRole(int userId, int roleId)
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            this.LoadBaseUsers(out baseUsers);
+            UserControl.LoadBaseUsers(out baseUsers);
 
             foreach (User x in baseUsers)
             {
@@ -121,7 +121,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            this.ExportBaseUsers(baseUsers);
+            UserControl.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -131,11 +131,11 @@ namespace PMI21_TeachingPractice
         /// <param name="userId">User's idNumber</param>
         /// <param name="roleId">The role's id to remove</param>
         /// <returns>True if role was successfully removed </returns>
-        public bool RemoveUsersRole(int userId, int roleId)
+        public static bool RemoveUsersRole(int userId, int roleId)
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            this.LoadBaseUsers(out baseUsers);
+            UserControl.LoadBaseUsers(out baseUsers);
 
             foreach (User x in baseUsers)
             {
@@ -150,7 +150,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            this.ExportBaseUsers(baseUsers);
+            UserControl.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -159,7 +159,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="userId">User's idNumber</param>
         /// <returns>User if exist, null pointer otherwise</returns>
-        public User GetUserById(int userId)
+        public static User GetUserById(int userId)
         {
             System.IO.StreamReader baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
 
@@ -176,7 +176,7 @@ namespace PMI21_TeachingPractice
 
             if (Convert.ToString(userId) == idReader)
             {
-                return this.CreateUser(textLine);
+                return UserControl.CreateUser(textLine);
             }
             else
             {
@@ -189,7 +189,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="roleId">The role's id to check by</param>
         /// <returns>A list of users by the role</returns>
-        public System.Collections.Generic.List<User> GetUsersByRole(int roleId)
+        public static System.Collections.Generic.List<User> GetUsersByRole(int roleId)
         {
             System.IO.StreamReader baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
             System.Collections.Generic.List<User> toReturn = new System.Collections.Generic.List<User>();
@@ -199,7 +199,7 @@ namespace PMI21_TeachingPractice
             while (!baseUsers.EndOfStream)
             {
                 textLine = baseUsers.ReadLine();
-                temp = new User(this.CreateUser(textLine));
+                temp = new User(UserControl.CreateUser(textLine));
                 if (temp.RolesId.Contains(roleId))
                 {
                     toReturn.Add(temp);
@@ -215,7 +215,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="roleId">Role's idNumber</param>
         /// <returns>Role if exist, null pointer otherwise</returns>
-        public Role GetRoleById(int roleId)
+        public static Role GetRoleById(int roleId)
         {
             System.IO.StreamReader baseRoles = new System.IO.StreamReader(Constants.BaseRoles);
 
@@ -245,11 +245,11 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="userId">id of the user to delete</param>
         /// <returns>false if there is no such user in the database</returns>
-        public bool DeleteUser(int userId)
+        public static bool DeleteUser(int userId)
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            this.LoadBaseUsers(out baseUsers);
+            UserControl.LoadBaseUsers(out baseUsers);
             foreach (User x in baseUsers)
             {
                 if (x.Id == userId)
@@ -260,7 +260,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            this.ExportBaseUsers(baseUsers);
+            UserControl.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -271,7 +271,7 @@ namespace PMI21_TeachingPractice
         /// <param name="login">login that the user has entered</param>
         /// <param name="inFile">input file</param>
         /// <returns>true if the login is found</returns>
-        private bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader inFile)
+        private static bool IdentifyLogin(ref string allContent, string login, System.IO.StreamReader inFile)
         {
             string tempLogin = null;
             while (tempLogin != login && !inFile.EndOfStream)
@@ -289,7 +289,7 @@ namespace PMI21_TeachingPractice
         /// <param name="allContent">The source of the event.</param>
         /// <param name="password">The <see cref="password"/> instance containing the event data.</param>
         /// <returns> true if the password is correct </returns>
-        private bool IdentifyPassword(string allContent, string password)
+        private static bool IdentifyPassword(string allContent, string password)
         {
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
             allContent = allContent.Remove(Constants.Zero, allContent.IndexOf(',') + Constants.One);
@@ -303,7 +303,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="tape">Information about new instance of User class</param>
         /// <returns>User if OK, else null pointer</returns>
-        private User CreateUser(string tape)
+        private static User CreateUser(string tape)
         {
             try
             {
@@ -358,7 +358,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="user">The <see cref="user"/> .</param>
         /// <returns>a string which contains all the information about the user</returns>
-        private string CreateLineUserRepresentation(User user)
+        private static string CreateLineUserRepresentation(User user)
         {
             string toReturn = user.Id + "," + user.Login + "," + user.Password + "," + user.RolesId.Count;
             foreach (int x in user.RolesId)
@@ -374,7 +374,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="nameToCheck">the name to search for</param>
         /// <returns>true if the name is found</returns>
-        private bool CheckNameExistence(string nameToCheck)
+        private static bool CheckNameExistence(string nameToCheck)
         {
             System.IO.StreamReader reader = new System.IO.StreamReader(Constants.BaseUsers);
             string temp = null;
@@ -393,7 +393,7 @@ namespace PMI21_TeachingPractice
         /// Generates user's id
         /// </summary>
         /// <returns>new user's id</returns>
-        private int IdGenerator()
+        private static int IdGenerator()
         {
             int id;
             string line = string.Empty;
@@ -417,9 +417,9 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
-        private void AddToBaseUsers(string newName, string newPassword)
+        private static void AddToBaseUsers(string newName, string newPassword)
         {
-            string generatedId = Convert.ToString(this.IdGenerator());
+            string generatedId = Convert.ToString(UserControl.IdGenerator());
             string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DefaultRoleId;
 
             System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
@@ -436,7 +436,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="contentToLoad">Content load to.</param>
         /// <returns>True if loaded, false otherwise</returns>
-        private bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
+        private static bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
         {
             System.IO.StreamReader baseUsers = null;
             contentToLoad = null;
@@ -450,7 +450,7 @@ namespace PMI21_TeachingPractice
                 while (!baseUsers.EndOfStream)
                 {
                     textLine = baseUsers.ReadLine();
-                    contentToLoad.Add(this.CreateUser(textLine));
+                    contentToLoad.Add(UserControl.CreateUser(textLine));
                 }
             }
             catch (FileNotFoundException p)
@@ -479,7 +479,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="contentToExport">list with users</param>
         /// <returns>true if operation was successful</returns>
-        private bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
+        private static bool ExportBaseUsers(System.Collections.Generic.List<User> contentToExport)
         {
             System.IO.StreamWriter baseUsers = null;
             try
@@ -487,7 +487,7 @@ namespace PMI21_TeachingPractice
                 baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
                 foreach (User x in contentToExport)
                 {
-                    baseUsers.WriteLine(this.CreateLineUserRepresentation(x));
+                    baseUsers.WriteLine(UserControl.CreateLineUserRepresentation(x));
                 }
             }
             catch (FileNotFoundException p)
