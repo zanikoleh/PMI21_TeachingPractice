@@ -17,15 +17,13 @@ namespace PMI21_TeachingPractice
     /// </summary>
     public class Program
     {
-  
-        
+
         /// <summary>
         /// Main function
         /// </summary>
         public static void Main()
         {
-            UserControl uc = new UserControl();
-            Application.WorkFlow(uc);
+            Console.WriteLine(UserControl.GetUserById(3));
         }
     }
 }
