@@ -72,6 +72,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="data\BaseRoles.csv" />
+    <None Include="data\BaseUsers.csv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="static\" />

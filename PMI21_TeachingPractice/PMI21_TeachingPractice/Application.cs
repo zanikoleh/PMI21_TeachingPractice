@@ -8,7 +8,47 @@ namespace PMI21_TeachingPractice
 {
     static public class Application
     {
-        static private User Login(UserControl uc, int count)
+        /// <summary>
+        /// Delegate for containing 
+        /// </summary>
+        public delegate void UserAbbilities();
+        
+        /// <summary>
+        /// Main interface function
+        /// </summary>
+        static public void WorkFlow()
+        {
+            try
+            {
+                Console.WriteLine("Type 1 to login type 0 to exit:");
+                int start = Convert.ToInt32(Console.ReadLine());
+                switch (start)
+                {
+                    case 1:
+                        {
+                            User logged = Application.Login(0);
+                            break;
+                        }
+                    case 0:
+                        {
+                            Environment.Exit(0);
+                            break;
+                        }
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("You chose wrong option");
+                WorkFlow();
+            }
+        }
+
+        /// <summary>
+        /// Login interface
+        /// </summary>
+        /// <param name="count">Counter of tries</param>
+        /// <returns>User if logged null if not</returns>
+        static private User Login(int count)
         {
             try
             {
@@ -40,7 +80,7 @@ namespace PMI21_TeachingPractice
                 while (key.Key != ConsoleKey.Enter);
 
                 Console.WriteLine();
-                if (uc.Identify(login, password) == null)
+                if (UserControl.Identify(login, password) == null)
                 {
                     if (count < 3)
                     {
@@ -58,7 +98,7 @@ namespace PMI21_TeachingPractice
                                 }
                             default:
                                 {
-                                    return Login(uc, count+1);
+                                    return Login(count + 1);
                                 }
                         }
                     }
@@ -68,38 +108,58 @@ namespace PMI21_TeachingPractice
                         return new User();
                     }
                 }
-                return uc.Identify(login, password);
+                return UserControl.Identify(login, password);
             }
             catch (FormatException)
             {
-                return Login(uc, count + 1);
+                return Login(count + 1);
             }
         }
-        static public void WorkFlow(UserControl uc)
+
+        /// <summary>
+        /// Special interface for logged user
+        /// </summary>
+        /// <param name="user">Logged user</param>
+        static private void LoggedInterface(User user)
         {
-            try
+            List<UserAbbilities> abbilities = new List<UserAbbilities>();
+
+        }
+
+        /// <summary>
+        /// Method for creating abbility list for user
+        /// </summary>
+        /// <param name="user">Logged user</param>
+        /// <returns>list of UserAbbilities</returns>
+        static private List<UserAbbilities> BuildAbbilityList(User user)
+        {
+            List<UserAbbilities> abbilities = new List<UserAbbilities>();
+            foreach (int i in user.RolesId)
             {
-                Console.WriteLine("Type 1 to login type 0 to exit:");
-                int start = Convert.ToInt32(Console.ReadLine());
-                switch (start)
-                {
-                    case 1:
-                        {
-                            User logged = Application.Login(uc, 0);
-                            break;
-                        }
-                    case 0:
-                        {
-                            Environment.Exit(0);
-                            break;
-                        }
-                }
+                AbbilitiesAdd(abbilities, UserControl.GetRoleById(i));
             }
-            catch (FormatException)
+            return abbilities;
+        }
+
+        /// <summary>
+        /// Adding abillities of role
+        /// </summary>
+        /// <param name="abbilities">list of UserAbillities</param>
+        /// <param name="role">Role</param>
+        private static void AbbilitiesAdd(List<UserAbbilities> abbilities, Role role)
+        {
+            if(role.Name.Equals("Admin"))
             {
-                Console.WriteLine("You chose wrong option");
-                WorkFlow(uc);
+                abbilities.Add(new UserAbbilities(AddNewUser));
             }
+        }
+
+        /// <summary>
+        /// Adding of new user
+        /// </summary>
+        private static void AddNewUser()
+        {
+
         }
     }
 }
