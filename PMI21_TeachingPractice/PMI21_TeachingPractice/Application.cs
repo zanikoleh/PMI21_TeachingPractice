@@ -161,5 +161,20 @@ namespace PMI21_TeachingPractice
         {
 
         }
+
+        private static void DeleteUserFromBase()
+        {
+            Console.WriteLine("Input ID user to delete.");
+            int idDel = new int();
+            idDel = Convert.ToInt32(Console.ReadLine());
+            if (UserControl.DeleteUser(idDel))
+            {
+                Console.WriteLine("Success!");
+            }
+            else
+            {
+                Console.WriteLine("Wrong ID!");
+            }
+        }
     }
 }
