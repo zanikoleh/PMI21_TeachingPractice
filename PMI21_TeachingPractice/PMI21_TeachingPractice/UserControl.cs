@@ -158,7 +158,6 @@ namespace PMI21_TeachingPractice
             return UserControl.AddToBaseRoles(roleId, roleName);
         }
 
-
         /// <summary>
         /// Method removes user's role 
         /// </summary>
