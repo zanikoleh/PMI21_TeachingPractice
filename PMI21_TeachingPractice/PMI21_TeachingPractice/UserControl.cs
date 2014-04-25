@@ -100,6 +100,23 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Method adds new user to database
+        /// </summary>
+        /// <param name="newName">new user's name</param>
+        /// <param name="newPassword">new user's password</param>
+        /// <param name="rolesIdes">List of Ides of user's roles</param>
+        /// <returns></returns>
+        public static bool AddNewUser(string newName, string newPassword, List<int> rolesIdes)
+        {
+            if (UserControl.CheckNameExistence(newName))
+            {
+                return false;
+            }
+
+            return UserControl.AddToBaseUsers(newName, newPassword, rolesIdes);
+        }
+
+        /// <summary>
         /// Method adds new role to the user's role list
         /// </summary>
         /// <param name="userId">User's idNumber</param>
@@ -124,6 +141,23 @@ namespace PMI21_TeachingPractice
             UserControl.ExportBaseUsers(baseUsers);
             return success;
         }
+
+        /// <summary>
+        /// Add new Role to database.
+        /// </summary>
+        /// <param name="roleId">Id of new Role.</param>
+        /// <param name="roleName">Name of new Role.</param>
+        /// <returns>True if ok, false otherwise.</returns>
+        public static bool AddNewRole(int roleId, string roleName)
+        {
+            if (UserControl.CheckRoleExistence(roleId))
+            {
+                return false;
+            }
+
+            return UserControl.AddToBaseRoles(roleId, roleName);
+        }
+
 
         /// <summary>
         /// Method removes user's role 
@@ -302,7 +336,7 @@ namespace PMI21_TeachingPractice
         /// Create new instance of User class, using information from text line.
         /// </summary>
         /// <param name="tape">Information about new instance of User class</param>
-        /// <returns>User if OK, else null pointer</returns>
+        /// <returns>User if User was successfully created, else null pointer</returns>
         private static User CreateUser(string tape)
         {
             try
@@ -373,7 +407,7 @@ namespace PMI21_TeachingPractice
         /// Checks if the current name is in the database
         /// </summary>
         /// <param name="nameToCheck">the name to search for</param>
-        /// <returns>true if the name is found</returns>
+        /// <returns>True if the name is found</returns>
         private static bool CheckNameExistence(string nameToCheck)
         {
             System.IO.StreamReader reader = new System.IO.StreamReader(Constants.BaseUsers);
@@ -387,6 +421,27 @@ namespace PMI21_TeachingPractice
             reader.Close();
 
             return temp == nameToCheck;
+        }
+
+        /// <summary>
+        /// Checks if the current role's Id is in the database.
+        /// </summary>
+        /// <param name="roleId">The Id to search for.</param>
+        /// <returns>True if the Id is found.</returns>
+        private static bool CheckRoleExistence(int roleId)
+        {
+            System.IO.StreamReader reader = new System.IO.StreamReader(Constants.BaseRoles);
+
+            string temp = null;
+            while (Convert.ToInt32(temp) != roleId && !reader.EndOfStream)
+            {
+                temp = reader.ReadLine();
+                temp = temp.Substring(0, temp.IndexOf(','));
+            }
+
+            reader.Close();
+
+            return Convert.ToInt32(temp) == roleId;
         }
 
         /// <summary>
@@ -417,18 +472,108 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="newName">new user's name</param>
         /// <param name="newPassword">new user's password</param>
-        private static void AddToBaseUsers(string newName, string newPassword)
+        /// <returns>True if user was successfully added, false otherwise.</returns>
+        private static bool AddToBaseUsers(string newName, string newPassword)
         {
-            string generatedId = Convert.ToString(UserControl.IdGenerator());
-            string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DefaultRoleId;
+            try
+            {
+                string generatedId = Convert.ToString(UserControl.IdGenerator());
+                string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DefaultRoleId;
 
-            System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
-            System.IO.StreamWriter baseUsersFileWriter = new System.IO.StreamWriter(baseUsers);
+                System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
+                System.IO.StreamWriter baseUsersFileWriter = new System.IO.StreamWriter(baseUsers);
 
-            baseUsersFileWriter.WriteLine(forBaseUsers);
+                baseUsersFileWriter.WriteLine(forBaseUsers);
 
-            baseUsersFileWriter.Close();
-            baseUsers.Close();
+                baseUsersFileWriter.Close();
+                baseUsers.Close();
+            }
+
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adds a new user to database
+        /// </summary>
+        /// <param name="newName">New user's name.</param>
+        /// <param name="newPassword">New user's password.</param>
+        /// <param name="rolesIdes">List of Ides of user's roles.</param>
+        /// <returns>True if user was successfully added, false otherwise.</returns>
+        private static bool AddToBaseUsers(string newName, string newPassword, List<int> rolesIdes)
+        {
+            try
+            {
+                string generatedId = Convert.ToString(UserControl.IdGenerator());
+                string forBaseUsers = generatedId + "," + newName + "," + newPassword;
+
+                foreach (int roleId in rolesIdes)
+                {
+                    forBaseUsers += "," + roleId;
+                }
+
+                System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
+                System.IO.StreamWriter baseUsersFileWriter = new System.IO.StreamWriter(baseUsers);
+
+                baseUsersFileWriter.WriteLine(forBaseUsers);
+
+                baseUsersFileWriter.Close();
+                baseUsers.Close();
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adds new role to database.
+        /// </summary>
+        /// <param name="roleId">New role's Id.</param>
+        /// <param name="roleName">New role's name.</param>
+        /// <returns>True if role was successfully added, false otherwise.</returns>
+        private static bool AddToBaseRoles(int roleId, string roleName)
+        {
+            try
+            {
+                System.IO.FileStream baseRoles = new System.IO.FileStream(Constants.BaseRoles, System.IO.FileMode.Append);
+                System.IO.StreamWriter baseRolesFileWriter = new System.IO.StreamWriter(baseRoles);
+
+                baseRolesFileWriter.WriteLine(roleId + ',' + roleName);
+
+                baseRolesFileWriter.Close();
+                baseRoles.Close();
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
