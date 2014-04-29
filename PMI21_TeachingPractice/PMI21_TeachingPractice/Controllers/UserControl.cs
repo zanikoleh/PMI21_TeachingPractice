@@ -313,6 +313,49 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Load all users from database.
+        /// </summary>
+        /// <param name="contentToLoad">Content load to.</param>
+        /// <returns>True if loaded, false otherwise</returns>
+        public static bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
+        {
+            System.IO.StreamReader baseUsers = null;
+            contentToLoad = null;
+            try
+            {
+                baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
+                contentToLoad = new System.Collections.Generic.List<User>();
+
+                string textLine = string.Empty;
+
+                while (!baseUsers.EndOfStream)
+                {
+                    textLine = baseUsers.ReadLine();
+                    contentToLoad.Add(UserControl.CreateUser(textLine));
+                }
+            }
+            catch (FileNotFoundException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            catch (IOException p)
+            {
+                Console.WriteLine(p.Message);
+                return false;
+            }
+            finally
+            {
+                if (baseUsers != null)
+                {
+                    baseUsers.Close();
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Looks for an appropriate login in the file
         /// </summary>
         /// <param name="allContent">current line that 'inFile' reads</param>
@@ -585,49 +628,6 @@ namespace PMI21_TeachingPractice
             {
                 Console.WriteLine(p.Message);
                 return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Load all users from database.
-        /// </summary>
-        /// <param name="contentToLoad">Content load to.</param>
-        /// <returns>True if loaded, false otherwise</returns>
-        private static bool LoadBaseUsers(out System.Collections.Generic.List<User> contentToLoad)
-        {
-            System.IO.StreamReader baseUsers = null;
-            contentToLoad = null;
-            try
-            {
-                baseUsers = new System.IO.StreamReader(Constants.BaseUsers);
-                contentToLoad = new System.Collections.Generic.List<User>();
-
-                string textLine = string.Empty;
-
-                while (!baseUsers.EndOfStream)
-                {
-                    textLine = baseUsers.ReadLine();
-                    contentToLoad.Add(UserControl.CreateUser(textLine));
-                }
-            }
-            catch (FileNotFoundException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            catch (IOException p)
-            {
-                Console.WriteLine(p.Message);
-                return false;
-            }
-            finally
-            {
-                if (baseUsers != null)
-                {
-                    baseUsers.Close();
-                }
             }
 
             return true;
