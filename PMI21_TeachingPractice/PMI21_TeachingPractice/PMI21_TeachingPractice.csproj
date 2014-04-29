@@ -56,31 +56,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
-    <Compile Include="Check.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="DataBase.cs" />
-    <Compile Include="FileStream.cs" />
-    <Compile Include="History.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="Product.cs" />
-    <Compile Include="Products.cs" />
+    <Compile Include="Controllers\UserControl.cs" />
+    <Compile Include="data\Constants.cs" />
+    <Compile Include="Models\Check.cs" />
+    <Compile Include="Models\History.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Products.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
+    <Compile Include="Service\Application.cs" />
+    <Compile Include="Service\DataBase.cs" />
     <Compile Include="Test Order.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="data\BaseRoles.csv" />
+    <None Include="data\BaseUsers – копія.csv" />
     <None Include="data\BaseUsers.csv" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\Data.txt" />
     <Content Include="data\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
