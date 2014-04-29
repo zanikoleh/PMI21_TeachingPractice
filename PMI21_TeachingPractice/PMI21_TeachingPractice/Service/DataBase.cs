@@ -338,5 +338,48 @@ namespace PMI21_TeachingPractice
             }
             reader.Close();
         }
+        private static void SaveUserDB(XmlDocument doc, User myUser)
+        {
+            XmlNode root = doc.DocumentElement;
+            XmlElement newID = doc.CreateElement("UserId");
+            XmlAttribute attrID = doc.CreateAttribute("user_id");
+            attrID.Value = myUser.Id.ToString();
+            newID.SetAttributeNode(attrID);
+            root.InsertAfter(newID, root.LastChild);
+            XmlElement uLogin = doc.CreateElement("UserLogin");
+            XmlElement uPassword = doc.CreateElement("UserPassword");
+            XmlElement uRole = doc.CreateElement("UserRole");
+            XmlText usLog = doc.CreateTextNode(myUser.Login);
+            XmlText usPass = doc.CreateTextNode(myUser.Password);
+            string temp = "";
+            foreach (int i in myUser.RolesId)
+            {
+                temp = temp + i.ToString() + "|";
+            }
+            XmlText usRole = doc.CreateTextNode(temp);
+            uLogin.AppendChild(usLog);
+            uPassword.AppendChild(usPass);
+            uRole.AppendChild(usRole);
+            root.InsertAfter(uLogin, root.LastChild);
+            root.InsertAfter(uPassword, root.LastChild);
+            root.InsertAfter(uRole, root.LastChild);
+        }
+        private static void SaveProductDB(XmlDocument doc, Product myProduct)
+        {
+            XmlNode root = doc.DocumentElement;
+            XmlElement newID = doc.CreateElement("ProductId");
+            XmlAttribute attrID = doc.CreateAttribute("product_id");
+            attrID.Value = myProduct.Id.ToString();
+            newID.SetAttributeNode(attrID);
+            root.InsertAfter(newID, root.LastChild);
+            XmlElement prodName = doc.CreateElement("ProductName");
+            XmlElement prodPrice = doc.CreateElement("ProductPrice");
+            XmlText pName = doc.CreateTextNode(myProduct.Name);
+            XmlText pPrice = doc.CreateTextNode(myProduct.Price.ToString());
+            prodName.AppendChild(pName);
+            prodPrice.AppendChild(pPrice);
+            root.InsertAfter(prodName, root.LastChild);
+            root.InsertAfter(prodPrice, root.LastChild);
+        }
     }
 }
