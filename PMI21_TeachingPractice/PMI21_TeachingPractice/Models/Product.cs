@@ -144,8 +144,9 @@ namespace PMI21_TeachingPractice
         /// <param name="identifier"> id of searching product</param>
         /// <param name="reader">fie to read</param>
         /// <returns>price of product with searching id</returns>
-        public double PriceById(int identifier, XmlTextReader reader)
+        public double PriceById(int identifier)
         {
+            XmlTextReader reader = new XmlTextReader("XMLFile1.xml");
             int tempId = 0;
             while (reader.Read())
             {
@@ -223,23 +224,23 @@ namespace PMI21_TeachingPractice
             return this.id.ToString() + " " + this.name + " " + this.price.ToString();
         }
 
-        // Needs to be checked by 3 team.
         public void SaveProductDB(XmlDocument doc)
         {
             XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("ProductId");
-            XmlAttribute attrID = doc.CreateAttribute("product_id");
-            attrID.Value = this.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
+            XmlElement newProduct = doc.CreateElement("Product");
+            XmlElement prodId = doc.CreateElement("PrductId");
             XmlElement prodName = doc.CreateElement("ProductName");
             XmlElement prodPrice = doc.CreateElement("ProductPrice");
+            XmlText pId = doc.CreateTextNode(this.Id.ToString());
             XmlText pName = doc.CreateTextNode(this.Name);
             XmlText pPrice = doc.CreateTextNode(this.Price.ToString());
+            prodId.AppendChild(pId);
             prodName.AppendChild(pName);
             prodPrice.AppendChild(pPrice);
-            root.InsertAfter(prodName, root.LastChild);
-            root.InsertAfter(prodPrice, root.LastChild);
+            newProduct.AppendChild(prodId);
+            newProduct.AppendChild(prodName);
+            newProduct.AppendChild(prodPrice);
+            root.InsertAfter(newProduct, root.LastChild);
         }
     }
 }
