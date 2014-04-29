@@ -223,27 +223,5 @@ namespace PMI21_TeachingPractice
         {
             return this.id.ToString() + " " + this.name + " " + this.price.ToString();
         }
-
-<<<<<<< HEAD:PMI21_TeachingPractice/PMI21_TeachingPractice/Product.cs
-=======
-        public void SaveProductDB(XmlDocument doc)
-        {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newProduct = doc.CreateElement("Product");
-            XmlElement prodId = doc.CreateElement("PrductId");
-            XmlElement prodName = doc.CreateElement("ProductName");
-            XmlElement prodPrice = doc.CreateElement("ProductPrice");
-            XmlText pId = doc.CreateTextNode(this.Id.ToString());
-            XmlText pName = doc.CreateTextNode(this.Name);
-            XmlText pPrice = doc.CreateTextNode(this.Price.ToString());
-            prodId.AppendChild(pId);
-            prodName.AppendChild(pName);
-            prodPrice.AppendChild(pPrice);
-            newProduct.AppendChild(prodId);
-            newProduct.AppendChild(prodName);
-            newProduct.AppendChild(prodPrice);
-            root.InsertAfter(newProduct, root.LastChild);
-        }
->>>>>>> 44e667c5a03a33a08658d108a89081d8800cb49d:PMI21_TeachingPractice/PMI21_TeachingPractice/Models/Product.cs
     }
 }
