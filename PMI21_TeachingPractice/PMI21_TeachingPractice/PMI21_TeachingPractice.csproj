@@ -59,7 +59,6 @@
     <Compile Include="Controllers\UserControl.cs" />
     <Compile Include="data\Constants.cs" />
     <Compile Include="Models\Check.cs" />
-    <Compile Include="Models\History.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Products.cs" />

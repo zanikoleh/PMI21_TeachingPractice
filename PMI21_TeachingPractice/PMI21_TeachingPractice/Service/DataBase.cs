@@ -246,9 +246,9 @@ namespace PMI21_TeachingPractice
         public void LoadOrders()
         {
             int id = -1;
-            int prodId = 0;
-            double prodpPrice = -1;
-            List<Product> listProd = new List<Product>();
+            int amount = -1;
+            int price = -1;
+            Dictionary<int, int> dict = new Dictionary<int, int>(); 
             XmlTextReader reader = new XmlTextReader(this.OrdersPath);
             int i = 0;
             while (reader.Read())
@@ -257,24 +257,24 @@ namespace PMI21_TeachingPractice
                 {
                     if (i != 0)
                     {
-                        this.orders.Add(new Order(id, listProd));
-                        listProd.Clear();
+                        this.orders.Add(new Order(id, dict));
+                        dict.Clear();
                         Console.WriteLine(i);
                     }
                     i++;
                     id = Convert.ToInt32(reader.GetAttribute("name_id"));
                 }
-                if (reader.Name == "id")
+                if (reader.Name == "amount")
                 {
-                    prodId = reader.ReadElementContentAsInt();
+                    amount = reader.ReadElementContentAsInt();
                 }
                 if (reader.Name == "price")
                 {
-                    prodpPrice = reader.ReadElementContentAsDouble();
-                    listProd.Add(new Product(prodId, "unknown_name", prodpPrice));
+                    price = reader.ReadElementContentAsInt();
+                    dict[price] = amount;
                 }
             }
-            this.orders.Add(new Order(id, listProd));
+            this.orders.Add(new Order(id, dict));
             reader.Close();
         }
         public void LoadProducts()
