@@ -16,7 +16,7 @@ namespace PMI21_TeachingPractice
     /// <summary>
     /// class user control
     /// </summary>
-    public static class UserControl
+    public static class UserControls
     {
         /// <summary>
         /// This method performs logging in.
@@ -33,11 +33,11 @@ namespace PMI21_TeachingPractice
 
                 string lineReader = null;
 
-                if (UserControl.IdentifyLogin(ref lineReader, forLogin, baseUsers))
+                if (UserControls.IdentifyLogin(ref lineReader, forLogin, baseUsers))
                 {
-                    if (UserControl.IdentifyPassword(lineReader, forPassword))
+                    if (UserControls.IdentifyPassword(lineReader, forPassword))
                     {
-                        return UserControl.CreateUser(lineReader);
+                        return UserControls.CreateUser(lineReader);
                     }
                     else
                     {
@@ -78,12 +78,12 @@ namespace PMI21_TeachingPractice
         {
             try
             {
-                if (UserControl.CheckNameExistence(newName))
+                if (UserControls.CheckNameExistence(newName))
                 {
                     return false;
                 }
 
-                UserControl.AddToBaseUsers(newName, newPassword);
+                UserControls.AddToBaseUsers(newName, newPassword);
             }
             catch (FileNotFoundException p)
             {
@@ -108,12 +108,12 @@ namespace PMI21_TeachingPractice
         /// <returns></returns>
         public static bool AddNewUser(string newName, string newPassword, List<int> rolesIdes)
         {
-            if (UserControl.CheckNameExistence(newName))
+            if (UserControls.CheckNameExistence(newName))
             {
                 return false;
             }
 
-            return UserControl.AddToBaseUsers(newName, newPassword, rolesIdes);
+            return UserControls.AddToBaseUsers(newName, newPassword, rolesIdes);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace PMI21_TeachingPractice
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            UserControl.LoadBaseUsers(out baseUsers);
+            UserControls.LoadBaseUsers(out baseUsers);
 
             foreach (User x in baseUsers)
             {
@@ -138,7 +138,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            UserControl.ExportBaseUsers(baseUsers);
+            UserControls.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -150,12 +150,12 @@ namespace PMI21_TeachingPractice
         /// <returns>True if ok, false otherwise.</returns>
         public static bool AddNewRole(int roleId, string roleName)
         {
-            if (UserControl.CheckRoleExistence(roleId))
+            if (UserControls.CheckRoleExistence(roleId))
             {
                 return false;
             }
 
-            return UserControl.AddToBaseRoles(roleId, roleName);
+            return UserControls.AddToBaseRoles(roleId, roleName);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace PMI21_TeachingPractice
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            UserControl.LoadBaseUsers(out baseUsers);
+            UserControls.LoadBaseUsers(out baseUsers);
 
             foreach (User x in baseUsers)
             {
@@ -183,7 +183,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            UserControl.ExportBaseUsers(baseUsers);
+            UserControls.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -209,7 +209,7 @@ namespace PMI21_TeachingPractice
 
             if (Convert.ToString(userId) == idReader)
             {
-                return UserControl.CreateUser(textLine);
+                return UserControls.CreateUser(textLine);
             }
             else
             {
@@ -232,7 +232,7 @@ namespace PMI21_TeachingPractice
             while (!baseUsers.EndOfStream)
             {
                 textLine = baseUsers.ReadLine();
-                temp = new User(UserControl.CreateUser(textLine));
+                temp = new User(UserControls.CreateUser(textLine));
                 if (temp.RolesId.Contains(roleId))
                 {
                     toReturn.Add(temp);
@@ -282,7 +282,7 @@ namespace PMI21_TeachingPractice
         {
             System.Collections.Generic.List<User> baseUsers = null;
             bool success = false;
-            UserControl.LoadBaseUsers(out baseUsers);
+            UserControls.LoadBaseUsers(out baseUsers);
             foreach (User x in baseUsers)
             {
                 if (x.Id == userId)
@@ -293,7 +293,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            UserControl.ExportBaseUsers(baseUsers);
+            UserControls.ExportBaseUsers(baseUsers);
             return success;
         }
 
@@ -331,7 +331,7 @@ namespace PMI21_TeachingPractice
                 while (!baseUsers.EndOfStream)
                 {
                     textLine = baseUsers.ReadLine();
-                    contentToLoad.Add(UserControl.CreateUser(textLine));
+                    contentToLoad.Add(UserControls.CreateUser(textLine));
                 }
             }
             catch (FileNotFoundException p)
@@ -534,7 +534,7 @@ namespace PMI21_TeachingPractice
         {
             try
             {
-                string generatedId = Convert.ToString(UserControl.IdGenerator());
+                string generatedId = Convert.ToString(UserControls.IdGenerator());
                 string forBaseUsers = generatedId + "," + newName + "," + newPassword + "," + "1" + "," + Constants.DefaultRoleId;
 
                 System.IO.FileStream baseUsers = new System.IO.FileStream(Constants.BaseUsers, System.IO.FileMode.Append);
@@ -571,7 +571,7 @@ namespace PMI21_TeachingPractice
         {
             try
             {
-                string generatedId = Convert.ToString(UserControl.IdGenerator());
+                string generatedId = Convert.ToString(UserControls.IdGenerator());
                 string forBaseUsers = generatedId + "," + newName + "," + newPassword;
 
                 foreach (int roleId in rolesIdes)
@@ -646,7 +646,7 @@ namespace PMI21_TeachingPractice
                 baseUsers = new System.IO.StreamWriter(Constants.BaseUsers);
                 foreach (User x in contentToExport)
                 {
-                    baseUsers.WriteLine(UserControl.CreateLineUserRepresentation(x));
+                    baseUsers.WriteLine(UserControls.CreateLineUserRepresentation(x));
                 }
             }
             catch (FileNotFoundException p)

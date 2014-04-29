@@ -80,7 +80,7 @@ namespace PMI21_TeachingPractice
                 while (key.Key != ConsoleKey.Enter);
 
                 Console.WriteLine();
-                if (UserControl.Identify(login, password) == null)
+                if (UserControls.Identify(login, password) == null)
                 {
                     if (count < 3)
                     {
@@ -108,7 +108,7 @@ namespace PMI21_TeachingPractice
                         return new User();
                     }
                 }
-                return UserControl.Identify(login, password);
+                return UserControls.Identify(login, password);
             }
             catch (FormatException)
             {
@@ -136,7 +136,7 @@ namespace PMI21_TeachingPractice
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
             foreach (int i in user.RolesId)
             {
-                AbbilitiesAdd(abbilities, UserControl.GetRoleById(i));
+                AbbilitiesAdd(abbilities, UserControls.GetRoleById(i));
             }
             return abbilities;
         }
@@ -171,8 +171,8 @@ namespace PMI21_TeachingPractice
             login = Console.ReadLine();
             Console.WriteLine("Password: ");
             password = Console.ReadLine();
-            UserControl.AddNewUser(login, password);
-            User user = UserControl.Identify(login, password);
+            UserControls.AddNewUser(login, password);
+            User user = UserControls.Identify(login, password);
             bool adding = true;
             while (adding)
             {
@@ -189,7 +189,7 @@ namespace PMI21_TeachingPractice
                         {
                             Console.WriteLine("Enter roles id:");
                             int roleid = Convert.ToInt32(Console.ReadLine());
-                            if (UserControl.AddUsersRole(user.Id, roleid))
+                            if (UserControls.AddUsersRole(user.Id, roleid))
                             {
                                 Console.WriteLine("Role added successfully");
                             }
@@ -213,7 +213,7 @@ namespace PMI21_TeachingPractice
             Console.WriteLine("Input ID user to delete.");
             int idDel = new int();
             idDel = Convert.ToInt32(Console.ReadLine());
-            if (UserControl.DeleteUser(idDel))
+            if (UserControls.DeleteUser(idDel))
             {
                 Console.WriteLine("Success!");
             }
