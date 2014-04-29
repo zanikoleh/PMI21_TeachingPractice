@@ -47,6 +47,26 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// describes button that makes visible password
+        /// </summary>
+        /// <param name="sender">sender of event</param>
+        /// <param name="e">event data</param>
+        private void Visible_Down(object sender, EventArgs e)
+        {
+            this.password.UseSystemPasswordChar = false;
+        }
+
+        /// <summary>
+        /// describes button hides password
+        /// </summary>
+        /// <param name="sender">sender of event</param>
+        /// <param name="e">event data</param>
+        private void Visible_Up(object sender, EventArgs e)
+        {
+            this.password.UseSystemPasswordChar = true;
+        }
+
+        /// <summary>
         /// describes button that shows users list
         /// </summary>
         /// <param name="sender">sender of event</param>
