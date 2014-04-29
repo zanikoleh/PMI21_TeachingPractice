@@ -29,6 +29,24 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// describes button that creates new user
+        /// </summary>
+        /// <param name="sender">sender of event</param>
+        /// <param name="e">event data</param>
+        private void NewUser_Click(object sender, EventArgs e)
+        {
+            if ((login.Text.Length < 5) || UserControls.WrongSymbols(login.Text) || (password.Text.Length < 5) || UserControls.WrongSymbols(password.Text))
+            {
+                MessageBox.Show("Wrong login or password. Not enought or wrong symbols");
+            }
+            else
+            {
+                UserControls.AddNewUser(login.Text, password.Text);
+                MessageBox.Show("User Created");
+            }
+        }
+
+        /// <summary>
         /// loads form
         /// </summary>
         /// <param name="sender">sender of event</param>
