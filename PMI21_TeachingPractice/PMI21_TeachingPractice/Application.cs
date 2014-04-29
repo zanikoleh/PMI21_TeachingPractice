@@ -12,7 +12,7 @@ namespace PMI21_TeachingPractice
         /// Delegate for containing 
         /// </summary>
         public delegate void UserAbbilities();
-        
+
         /// <summary>
         /// Main interface function
         /// </summary>
@@ -148,9 +148,15 @@ namespace PMI21_TeachingPractice
         /// <param name="role">Role</param>
         private static void AbbilitiesAdd(List<UserAbbilities> abbilities, Role role)
         {
-            if(role.Name.Equals("Admin"))
+            if (role.Name.Equals("Admin"))
             {
                 abbilities.Add(new UserAbbilities(AddNewUser));
+                abbilities.Add(new UserAbbilities(DeleteUser));
+                abbilities.Add(new UserAbbilities(ShowAllUsers));
+            }
+            if (role.Name.Equals("Client"))
+            {
+
             }
         }
 
@@ -202,7 +208,7 @@ namespace PMI21_TeachingPractice
             }
         }
 
-        private static void DeleteUserFromBase()
+        private static void DeleteUser()
         {
             Console.WriteLine("Input ID user to delete.");
             int idDel = new int();
@@ -216,5 +222,11 @@ namespace PMI21_TeachingPractice
                 Console.WriteLine("Wrong ID!");
             }
         }
+
+        private static void ShowAllUsers()
+        {
+
+        }
     }
 }
+   

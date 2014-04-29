@@ -23,7 +23,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {
-            Console.WriteLine(UserControl.GetUserById(3));
+            Application.WorkFlow();
 
         }
     }
