@@ -94,6 +94,23 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// describes button that turns back
+        /// </summary>
+        /// <param name="sender">sender of event</param>
+        /// <param name="e">event data</param>
+        private void Back_Click(object sender, EventArgs e)
+        {
+            this.login.Show();
+            this.password.Show();
+            this.newUser.Show();
+            this.showUsers.Show();
+            this.back.Hide();
+            this.label1.Show();
+            this.label2.Show();
+            this.usersList.Hide();
+        }
+
+        /// <summary>
         /// loads form
         /// </summary>
         /// <param name="sender">sender of event</param>
