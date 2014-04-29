@@ -20,7 +20,8 @@ namespace PMI21_TeachingPractice
         private string productsPath;
         private string usersPath;
         private string checksPath;
-        public DataBase()
+        private static DataBase DBInstance = null;
+        private DataBase()
         {
             this.orders = new List<Order>();
             this.products = new List<Product>();
@@ -31,6 +32,25 @@ namespace PMI21_TeachingPractice
             this.productsPath = " ";
             this.usersPath = " ";
             this.checksPath = " ";
+        }
+        public static DataBase GetInstance()
+        {
+            if (DBInstance == null)
+            {
+                DBInstance = new DataBase();
+            }
+            return DBInstance;
+        }
+        public static DataBase Instance
+        {
+            get
+            {
+                if (DBInstance == null)
+                {
+                    DBInstance = new DataBase();
+                }
+                return DBInstance;
+            }
         }
         public List<Order> Orders
         {
@@ -183,7 +203,7 @@ namespace PMI21_TeachingPractice
             docProduct.Load(ProductsPath);
             foreach (Product prd in this.Products)
             {
-                prd.SaveProductDB(docProduct);
+                DataBase.SaveProductDB(docProduct, prd);
             }
             docProduct.Save(this.ProductsPath);
         }
@@ -197,7 +217,7 @@ namespace PMI21_TeachingPractice
             docUser.Load(UsersPath);
             foreach (User usr in this.Users)
             {
-                usr.SaveUserDB(docUser);
+                DataBase.SaveUserDB(docUser, usr);
             }
             docUser.Save(this.UsersPath);
         }
