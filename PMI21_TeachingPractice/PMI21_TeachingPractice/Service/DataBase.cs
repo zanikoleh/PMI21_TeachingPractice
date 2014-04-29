@@ -338,6 +338,85 @@ namespace PMI21_TeachingPractice
             }
             reader.Close();
         }
+
+        public Order GetOrderById(int id)
+        {
+            Order retOrd = new Order();
+            bool found = false;
+            foreach (Order ord in this.Orders)
+            {
+                if (ord.ID == id)
+                {
+                    retOrd = ord;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (found)
+            {
+                return retOrd;
+            }
+            else
+            {
+                throw new ArgumentException("No user with id: >" + id.ToString() + "< found");
+            }
+        }
+        public User GetUserById(int id)
+        {
+            User retUsr = new User();
+            bool found = false;
+            foreach (User usr in this.Users)
+            {
+                if (usr.Id == id)
+                {
+                    retUsr = usr;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (found)
+            {
+                return retUsr;
+            }
+            else
+            {
+                throw new ArgumentException("No order with id: >" + id.ToString() + "< found");
+            }
+        }
+        public Product GetProductById(int id)
+        {
+            Product retPrd = new Product();
+            bool found = false;
+            foreach (Product prd in this.Products)
+            {
+                if (prd.Id == id)
+                {
+                    retPrd = prd;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (found)
+            {
+                return retPrd;
+            }
+            else
+            {
+                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
+            }
+        }
         private static void SaveUserDB(XmlDocument doc, User myUser)
         {
             XmlNode root = doc.DocumentElement;
