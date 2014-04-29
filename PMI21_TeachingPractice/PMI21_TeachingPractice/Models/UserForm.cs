@@ -47,6 +47,33 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// describes button that shows users list
+        /// </summary>
+        /// <param name="sender">sender of event</param>
+        /// <param name="e">event data</param>
+        private void ShowUsers_Click(object sender, EventArgs e)
+        {
+            this.login.Hide();
+            this.password.Hide();
+            this.newUser.Hide();
+            this.showUsers.Hide();
+            this.usersList.Show();
+            this.label1.Hide();
+            this.label2.Hide();
+            this.visible.Hide();
+            this.back.Show();
+            List<User> list;
+            UserControls.LoadBaseUsers(out list);
+            foreach (User user in list)
+            {
+                this.usersList.Text = usersList.Text + user.ToString() + "\r\n";
+            }
+
+            this.usersList.ReadOnly = true;
+            list.Clear();
+        }
+
+        /// <summary>
         /// loads form
         /// </summary>
         /// <param name="sender">sender of event</param>
