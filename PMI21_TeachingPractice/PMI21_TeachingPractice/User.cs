@@ -92,31 +92,6 @@ namespace PMI21_TeachingPractice
 
             return textLine;
         }
-        public void SaveUserDB(XmlDocument doc)
-        {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("UserId");
-            XmlAttribute attrID = doc.CreateAttribute("user_id");
-            attrID.Value = this.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
-            XmlElement uLogin = doc.CreateElement("UserLogin");
-            XmlElement uPassword = doc.CreateElement("UserPassword");
-            XmlElement uRole = doc.CreateElement("UserRole");
-            XmlText usLog = doc.CreateTextNode(this.Login);
-            XmlText usPass = doc.CreateTextNode(this.Password);
-            string temp = "";
-            foreach (int i in this.RolesId)
-            {
-                temp = temp + i.ToString() + "|";
-            }
-            XmlText usRole = doc.CreateTextNode(temp);
-            uLogin.AppendChild(usLog);
-            uPassword.AppendChild(usPass);
-            uRole.AppendChild(usRole);
-            root.InsertAfter(uLogin, root.LastChild);
-            root.InsertAfter(uPassword, root.LastChild);
-            root.InsertAfter(uRole, root.LastChild);
-        }
+       
     }
 }

@@ -262,22 +262,5 @@ namespace PMI21_TeachingPractice
             return this.id.ToString() + " " + this.name + " " + this.price.ToString() + " " + this.amount.ToString();
         }
 
-        public void SaveProductDB(XmlDocument doc)
-        {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("ProductId");
-            XmlAttribute attrID = doc.CreateAttribute("product_id");
-            attrID.Value = this.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
-            XmlElement prodName = doc.CreateElement("ProductName");
-            XmlElement prodPrice = doc.CreateElement("ProductPrice");
-            XmlText pName = doc.CreateTextNode(this.Name);
-            XmlText pPrice = doc.CreateTextNode(this.Price.ToString());
-            prodName.AppendChild(pName);
-            prodPrice.AppendChild(pPrice);
-            root.InsertAfter(prodName, root.LastChild);
-            root.InsertAfter(prodPrice, root.LastChild);
-        }
     }
 }
