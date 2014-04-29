@@ -30,7 +30,7 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// constant field default roleId
         /// </summary>
-        public const int DefaultRoleId = 0;
+        public const int DefaultRoleId = 2;
         
         /// <summary>
         /// constant field zero

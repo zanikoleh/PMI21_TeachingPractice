@@ -28,7 +28,7 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// the list of products
         /// </summary>
-        private List<Product> products;
+        private Dictionary<int,int> products;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Order"/> class
@@ -36,7 +36,7 @@ namespace PMI21_TeachingPractice
         public Order()
         {
             this.id = 0;
-            this.products = new List<Product>();
+            this.products = new Dictionary<int,int>();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="identifier">id of user</param>
         /// <param name="products"> list of products</param>
-        public Order(int identifier, List<Product> products)
+        public Order(int identifier, Dictionary<int,int> products)
         {
             this.id = identifier;
             this.products = products;
@@ -69,7 +69,7 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// Gets or sets list of products
         /// </summary>
-        public List<Product> List
+        public Dictionary<int,int> List
         {
             get
             {
@@ -106,9 +106,7 @@ namespace PMI21_TeachingPractice
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
                     productAmount = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
-                    Product temp = new Product(productID, string.Empty, 0, productAmount);
-                    temp.Price = temp.PriceById(productID, reader);
-                    this.products.Add(temp);
+                    this.products.Add(productID,productAmount);
                     counter = 0;
                     i = -1;
                 }
@@ -122,12 +120,8 @@ namespace PMI21_TeachingPractice
         /// <param name="amount">amount of product`s</param>
         public void AddProduct(int identifier, int amount)
         {
-            Product temp = new Product();
             XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
-            temp.Price = temp.PriceById(identifier, reader);
-            temp.Id = identifier;
-            temp.Amount = amount;
-            this.products.Add(temp);
+            this.products.Add(identifier,amount);
         }
 
         /// <summary>
@@ -137,16 +131,7 @@ namespace PMI21_TeachingPractice
         /// <returns>true if removed product with id exists false if it does not exist</returns>
         public bool RemoveProduct(int id)
         {
-            for (int i = 0; i < this.products.Count; i++)
-            {
-                if (this.products[i].Id == id)
-                {
-                    this.products.RemoveAt(i);
-                    return true;
-                }
-            }
-
-            return false;
+            return this.products.Remove(id);
         }
 
         /// <summary>
@@ -155,9 +140,9 @@ namespace PMI21_TeachingPractice
         public void Write()
         {
             Console.Write("{0}\r\n", this.id);
-            for (int i = 0; i < this.products.Count; i++)
+            foreach (KeyValuePair<int, int> pair in this.products)
             {
-                ((Product)this.products[i]).Write();
+                Console.Write("{0} , {1}", pair.Key, pair.Value);
                 Console.Write("\r\n");
             }
         }
@@ -168,15 +153,31 @@ namespace PMI21_TeachingPractice
         /// <param name="doc"> xml document</param>
         public void SaveOrder(XmlDocument doc)
         {
+            Product temp = new Product();
             XmlNode root = doc.DocumentElement;
             XmlElement newID = doc.CreateElement("userId");
             XmlAttribute attrID = doc.CreateAttribute("name_id");
             attrID.Value = Convert.ToString(this.id);
             newID.SetAttributeNode(attrID);
             root.InsertAfter(newID, root.LastChild);
-            for (int i = 0; i < this.products.Count; i++)
+
+            foreach (KeyValuePair<int, int> pair in this.products)
             {
-                ((Product)this.products[i]).WriteXml(doc, newID);
+                XmlElement newProduct = doc.CreateElement("Product");
+                XmlElement newId = doc.CreateElement("id");
+                XmlText identifier = doc.CreateTextNode(pair.Key.ToString());
+                newId.AppendChild(identifier);
+                XmlElement newPrice = doc.CreateElement("price");
+                XmlText cost = doc.CreateTextNode((temp.PriceById(pair.Key)*pair.Value).ToString());
+                newPrice.AppendChild(cost);
+                newProduct.AppendChild(newId);
+                newProduct.AppendChild(newPrice);
+                XmlElement newAmount = doc.CreateElement("amount");
+                XmlText amountStr = doc.CreateTextNode(pair.Value.ToString());
+                newAmount.AppendChild(amountStr);
+                newProduct.AppendChild(newAmount);
+
+                root.InsertAfter(newProduct, root.LastChild);
             }
         }
 

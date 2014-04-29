@@ -31,11 +31,6 @@ namespace PMI21_TeachingPractice
         private double price;
 
         /// <summary>
-        /// Available amount of product.
-        /// </summary>
-        private int amount;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Product" /> class with default values: (0, "Product", 0).
         /// </summary>
         public Product()
@@ -43,7 +38,6 @@ namespace PMI21_TeachingPractice
             this.id = 0;
             this.name = "Product";
             this.price = 0;
-            this.amount = 0;
         }
 
         /// <summary>
@@ -52,13 +46,11 @@ namespace PMI21_TeachingPractice
         /// <param name="id">ID of product.</param>
         /// <param name="name">Name of product.</param>
         /// <param name="price">Price of product.</param>
-        /// <param name="amount">Amount of product</param>
-        public Product(int id, string name, double price, int amount)
+        public Product(int id, string name, double price)
         {
             this.id = id;
             this.name = name;
             this.price = price;
-            this.amount = amount;
         }
 
         /// <summary>
@@ -70,7 +62,6 @@ namespace PMI21_TeachingPractice
             this.id = p.id;
             this.name = p.name;
             this.price = p.price;
-            this.amount = p.amount;
         }
 
         /// <summary>
@@ -102,22 +93,6 @@ namespace PMI21_TeachingPractice
             set
             {
                 this.price = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets amount of product.
-        /// </summary>
-        public int Amount
-        {
-            get
-            {
-                return this.amount;
-            }
-
-            set
-            {
-                this.amount = value;
             }
         }
 
@@ -160,12 +135,6 @@ namespace PMI21_TeachingPractice
                     this.price = reader.ReadElementContentAsDouble();
                     break;
                 }
-
-                if (reader.Name == "amount")
-                {
-                    this.amount = reader.ReadElementContentAsInt();
-                    break;
-                }
             }
         }
 
@@ -175,8 +144,9 @@ namespace PMI21_TeachingPractice
         /// <param name="identifier"> id of searching product</param>
         /// <param name="reader">fie to read</param>
         /// <returns>price of product with searching id</returns>
-        public double PriceById(int identifier, XmlTextReader reader)
+        public double PriceById(int identifier)
         {
+            XmlTextReader reader = new XmlTextReader("XMLFile1.xml");
             int tempId = 0;
             while (reader.Read())
             {
@@ -213,9 +183,6 @@ namespace PMI21_TeachingPractice
             writer.WriteStartElement("price");
             writer.WriteValue(this.price);
             writer.WriteEndElement();
-            writer.WriteStartElement("amount");
-            writer.WriteValue(this.amount);
-            writer.WriteEndElement();
         }
 
         /// <summary>
@@ -234,10 +201,6 @@ namespace PMI21_TeachingPractice
             newPrice.AppendChild(cost);
             newProduct.AppendChild(newId);
             newProduct.AppendChild(newPrice);
-            XmlElement newAmount = doc.CreateElement("amount");
-            XmlText amountStr = doc.CreateTextNode(this.amount.ToString());
-            newAmount.AppendChild(amountStr);
-            newProduct.AppendChild(newAmount);
 
             root.InsertAfter(newProduct, root.LastChild);
         }
@@ -250,7 +213,6 @@ namespace PMI21_TeachingPractice
             Console.Write("{0} ", this.id);
             Console.Write(this.name);
             Console.Write("{0} ", this.price);
-            Console.Write(this.amount);
         }
 
         /// <summary>
@@ -259,8 +221,29 @@ namespace PMI21_TeachingPractice
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return this.id.ToString() + " " + this.name + " " + this.price.ToString() + " " + this.amount.ToString();
+            return this.id.ToString() + " " + this.name + " " + this.price.ToString();
         }
 
+<<<<<<< HEAD:PMI21_TeachingPractice/PMI21_TeachingPractice/Product.cs
+=======
+        public void SaveProductDB(XmlDocument doc)
+        {
+            XmlNode root = doc.DocumentElement;
+            XmlElement newProduct = doc.CreateElement("Product");
+            XmlElement prodId = doc.CreateElement("PrductId");
+            XmlElement prodName = doc.CreateElement("ProductName");
+            XmlElement prodPrice = doc.CreateElement("ProductPrice");
+            XmlText pId = doc.CreateTextNode(this.Id.ToString());
+            XmlText pName = doc.CreateTextNode(this.Name);
+            XmlText pPrice = doc.CreateTextNode(this.Price.ToString());
+            prodId.AppendChild(pId);
+            prodName.AppendChild(pName);
+            prodPrice.AppendChild(pPrice);
+            newProduct.AppendChild(prodId);
+            newProduct.AppendChild(prodName);
+            newProduct.AppendChild(prodPrice);
+            root.InsertAfter(newProduct, root.LastChild);
+        }
+>>>>>>> 44e667c5a03a33a08658d108a89081d8800cb49d:PMI21_TeachingPractice/PMI21_TeachingPractice/Models/Product.cs
     }
 }
