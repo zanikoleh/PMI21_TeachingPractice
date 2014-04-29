@@ -24,7 +24,7 @@ namespace PMI21_TeachingPractice
         public static void Main()
         {
             Application.WorkFlow();
-
+            //Console.WriteLine(UserControl.GetUserById(3));
         }
     }
 }
