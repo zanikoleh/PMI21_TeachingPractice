@@ -2,10 +2,13 @@
     <id>1</id>
     <name>product</name>
     <price>7777</price>
+    <amount>3</amount>
     <id>2</id>
     <name>product2</name>
     <price>8888</price>
+    <amount>5</amount>
     <id>3</id>
     <name>product3</name>
     <price>9999</price>
+    <amount>1</amount>
 </products>

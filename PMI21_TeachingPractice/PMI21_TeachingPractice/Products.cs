@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Product.cs" company="PMI21_TeachingPractice">
+// <copyright file="Products.cs" company="PMI21_TeachingPractice">
 //     Copyright PMI21_TeachingPractice. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -13,102 +13,74 @@ namespace PMI21_TeachingPractice
     /// <summary>
     /// Class which represents product.
     /// </summary>
-    public class Product
+    public class Products
     {
         /// <summary>
-        /// ID of product. For database.
+        /// Information about product.
         /// </summary>
-        private int id;
+        private Product product;
 
         /// <summary>
-        /// Name of product. For user.
+        /// Available amount of product.
         /// </summary>
-        private string name;
+        private int amount;
 
         /// <summary>
-        /// Price of product.
+        /// Initializes a new instance of the <see cref="Products" /> class with default values: (0, "Product", 0, 0).
         /// </summary>
-        private double price;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Product" /> class with default values: (0, "Product", 0).
-        /// </summary>
-        public Product()
+        public Products()
         {
-            this.id = 0;
-            this.name = "Product";
-            this.price = 0;
+            this.product = new Product();
+            this.amount = 0;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Product" /> class with values from parameters of constructor.
+        /// Initializes a new instance of the <see cref="Products" /> class with values from parameters of constructor.
         /// </summary>
         /// <param name="id">ID of product.</param>
         /// <param name="name">Name of product.</param>
         /// <param name="price">Price of product.</param>
-        public Product(int id, string name, double price)
+        /// <param name="amount">Amount of product</param>
+        public Products(int id, string name, double price, int amount)
         {
-            this.id = id;
-            this.name = name;
-            this.price = price;
+            this.product = new Product(id, name, price);
+            this.amount = amount;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Product" /> class with values from Product from parameters box.
+        /// Initializes a new instance of the <see cref="Products" /> class with values from parameters of constructor.
+        /// </summary>
+        /// <param name="product">Previous information about product.</param>
+        /// <param name="amount">Amount of product</param>
+        public Products(Product product, int amount)
+        {
+            this.product = product;
+            this.amount = amount;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Products" /> class with values from Product from parameters box.
         /// </summary>
         /// <param name="p">Object of class Product.</param>
-        public Product(Product p)
+        public Products(Products p)
         {
-            this.id = p.id;
-            this.name = p.name;
-            this.price = p.price;
+            this.product = p.product;
+            this.amount = p.amount;
         }
 
         /// <summary>
-        /// Gets or sets ID.
+        /// Gets or sets amount of product.
         /// </summary>
-        public int Id
+        public int Amount
         {
             get
             {
-                return this.id;
+                return this.amount;
             }
 
             set
             {
-                this.id = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets price of product
-        /// </summary>
-        public double Price
-        {
-            get
-            {
-                return this.price;
-            }
-
-            set
-            {
-                this.price = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets name of product
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-
-            set
-            {
-                this.name = value;
+                this.amount = value;
             }
         }
 
@@ -120,19 +92,11 @@ namespace PMI21_TeachingPractice
         {
             while (reader.Read())
             {
-                if (reader.Name == "id")
-                {
-                    this.id = reader.ReadElementContentAsInt();
-                }
+                this.product.Read(reader);
 
-                if (reader.Name == "name")
+                if (reader.Name == "amount")
                 {
-                    this.name = reader.ReadElementContentAsString();
-                }
-
-                if (reader.Name == "price")
-                {
-                    this.price = reader.ReadElementContentAsDouble();
+                    this.amount = reader.ReadElementContentAsInt();
                     break;
                 }
             }
@@ -147,6 +111,7 @@ namespace PMI21_TeachingPractice
         public double PriceById(int identifier, XmlTextReader reader)
         {
             int tempId = 0;
+            // Need to be checked by Team 3.
             while (reader.Read())
             {
                 if (reader.Name == "id")
@@ -173,14 +138,9 @@ namespace PMI21_TeachingPractice
         /// <param name="writer">Writer module of file which will be filled with data.</param>
         public void Write(XmlTextWriter writer)
         {
-            writer.WriteStartElement("id");
-            writer.WriteValue(this.id);
-            writer.WriteEndElement();
-            writer.WriteStartElement("name");
-            writer.WriteValue(this.name);
-            writer.WriteEndElement();
-            writer.WriteStartElement("price");
-            writer.WriteValue(this.price);
+            this.product.Write(writer);
+            writer.WriteStartElement("amount");
+            writer.WriteValue(this.amount);
             writer.WriteEndElement();
         }
 
@@ -191,6 +151,7 @@ namespace PMI21_TeachingPractice
         /// <param name="root">root to add</param>
         public void WriteXml(XmlDocument doc, XmlNode root)
         {
+            // Need to be modified by Team 3.
             XmlElement newProduct = doc.CreateElement("Product");
             XmlElement newId = doc.CreateElement("id");
             XmlText identifier = doc.CreateTextNode(this.id.ToString());
@@ -200,6 +161,10 @@ namespace PMI21_TeachingPractice
             newPrice.AppendChild(cost);
             newProduct.AppendChild(newId);
             newProduct.AppendChild(newPrice);
+            XmlElement newAmount = doc.CreateElement("amount");
+            XmlText amountStr = doc.CreateTextNode(this.amount.ToString());
+            newAmount.AppendChild(amountStr);
+            newProduct.AppendChild(newAmount);
 
             root.InsertAfter(newProduct, root.LastChild);
         }
@@ -209,9 +174,8 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public void Write()
         {
-            Console.Write("{0} ", this.id);
-            Console.Write(this.name);
-            Console.Write("{0} ", this.price);
+            this.product.Write();
+            Console.Write(this.amount);
         }
 
         /// <summary>
@@ -220,12 +184,12 @@ namespace PMI21_TeachingPractice
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            return this.id.ToString() + " " + this.name + " " + this.price.ToString();
+            return this.product.ToString() + " " + this.amount.ToString();
         }
 
-        // Needs to be checked by 3 team.
         public void SaveProductDB(XmlDocument doc)
         {
+            // Need to be modified by Team 3.
             XmlNode root = doc.DocumentElement;
             XmlElement newID = doc.CreateElement("ProductId");
             XmlAttribute attrID = doc.CreateAttribute("product_id");
