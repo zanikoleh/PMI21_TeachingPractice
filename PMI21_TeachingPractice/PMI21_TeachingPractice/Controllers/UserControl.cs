@@ -298,6 +298,21 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// describes wrong symbols in password and login
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns>true if symbol is wrong else false</returns>
+        public static bool WrongSymbols(string s)
+        {
+            if (s.Contains('.') || s.Contains('\\') || s.Contains('/') || s.Contains('|') || s.Contains(' '))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Looks for an appropriate login in the file
         /// </summary>
         /// <param name="allContent">current line that 'inFile' reads</param>
