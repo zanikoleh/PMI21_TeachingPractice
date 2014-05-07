@@ -284,6 +284,40 @@ namespace PMI21_TeachingPractice
             DataBase db = DataBase.GetInstance();
             db.Add(product);
         }
+
+        private static void PerformOrder()
+        {
+            Order order=new Order();
+            bool ordering=true;
+            try
+            {
+                while(ordering)
+                {
+                    Console.WriteLine("Enter 1 to add new product 0 to end order:");
+                    char option=Convert.ToChar(Console.ReadLine());
+                    switch(option)
+                    {
+                        case '0':
+                            {
+                                ordering=false;
+                                break;
+                            }
+                        case '1':
+                            {
+                                DataBase database=DataBase.Instance;
+                                database.SetConnections(Constants.dataBasePath);
+                                database.LoadProducts();
+                                Console.WriteLine("Enter id of product:");
+                                int id = Convert.ToInt32(Console.ReadLine());
+                                //order.AddProduct(database.GetProductById(id),1);
+                            }
+                    }
+                }
+            }
+        }
+
+                       
+
     }
 }
    

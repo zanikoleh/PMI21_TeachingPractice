@@ -26,6 +26,8 @@ namespace PMI21_TeachingPractice
         /// constant field base roles
         /// </summary>
         public const string BaseRoles = @"../../data/BaseRoles.csv";
+
+        public const string dataBasePath = @"";
         
         /// <summary>
         /// constant field default roleId
