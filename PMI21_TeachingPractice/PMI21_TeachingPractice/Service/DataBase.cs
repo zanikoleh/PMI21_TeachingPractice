@@ -474,7 +474,7 @@ namespace PMI21_TeachingPractice
             }
             if (found)
             {
-                return price;
+                return name;
             }
             else
             {
