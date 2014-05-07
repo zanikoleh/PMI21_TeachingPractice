@@ -417,6 +417,39 @@ namespace PMI21_TeachingPractice
                 throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
             }
         }
+
+        /// <summary>
+        /// return price of product by id
+        /// </summary>
+        /// <param name="id">id of product</param>
+        /// <returns></returns>
+        public double GetPriceById(int id)
+        {
+            double price = 0;
+            bool found = false;
+            foreach (Product prd in this.Products)
+            {
+                if (prd.Id == id)
+                {
+                    price = prd.Price;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (found)
+            {
+                return price;
+            }
+            else
+            {
+                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
+            }
+        }
+
         private static void SaveUserDB(XmlDocument doc, User myUser)
         {
             XmlNode root = doc.DocumentElement;
