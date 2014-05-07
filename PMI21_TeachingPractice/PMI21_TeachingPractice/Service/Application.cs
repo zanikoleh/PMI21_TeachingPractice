@@ -156,7 +156,17 @@ namespace PMI21_TeachingPractice
             }
             if (role.Name.Equals("Client"))
             {
+                abbilities.Add(new UserAbbilities(ShowProducts));
+                abbilities.Add(new UserAbbilities(PerformOrders));
+            }
+            if (role.Name.Equals("TradeAgent"))
+            {
+                abbilities.Add(AddNewProduct);
+                //abbilities.Add(GetHistoryOfProducts);
+                //abbilities.Add(GetHistoryOfUsers);
+                //abbilities.Add(Modify);
 
+                
             }
         }
 
@@ -208,6 +218,9 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// Deleting user from base.
+        /// </summary>
         private static void DeleteUser()
         {
             Console.WriteLine("Input ID user to delete.");
@@ -223,9 +236,53 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// Prints list of users.
+        /// </summary>
         private static void ShowAllUsers()
         {
+            List<User> AllUsers = new List<User>();
+            if (UserControls.LoadBaseUsers(out AllUsers))
+            {
+                foreach (User user in AllUsers)
+                {
+                    Console.WriteLine(user.ToString());
+                }
+            }
+        }
 
+        /// <summary>
+        /// Prints list of products.
+        /// </summary>
+        private static void ShowProducts()
+        {
+            DataBase db = DataBase.GetInstance();
+            db.LoadProducts();
+            List<Product> products = new List<Product>();
+            products = db.Products;
+            foreach (Product product in products)
+            {
+                Console.WriteLine(product.ToString()); 
+            }
+        }
+
+        /// <summary>
+        /// Adds new product to DataBase.
+        /// </summary>
+        private static void AddNewProduct()
+        {
+            int id;
+            string name;
+            double price;
+            Console.WriteLine("Input id of product");
+            id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Input name of product");
+            name = Console.ReadLine();
+            Console.WriteLine("Input price of product");
+            price = Convert.ToDouble(Console.ReadLine());
+            Product product = new Product(id, name, price);
+            DataBase db = DataBase.GetInstance();
+            db.Add(product);
         }
     }
 }
