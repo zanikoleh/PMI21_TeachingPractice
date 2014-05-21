@@ -164,7 +164,7 @@ namespace PMI21_TeachingPractice
                 abbilities.Add(AddNewProduct);
                 //abbilities.Add(GetHistoryOfProducts);
                 //abbilities.Add(GetHistoryOfUsers);
-                //abbilities.Add(Modify);
+                abbilities.Add(Modify);
 
                 
             }
@@ -323,6 +323,26 @@ namespace PMI21_TeachingPractice
             {
                 Console.WriteLine("");
             }
+        }
+
+        private static void Modify()
+        {
+            Console.WriteLine("Input name of product to modify");
+            string name = Console.ReadLine();
+            int id = Product.IdByName(name);
+            // Needs to create list of Products in DataBase to modify amount of products.
+
+            // Console.WriteLine("Input amount to add products (- means delete)");
+            // int amount = Convert.ToInt32(Console.ReadLine());
+            // DataBase dataBase;
+            //dataBase = DataBase.GetInstance();
+            //foreach (Products prods in dataBase.Products)
+            //{
+            //    if (prods.id == id)
+            //    {
+            //        prods.Amount += amount;
+            //    }
+            //}
         }
     }
 }
