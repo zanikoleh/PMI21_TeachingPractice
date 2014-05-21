@@ -57,8 +57,15 @@ namespace PMI21_TeachingPractice.Service
                         //TODO
                         break;
                     case "Client":
-                        //TODO
-                        break;
+                        {
+                            Application.Exit();
+                            Application.EnableVisualStyles();
+                            Application.SetCompatibleTextRenderingDefault(false);
+                            FormOrder form = new FormOrder();
+                            form.ident = Convert.ToInt32(this.IDinput.Text);
+                            Application.Run(form);
+                            break;
+                        }
                     case "TradeAgent":
                         //TODO
                         break;
