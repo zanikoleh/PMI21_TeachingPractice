@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\UserControl.cs" />
+    <Compile Include="Controllers\UserControls.cs" />
     <Compile Include="data\Constants.cs" />
     <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Order.cs" />
@@ -77,9 +77,13 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\BaseChecks.xml" />
+    <Content Include="data\BaseOrders.xml" />
+    <Content Include="data\BaseProducts.xml" />
     <Content Include="data\BaseRoles.xml" />
     <Content Include="data\BaseUsers.xml" />
     <Content Include="data\Data.txt" />
+    <Content Include="data\Path.xml" />
     <Content Include="data\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
