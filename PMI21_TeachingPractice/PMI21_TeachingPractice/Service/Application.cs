@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -157,7 +157,7 @@ namespace PMI21_TeachingPractice
             if (role.Name.Equals("Client"))
             {
                 abbilities.Add(new UserAbbilities(ShowProducts));
-                abbilities.Add(new UserAbbilities(PerformOrders));
+                //abbilities.Add(new UserAbbilities(PerformOrders));
             }
             if (role.Name.Equals("TradeAgent"))
             {
@@ -310,14 +310,19 @@ namespace PMI21_TeachingPractice
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
                                 //order.AddProduct(database.GetProductById(id),1);
+                                break;
+                            }
+                        default:
+                            {
+                                throw new Exception();
                             }
                     }
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("");
+            }
         }
-
-                       
-
     }
 }
-   
