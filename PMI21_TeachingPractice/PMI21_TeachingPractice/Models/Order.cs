@@ -155,7 +155,7 @@ namespace PMI21_TeachingPractice
         {
             Product temp = new Product();
             XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("userId");
+            XmlElement newID = doc.CreateElement("orderId");
             XmlAttribute attrID = doc.CreateAttribute("name_id");
             attrID.Value = Convert.ToString(this.id);
             newID.SetAttributeNode(attrID);
@@ -177,7 +177,7 @@ namespace PMI21_TeachingPractice
                 newAmount.AppendChild(amountStr);
                 newProduct.AppendChild(newAmount);
 
-                root.InsertAfter(newProduct, root.LastChild);
+                newProduct.AppendChild(newProduct);
             }
         }
 
