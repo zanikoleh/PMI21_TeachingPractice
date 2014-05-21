@@ -116,8 +116,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "OrdersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))
-                    {
+                    if (File.Exists(temp))                    {
                         this.ordersPath = temp;
                     }
                     else
@@ -128,8 +127,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ProductsPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))
-                    {
+                    if (File.Exists(temp))                    {
                         this.productsPath = temp;
                     }
                     else
@@ -140,8 +138,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "UsersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))
-                    {
+                    if (File.Exists(temp))                    {
                         this.usersPath = temp;
                     }
                     else
@@ -152,8 +149,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ChecksPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))
-                    {
+                    if (File.Exists(temp))                    {
                         this.checksPath = temp;
                     }
                     else
