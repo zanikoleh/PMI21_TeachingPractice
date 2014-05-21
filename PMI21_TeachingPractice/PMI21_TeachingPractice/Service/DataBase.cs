@@ -420,6 +420,34 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        public int GetIdByLogin(string login)
+        {
+            int ident = 0;
+            // User retUsr = new User();
+            bool found = false;
+            foreach (User usr in this.Users)
+            {
+                if (usr.Login == login)
+                {
+                    ident = usr.Id;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            if (found)
+            {
+                return ident;
+            }
+            else
+            {
+                throw new ArgumentException("No order with login: >" + login + "< found");
+            }
+        }
+
         /// <summary>
         /// return price of product by id
         /// </summary>

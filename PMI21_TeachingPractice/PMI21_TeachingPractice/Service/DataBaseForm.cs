@@ -58,12 +58,10 @@ namespace PMI21_TeachingPractice.Service
                         break;
                     case "Client":
                         {
-                            Application.Exit();
-                            Application.EnableVisualStyles();
-                            Application.SetCompatibleTextRenderingDefault(false);
                             FormOrder form = new FormOrder();
-                            form.ident = Convert.ToInt32(this.IDinput.Text);
-                            Application.Run(form);
+                            DataBase db = DataBase.GetInstance();
+                            form.ident = db.GetIdByLogin(this.IDinput.Text);
+                            form.ShowDialog();
                             break;
                         }
                     case "TradeAgent":
