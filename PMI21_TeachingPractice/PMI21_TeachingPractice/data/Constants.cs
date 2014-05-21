@@ -17,18 +17,9 @@ namespace PMI21_TeachingPractice
     /// </summary>
     public class Constants
     {
-        /// <summary>
-        /// constant field base users
-        /// </summary>
-        public const string BaseUsers = @"../../data/BaseUsers.csv";
         
-        /// <summary>
-        /// constant field base roles
-        /// </summary>
-        public const string BaseRoles = @"../../data/BaseRoles.csv";
-
-        public const string dataBasePath = @"";
-        
+        public const string PATH = @"../../data/Path.xml";
+                
         /// <summary>
         /// constant field default roleId
         /// </summary>
