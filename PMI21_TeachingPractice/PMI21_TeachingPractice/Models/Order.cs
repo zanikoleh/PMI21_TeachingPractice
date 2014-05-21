@@ -153,7 +153,7 @@ namespace PMI21_TeachingPractice
         {
             Product temp = new Product();
             XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("orderId");
+            XmlElement newID = doc.CreateElement("userId");
             XmlAttribute attrID = doc.CreateAttribute("name_id");
             attrID.Value = Convert.ToString(this.id);
             newID.SetAttributeNode(attrID);
@@ -194,7 +194,7 @@ namespace PMI21_TeachingPractice
             tempOrder.ID = identifier;
             while (reader.Read())
             {
-                if (reader.Name == "orderId" && reader.HasAttributes)
+                if (reader.Name == "userId" && reader.HasAttributes)
                 {
                     id = Convert.ToInt32(reader.GetAttribute("name_id"));
                     if (id == identifier)
@@ -212,7 +212,7 @@ namespace PMI21_TeachingPractice
                                 tempOrder.AddProduct(prodID, prodAmount);
                             }
 
-                            if (reader.Name == "orderId")
+                            if (reader.Name == "userId")
                             {
                                 return tempOrder;
                             }
