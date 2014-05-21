@@ -116,7 +116,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "OrdersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (File.Exists(temp))
                     {
                         this.ordersPath = temp;
                     }
@@ -128,7 +128,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ProductsPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (File.Exists(temp))
                     {
                         this.productsPath = temp;
                     }
@@ -140,7 +140,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "UsersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (File.Exists(temp))
                     {
                         this.usersPath = temp;
                     }
@@ -152,7 +152,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ChecksPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (File.Exists(temp))
                     {
                         this.checksPath = temp;
                     }
@@ -222,7 +222,7 @@ namespace PMI21_TeachingPractice
             docUser.Save(this.UsersPath);
         }
 
-        public void CommitCkecks()
+        public void CommitChecks()
         {
             XmlWriter checksWriter = XmlWriter.Create(this.ChecksPath);
             checksWriter.WriteStartElement("head");
@@ -241,7 +241,7 @@ namespace PMI21_TeachingPractice
             this.CommitOrders();
             this.CommitProducts();
             this.CommitUsers();
-            this.CommitCkecks();
+            this.CommitChecks();
         }
         public void LoadOrders()
         {
@@ -337,6 +337,12 @@ namespace PMI21_TeachingPractice
                 }
             }
             reader.Close();
+        }
+        public void Load()
+        {
+            this.LoadOrders();
+            this.LoadProducts();
+            this.LoadUsers();
         }
 
         public Order GetOrderById(int id)
