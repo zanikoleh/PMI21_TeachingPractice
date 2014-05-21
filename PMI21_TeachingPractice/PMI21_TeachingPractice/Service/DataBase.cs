@@ -116,7 +116,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "OrdersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (Path.IsPathRooted(temp) || temp.IndexOf("..\\", 0, 3) == 0)
                     {
                         this.ordersPath = temp;
                     }
@@ -128,7 +128,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ProductsPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (Path.IsPathRooted(temp) || temp.IndexOf("..\\", 0, 3) == 0)
                     {
                         this.productsPath = temp;
                     }
@@ -140,7 +140,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "UsersPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (Path.IsPathRooted(temp) || temp.IndexOf("..\\", 0, 3) == 0)
                     {
                         this.usersPath = temp;
                     }
@@ -152,7 +152,7 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "ChecksPath")
                 {
                     string temp = reader.ReadElementContentAsString();
-                    if (Path.IsPathRooted(temp))
+                    if (Path.IsPathRooted(temp) || temp.IndexOf("..\\", 0, 3) == 0)
                     {
                         this.checksPath = temp;
                     }
