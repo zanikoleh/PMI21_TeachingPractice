@@ -1,22 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+//-----------------------------------------------------------------------
+// <copyright file="Application.cs" company="PMI21_TeachingPractice">
+//     Copyright PMI21_TeachingPractice. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace PMI21_TeachingPractice
 {
-    static public class Application
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Class which represents console application
+    /// </summary>
+    public static class Application
     {
         /// <summary>
         /// Delegate for containing 
         /// </summary>
-        public delegate void UserAbbilities(User user);
+        public delegate void UserAbbilities();
 
         /// <summary>
         /// Main interface function
         /// </summary>
-        static public void WorkFlow()
+        public static void WorkFlow()
         {
             try
             {
@@ -29,6 +37,7 @@ namespace PMI21_TeachingPractice
                             User logged = Application.Login(0);
                             break;
                         }
+
                     case 0:
                         {
                             Environment.Exit(0);
@@ -48,7 +57,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="count">Counter of tries</param>
         /// <returns>User if logged null if not</returns>
-        static private User Login(int count)
+        private static User Login(int count)
         {
             try
             {
@@ -76,9 +85,7 @@ namespace PMI21_TeachingPractice
                         }
                     }
                 }
-                // Stops Receving Keys Once Enter is Pressed
                 while (key.Key != ConsoleKey.Enter);
-
                 Console.WriteLine();
                 if (UserControls.Identify(login, password) == null)
                 {
@@ -96,6 +103,7 @@ namespace PMI21_TeachingPractice
                                     Environment.Exit(0);
                                     return new User();
                                 }
+
                             default:
                                 {
                                     return Login(count + 1);
@@ -108,6 +116,7 @@ namespace PMI21_TeachingPractice
                         return new User();
                     }
                 }
+
                 return UserControls.Identify(login, password);
             }
             catch (FormatException)
@@ -120,68 +129,32 @@ namespace PMI21_TeachingPractice
         /// Special interface for logged user
         /// </summary>
         /// <param name="user">Logged user</param>
-        static private void LoggedInterface(User user)
+        private static void LoggedInterface(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
-            abbilities = BuildAbbilityList(user);
-            bool working = true;
-            bool find = false;
-            while (working)
-            {
-                Console.WriteLine("Write methods for list of method exit to exit or name of method");
-                find = false;
-                string option = Console.ReadLine();
-                if (option.Equals("help"))
-                {
-                    foreach (var abillity in abbilities)
-                    {
-                        Console.WriteLine(abillity.Method.Name);
-                        option = string.Empty;
-                    }
-                }
-                if (option.Equals("exit"))
-                {
-                    working = false;
-                    option = string.Empty;
-                }
-                if (!option.Equals(string.Empty))
-                {
-                    foreach (var abillity in abbilities)
-                    {
-                        if (abillity.Method.Name.Equals(option))
-                        {
-                            find = true;
-                            abillity(user);
-                        }
-                        if (!find)
-                        {
-                            Console.WriteLine("There is no method with such name");
-                        }
-                    }
-                }
-            }
         }
 
         /// <summary>
-        /// Method for creating abbility list for user
+        /// Method for creating ability list for user
         /// </summary>
         /// <param name="user">Logged user</param>
-        /// <returns>list of UserAbbilities</returns>
-        static private List<UserAbbilities> BuildAbbilityList(User user)
+        /// <returns>list of UserAbilities</returns>
+        private static List<UserAbbilities> BuildAbbilityList(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
             foreach (int i in user.RolesId)
             {
                 AbbilitiesAdd(abbilities, UserControls.GetRoleById(i));
             }
+
             return abbilities;
         }
 
         /// <summary>
-        /// Adding abillities of role
+        /// Adding abilities of role
         /// </summary>
-        /// <param name="abbilities">list of UserAbillities</param>
-        /// <param name="role">Role</param>
+        /// <param name="abbilities">List of UserAbilities</param>
+        /// <param name="role">Needed role</param>
         private static void AbbilitiesAdd(List<UserAbbilities> abbilities, Role role)
         {
             if (role.Name.Equals("Admin"))
@@ -190,29 +163,25 @@ namespace PMI21_TeachingPractice
                 abbilities.Add(new UserAbbilities(DeleteUser));
                 abbilities.Add(new UserAbbilities(ShowAllUsers));
             }
+
             if (role.Name.Equals("Client"))
             {
                 abbilities.Add(new UserAbbilities(ShowProducts));
                 abbilities.Add(new UserAbbilities(PerformOrder));
             }
+
             if (role.Name.Equals("TradeAgent"))
             {
-
-                abbilities.Add(AddNewProducts);
-                //abbilities.Add(GetHistoryOfProducts);
-                //abbilities.Add(GetHistoryOfUsers);
-                //abbilities.Add(Modify);
                 abbilities.Add(AddNewProduct);
                 abbilities.Add(GetHistoryOfProducts);
                 abbilities.Add(Modify);                
-
             }
         }
 
         /// <summary>
         /// Adding of new user
         /// </summary>
-        private static void AddNewUser(User user)
+        private static void AddNewUser()
         {
             string login;
             string password;
@@ -221,7 +190,7 @@ namespace PMI21_TeachingPractice
             Console.WriteLine("Password: ");
             password = Console.ReadLine();
             UserControls.AddNewUser(login, password);
-            User newUser = UserControls.Identify(login, password);
+            User user = UserControls.Identify(login, password);
             bool adding = true;
             while (adding)
             {
@@ -234,11 +203,12 @@ namespace PMI21_TeachingPractice
                             adding = false;
                             break;
                         }
+
                     case 1:
                         {
                             Console.WriteLine("Enter roles id:");
                             int roleid = Convert.ToInt32(Console.ReadLine());
-                            if (UserControls.AddUsersRole(newUser.Id, roleid))
+                            if (UserControls.AddUsersRole(user.Id, roleid))
                             {
                                 Console.WriteLine("Role added successfully");
                             }
@@ -246,21 +216,22 @@ namespace PMI21_TeachingPractice
                             {
                                 Console.WriteLine("Something went wrong maybe id is incorrect");
                             }
+
                             break;
                         }
+
                     default:
                         {
                             break;
                         }
                 }
-
             }
         }
 
         /// <summary>
         /// Deleting user from base.
         /// </summary>
-        private static void DeleteUser(User user)
+        private static void DeleteUser()
         {
             Console.WriteLine("Input ID user to delete.");
             int idDel = new int();
@@ -278,22 +249,22 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// Prints list of users.
         /// </summary>
-        private static void ShowAllUsers(User user)
+        private static void ShowAllUsers()
         {
-            List<User> AllUsers = new List<User>();
-            if (UserControls.LoadBaseUsers(out AllUsers))
-            {
-                foreach (User user1 in AllUsers)
-                {
-                    Console.WriteLine(user1.ToString());
-                }
-            }
+            List<User> allUsers = new List<User>();
+            ////if (UserControls.LoadBaseUsers(out AllUsers))
+            ////{
+            ////    foreach (User user in AllUsers)
+            ////    {
+            ////        Console.WriteLine(user.ToString());
+            ////    }
+            ////}
         }
 
         /// <summary>
         /// Prints list of products.
         /// </summary>
-        private static void ShowProducts(User user)
+        private static void ShowProducts()
         {
             DataBase db = DataBase.GetInstance();
             db.LoadProducts();
@@ -301,14 +272,14 @@ namespace PMI21_TeachingPractice
             products = db.Products;
             foreach (Product product in products)
             {
-                Console.WriteLine(product.ToString());
+                Console.WriteLine(product.ToString()); 
             }
         }
 
         /// <summary>
         /// Adds new product to DataBase.
         /// </summary>
-        private static void AddNewProducts(User user)
+        private static void AddNewProduct()
         {
             int id;
             string name;
@@ -324,15 +295,12 @@ namespace PMI21_TeachingPractice
             db.Add(product);
         }
 
-        private static void PerformOrder(User user)
+        /// <summary>
+        /// Method to perform new order for current user
+        /// </summary>
+        private static void PerformOrder()
         {
             Order order = new Order();
-            Ordering(order, user);
-
-        }
-
-        private static void Ordering(Order order, User user)
-        {
             bool ordering = true;
             try
             {
@@ -347,67 +315,69 @@ namespace PMI21_TeachingPractice
                                 ordering = false;
                                 break;
                             }
+
                         case '1':
                             {
                                 DataBase database = DataBase.Instance;
-                                database.SetConnections(Constants.PATH);
+                                database.SetConnections(Constants.dataBasePath);
                                 database.LoadProducts();
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
-                                database.GetProductById(id);
-                                order.AddProduct(id, 1);
+                                ////order.AddProduct(database.GetProductById(id),1);
                                 break;
                             }
+
                         default:
                             {
-                                break;
+                                throw new Exception();
                             }
                     }
                 }
-
             }
-            catch (ArgumentException e)
+            catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                Ordering(order, user);
+                Console.WriteLine(string.Empty);
             }
         }
 
-        private static void Modify(User user)
+        /// <summary>
+        /// Method to modify product
+        /// </summary>
+        private static void Modify()
         {
             Console.WriteLine("Input name of product to modify");
             string name = Console.ReadLine();
             int id = Product.IdByName(name);
-            // Needs to create list of Products in DataBase to modify amount of products.
+            //// Needs to create list of Products in DataBase to modify amount of products.
 
-            // Console.WriteLine("Input amount to add products (- means delete)");
-            // int amount = Convert.ToInt32(Console.ReadLine());
-            // DataBase dataBase;
-            //dataBase = DataBase.GetInstance();
-            //foreach (Products prods in dataBase.Products)
-            //{
-            //    if (prods.id == id)
-            //    {
-            //        prods.Amount += amount;
-            //    }
+            //// Console.WriteLine("Input amount to add products (- means delete)");
+            //// int amount = Convert.ToInt32(Console.ReadLine());
+            //// DataBase dataBase;
+            ////dataBase = DataBase.GetInstance();
+            ////foreach (Products prods in dataBase.Products)
+            ////{
+            ////    if (prods.id == id)
+            ////    {
+            ////        prods.Amount += amount;
+            ////    }
             }
 
         /// <summary>
         /// Print list of products changing.
         /// </summary>
-        private static void GetHistoryOfProducts(User user)
+        private static void GetHistoryOfProducts()
         {
             Console.WriteLine("Input name of poduct");
             string name = Console.ReadLine();
-            //int id = Products().IdByName(name);
-            //Order order = new Order().ReturnOrderById(id);
-            //order.Write();
+            ////int id = Products().IdByName(name);
+            ////Order order = new Order().ReturnOrderById(id);
+            ////order.Write();
         }
 
         /// <summary>
-        /// 
+        /// Gives history of user activity
         /// </summary>
-        private static void GetHistoryOfUsersActivity(User user)
+        private static void GetHistoryOfUsersActivity()
         {
             Console.WriteLine("Input name of poduct");
             string name = Console.ReadLine();
@@ -418,12 +388,13 @@ namespace PMI21_TeachingPractice
             foreach (var item in checks)
             {
                 if (item.IdUser == user.Id)
+                {
                     usersChecks.Add(item);
+                }
             }
 
             foreach (var item in usersChecks)
             {
-                // 
                 // Console.WriteLine(item.ToString());
             }
         }
