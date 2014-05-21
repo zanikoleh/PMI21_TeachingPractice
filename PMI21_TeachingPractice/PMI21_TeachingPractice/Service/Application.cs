@@ -157,7 +157,7 @@ namespace PMI21_TeachingPractice
             if (role.Name.Equals("Client"))
             {
                 abbilities.Add(new UserAbbilities(ShowProducts));
-                //abbilities.Add(new UserAbbilities(PerformOrders));
+                abbilities.Add(new UserAbbilities(PerformOrder));
             }
             if (role.Name.Equals("TradeAgent"))
             {
