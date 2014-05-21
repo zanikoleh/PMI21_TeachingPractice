@@ -101,7 +101,6 @@ namespace PMI21_TeachingPractice
 
                 if (counter == 2)
                 {
-                    XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
                     productID = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
                     productAmount = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
@@ -120,7 +119,6 @@ namespace PMI21_TeachingPractice
         /// <param name="amount">amount of product`s</param>
         public void AddProduct(int identifier, int amount)
         {
-            XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
             this.products.Add(identifier,amount);
         }
 
@@ -196,7 +194,7 @@ namespace PMI21_TeachingPractice
             tempOrder.ID = identifier;
             while (reader.Read())
             {
-                if (reader.Name == "userId" && reader.HasAttributes)
+                if (reader.Name == "orderId" && reader.HasAttributes)
                 {
                     id = Convert.ToInt32(reader.GetAttribute("name_id"));
                     if (id == identifier)
@@ -214,7 +212,7 @@ namespace PMI21_TeachingPractice
                                 tempOrder.AddProduct(prodID, prodAmount);
                             }
 
-                            if (reader.Name == "userId")
+                            if (reader.Name == "orderId")
                             {
                                 return tempOrder;
                             }
