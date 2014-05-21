@@ -157,13 +157,13 @@ namespace PMI21_TeachingPractice
             if (role.Name.Equals("Client"))
             {
                 abbilities.Add(new UserAbbilities(ShowProducts));
-                //abbilities.Add(new UserAbbilities(PerformOrders));
+                abbilities.Add(new UserAbbilities(PerformOrder));
             }
             if (role.Name.Equals("TradeAgent"))
             {
                 abbilities.Add(AddNewProduct);
                 //abbilities.Add(GetHistoryOfProducts);
-                //abbilities.Add(GetHistoryOfUsers);
+                //abbilities.Add(GetHistoryOfUsersActivity);
                 //abbilities.Add(Modify);
 
                 
@@ -322,6 +322,42 @@ namespace PMI21_TeachingPractice
             catch (Exception e)
             {
                 Console.WriteLine("");
+            }
+        }
+
+        /// <summary>
+        /// Print list of products changing.
+        /// </summary>
+        private static void GetHistoryOfProducts()
+        {
+            Console.WriteLine("Input name of poduct");
+            string name = Console.ReadLine();
+            //int id = Products().IdByName(name);
+            //Order order = new Order().ReturnOrderById(id);
+            //order.Write();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private static void GetHistoryOfUsersActivity()
+        {
+            Console.WriteLine("Input name of poduct");
+            string name = Console.ReadLine();
+            int id = 0; // UserControl().GetUserIdByName(name);
+            User user = UserControls.GetUserById(id);
+            List<Check> checks = DataBase.Instance.Checks;
+            List<Check> usersChecks = new List<Check>();
+            foreach (var item in checks)
+            {
+                if (item.IdUser == user.Id)
+                    usersChecks.Add(item);
+            }
+
+            foreach (var item in usersChecks)
+            {
+                // 
+                // Console.WriteLine(item.ToString());
             }
         }
     }
