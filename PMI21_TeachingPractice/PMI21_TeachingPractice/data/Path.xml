@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<head>
+  <OrdersPath>..\..\data\OrdersPath.xml</OrdersPath>
+  <ProductsPath>..\..\data\ProductsPath.xml</ProductsPath>
+  <UsersPath>..\..\data\UsersPath.xml</UsersPath>
+  <ChecksPath>..\..\data\ChecksPath.xml</ChecksPath>
+</head>

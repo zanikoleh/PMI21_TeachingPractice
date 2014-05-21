@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<head>
+  <ProductId product_id="1" />
+  <ProductName>Kasha</ProductName>
+  <ProductPrice>15.5</ProductPrice>
+  <ProductId product_id="2" />
+  <ProductName>Rover</ProductName>
+  <ProductPrice>7950</ProductPrice>
+  <ProductId product_id="3" />
+  <ProductName>Nexus</ProductName>
+  <ProductPrice>3599.9</ProductPrice>
+</head>
