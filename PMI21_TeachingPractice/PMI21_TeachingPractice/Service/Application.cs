@@ -162,16 +162,8 @@ namespace PMI21_TeachingPractice
             if (role.Name.Equals("TradeAgent"))
             {
                 abbilities.Add(AddNewProduct);
-                //abbilities.Add(GetHistoryOfProducts);
-<<<<<<< HEAD
-                //abbilities.Add(GetHistoryOfUsers);
-                abbilities.Add(Modify);
-=======
-                //abbilities.Add(GetHistoryOfUsersActivity);
-                //abbilities.Add(Modify);
->>>>>>> 55bf8bf14a11c3daf5df1088f5f2ae512bfb50a6
-
-                
+                abbilities.Add(GetHistoryOfProducts);
+                abbilities.Add(Modify);                
             }
         }
 
@@ -347,7 +339,7 @@ namespace PMI21_TeachingPractice
             //    {
             //        prods.Amount += amount;
             //    }
-            //}
+            }
 
         /// <summary>
         /// Print list of products changing.
