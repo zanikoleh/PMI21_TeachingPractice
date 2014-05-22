@@ -34,7 +34,7 @@
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
             
         }
     }

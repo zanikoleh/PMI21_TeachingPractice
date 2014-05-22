@@ -46,9 +46,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +68,12 @@
     <Compile Include="data\Constants.cs" />
     <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\OrderForm.Designer.cs">
+      <DependentUpon>OrderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Role.cs" />
@@ -68,6 +82,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Application.cs" />
     <Compile Include="Service\DataBase.cs" />
+    <Compile Include="Service\DataBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Service\DataBaseForm.Designer.cs">
+      <DependentUpon>DataBaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Test Order.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +122,14 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Models\OrderForm.resx">
+      <DependentUpon>OrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\DataBaseForm.resx">
+      <DependentUpon>DataBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

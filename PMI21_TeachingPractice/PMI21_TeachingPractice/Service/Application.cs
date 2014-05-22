@@ -319,7 +319,8 @@ namespace PMI21_TeachingPractice
                         case '1':
                             {
                                 DataBase database = DataBase.Instance;
-                                database.SetConnections(Constants.dataBasePath);
+                                database.SetConnections("..\\..\\data\\Path.xml");
+                                //Constants.dataBasePath
                                 database.LoadProducts();
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
