@@ -35,6 +35,7 @@
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
+            System.Windows.Forms.Application.Run(new OrderForm());
             
         }
     }
