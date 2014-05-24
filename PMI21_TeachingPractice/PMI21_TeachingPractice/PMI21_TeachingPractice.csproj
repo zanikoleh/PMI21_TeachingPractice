@@ -11,6 +11,7 @@
     <AssemblyName>PMI21_TeachingPractice</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -68,11 +68,11 @@
     <Compile Include="data\Constants.cs" />
     <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderForm.cs">
+    <Compile Include="Models\FormOfOrder.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Models\OrderForm.Designer.cs">
-      <DependentUpon>OrderForm.cs</DependentUpon>
+    <Compile Include="Models\FormOfOrder.Designer.cs">
+      <DependentUpon>FormOfOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Products.cs" />
@@ -124,8 +124,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Models\OrderForm.resx">
-      <DependentUpon>OrderForm.cs</DependentUpon>
+    <EmbeddedResource Include="Models\FormOfOrder.resx">
+      <DependentUpon>FormOfOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Service\DataBaseForm.resx">
       <DependentUpon>DataBaseForm.cs</DependentUpon>
