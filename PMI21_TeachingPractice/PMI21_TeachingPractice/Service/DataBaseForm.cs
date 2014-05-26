@@ -29,63 +29,88 @@ namespace PMI21_TeachingPractice.Service
             InitializeComponent();
         }
 
+        private void DataBaseForm_Load(object sender, EventArgs e)
+        {
+            NameOfRole.Visible = false;
+            AgentMenu.Visible = false;
+            ClientMenu.Visible = false;
+            TradeAgentMenu.Visible = false;
+        }
+
         /// <summary>
         /// Method to enter to the system
         /// </summary>fsdsdf
         
-        private void ChangeWindow() {
+        private void chooseAdmin() {
             IDinput.Visible = false;
             PASSWORDinput.Visible = false;
-            OK.Visible =true;
+            OK.Visible = false;
             ID.Visible = false;
             PASSWORD.Visible = false;
             Text.Visible = false;
-            Menu.Visible = true;
-            
+            NameOfRole.Visible = true;
+            NameOfRole.Text = "Agent";
+            AgentMenu.Visible = true;
+        }
+
+        private void chooseClient()
+        {
+            IDinput.Visible = false;
+            PASSWORDinput.Visible = false;
+            OK.Visible = false;
+            ID.Visible = false;
+            PASSWORD.Visible = false;
+            Text.Visible = false;
+            NameOfRole.Visible = true;
+            NameOfRole.Text = "Client";
+            ClientMenu.Visible = true;
+        }
+
+        private void chooseTradeAgent()
+        {
+            IDinput.Visible = false;
+            PASSWORDinput.Visible = false;
+            OK.Visible = false;
+            ID.Visible = false;
+            PASSWORD.Visible = false;
+            Text.Visible = false;
+            NameOfRole.Visible = true;
+            NameOfRole.Text = "Trade Agent";
+            TradeAgentMenu.Visible = true;
         }
 
         /// <summary>
         /// Agree
         /// </summary>
-        private void button1_Click(object sender, EventArgs e)
+        private void OK_Click(object sender, EventArgs e)
         {
-            if (Menu.Visible == true)
-            {
-                switch (Menu.Text)
-                {
-                    case "Admin":
-                        //TODO
-                        break;
-                    case "Client":
-                        {
-                            FormOrder form = new FormOrder();
-                            DataBase db = DataBase.GetInstance();
-                            form.ident = db.GetIdByLogin(this.IDinput.Text);
-                            form.ShowDialog();
-                            break;
-                        }
-                    case "TradeAgent":
-                        //TODO
-                        break;
-                }
-            }
-            else
-            {
                 User s = PMI21_TeachingPractice.UserControls.Identify(IDinput.Text, PASSWORDinput.Text);
                 if (s != null)
                 {
-                    ChangeWindow();
+                    DataBase db = DataBase.Instance;
+                    db.LoadRoles();
+                    int id = db.GetIdByLogin(IDinput.Text);
+                    Role rol = db.GetRoleById(id);
+                    switch (rol.Name)
+                    {
+                        case "Admin":
+                            {
+                                chooseAdmin();
+                                break;
+                            }
+                        case "Client":
+                            {
+                                chooseClient();
+                                break;
+                            }
+                        case "TradeAgent":
+                            {
+                                chooseTradeAgent();
+                                break;
+                            }
+                    }
+                   // ChangeWindow();
                 }
-                else
-                {
-                    MessageBox.Show("Incorrect ID\\password");
-                }
-            }
-        }
-
-        private void DataBaseForm_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
