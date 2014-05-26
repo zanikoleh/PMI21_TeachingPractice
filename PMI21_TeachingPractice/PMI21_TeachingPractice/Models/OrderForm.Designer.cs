@@ -64,7 +64,7 @@
             // 
             // AddToCartButton
             // 
-            this.AddToCartButton.Font = new System.Drawing.Font("Segoe Script", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AddToCartButton.Font = new System.Drawing.Font("Calibri", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.AddToCartButton.Location = new System.Drawing.Point(768, 206);
             this.AddToCartButton.Name = "AddToCartButton";
             this.AddToCartButton.Size = new System.Drawing.Size(132, 28);
@@ -142,7 +142,7 @@
             // PrListLabel
             // 
             this.PrListLabel.AutoSize = true;
-            this.PrListLabel.Font = new System.Drawing.Font("Segoe Script", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PrListLabel.Font = new System.Drawing.Font("Calibri", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.PrListLabel.Location = new System.Drawing.Point(8, 0);
             this.PrListLabel.Name = "PrListLabel";
             this.PrListLabel.Size = new System.Drawing.Size(191, 33);
@@ -152,7 +152,7 @@
             // CartLabel
             // 
             this.CartLabel.AutoSize = true;
-            this.CartLabel.Font = new System.Drawing.Font("Segoe Script", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.CartLabel.Font = new System.Drawing.Font("Calibri", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.CartLabel.Location = new System.Drawing.Point(8, 221);
             this.CartLabel.Name = "CartLabel";
             this.CartLabel.Size = new System.Drawing.Size(61, 33);
@@ -162,7 +162,7 @@
             // TotalPriceLabel
             // 
             this.TotalPriceLabel.AutoSize = true;
-            this.TotalPriceLabel.Font = new System.Drawing.Font("Segoe Script", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TotalPriceLabel.Font = new System.Drawing.Font("Calibri", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.TotalPriceLabel.Location = new System.Drawing.Point(12, 466);
             this.TotalPriceLabel.Name = "TotalPriceLabel";
             this.TotalPriceLabel.Size = new System.Drawing.Size(178, 33);
@@ -199,6 +199,7 @@
             this.CancelButtom.TabIndex = 8;
             this.CancelButtom.Text = "Cancel";
             this.CancelButtom.UseVisualStyleBackColor = true;
+            this.CancelButtom.Click += new System.EventHandler(this.ExitButton_Click);
             // 
             // OrderForm
             // 

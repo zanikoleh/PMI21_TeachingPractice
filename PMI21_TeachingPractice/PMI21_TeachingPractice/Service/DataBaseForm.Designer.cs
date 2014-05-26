@@ -124,6 +124,7 @@
             this.Controls.Add(this.Text);
             this.Controls.Add(this.OK);
             this.Name = "DataBaseForm";
+            this.Load += new System.EventHandler(this.DataBaseForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

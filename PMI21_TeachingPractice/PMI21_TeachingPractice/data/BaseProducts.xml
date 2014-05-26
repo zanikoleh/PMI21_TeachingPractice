@@ -1,3 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <head>
+  <ProductId product_id="1" />
+  <ProductName>Cake</ProductName>
+  <ProductPrice>78.50</ProductPrice>
+  <ProductId product_id="2" />
+  <ProductName>Bicycle</ProductName>
+  <ProductPrice>3500</ProductPrice>
+  <ProductId product_id="3" />
+  <ProductName>Lexus</ProductName>
+  <ProductPrice>1000000</ProductPrice>
+  <ProductId product_id="4" />
+  <ProductName>Pineapple</ProductName>
+  <ProductPrice>14</ProductPrice>
+  <ProductId product_id="5" />
+  <ProductName>Cereal</ProductName>
+  <ProductPrice>40</ProductPrice>
+  <ProductId product_id="6" />
+  <ProductName>Vodka</ProductName>
+  <ProductPrice>100</ProductPrice>
 </head>

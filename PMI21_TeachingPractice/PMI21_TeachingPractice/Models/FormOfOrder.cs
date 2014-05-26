@@ -25,7 +25,7 @@
         private void buttonOrders_Click(object sender, EventArgs e)
         {
             DataBase temp = DataBase.GetInstance();
-            Order orders=temp.GetOrderById(this.ident);
+            Order orders = temp.GetOrderById(this.ident);
             foreach (KeyValuePair<int, int> elem in orders.List)
             {
                 textBoxOrders.Text += "Name: " + temp.GetNameById(elem.Key) + "Count: " + elem.Value + "Price: " + temp.GetPriceById(elem.Key) * elem.Value + "\r\n";
@@ -34,9 +34,9 @@
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
-            System.Windows.Forms.Application.Run(new OrderForm());
-            
+            System.Windows.Forms.Application.EnableVisualStyles();
+            OrderForm form = new OrderForm();
+            form.ShowDialog();
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PMI21_TeachingPractice;
 
 namespace PMI21_TeachingPractice
 {
@@ -37,7 +38,7 @@ namespace PMI21_TeachingPractice
         {
             foreach (Product i in this.dataBase.Products)
             {
-                this.ProductsList.Items.Add(i.Name + "\t-\t" + i.Price);
+                this.ProductsList.Items.Add(i.Name + "\t-\t" + i.Price + " $");
             }
         }
 
@@ -184,6 +185,13 @@ namespace PMI21_TeachingPractice
             this.Cart.Rows.Clear();
             this.SubmitButton.Enabled = false;
             this.ClearCartButton.Enabled = false;
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Cart.Rows.Clear();
+
+            System.Windows.Forms.Application.Exit();
         }
     }
 }

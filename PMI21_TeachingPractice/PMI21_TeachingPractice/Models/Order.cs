@@ -175,7 +175,8 @@ namespace PMI21_TeachingPractice
                 newAmount.AppendChild(amountStr);
                 newProduct.AppendChild(newAmount);
 
-                newProduct.AppendChild(newProduct);
+                root.InsertAfter(newProduct, root.LastChild);
+                //newProduct.AppendChild(newProduct);
             }
         }
 

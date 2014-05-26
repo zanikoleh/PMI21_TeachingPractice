@@ -146,7 +146,7 @@ namespace PMI21_TeachingPractice
         /// <returns>price of product with searching id</returns>
         public double PriceById(int identifier)
         {
-            XmlTextReader reader = new XmlTextReader("XMLFile1.xml");
+            XmlTextReader reader = new XmlTextReader("..\\..\\data\\BaseProducts.xml");
             int tempId = 0;
             while (reader.Read())
             {

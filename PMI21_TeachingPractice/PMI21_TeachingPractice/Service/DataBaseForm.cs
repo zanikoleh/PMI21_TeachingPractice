@@ -82,5 +82,10 @@ namespace PMI21_TeachingPractice.Service
                 }
             }
         }
+
+        private void DataBaseForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
