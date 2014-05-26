@@ -21,6 +21,7 @@ namespace PMI21_TeachingPractice
         private string usersPath;
         private string checksPath;
         private static DataBase DBInstance = null;
+
         private DataBase()
         {
             this.orders = new List<Order>();
@@ -52,6 +53,7 @@ namespace PMI21_TeachingPractice
                 return DBInstance;
             }
         }
+
         public List<Order> Orders
         {
             get
@@ -80,6 +82,7 @@ namespace PMI21_TeachingPractice
                 return this.checks;
             }
         }
+
         public string OrdersPath
         {
             get
@@ -108,6 +111,7 @@ namespace PMI21_TeachingPractice
                 return this.checksPath;
             }
         }
+
         public void SetConnections(string path)
         {
             XmlTextReader reader = new XmlTextReader(path);
@@ -163,6 +167,7 @@ namespace PMI21_TeachingPractice
                 }
             }
         }
+
         public void Add(Order newOrder)
         {
             this.orders.Add(newOrder);
@@ -179,6 +184,7 @@ namespace PMI21_TeachingPractice
         {
             this.checks.Add(newCheck);
         }
+
         public void CommitOrders()
         {
             XmlWriter ordersWriter = XmlWriter.Create(this.OrdersPath);
@@ -221,7 +227,6 @@ namespace PMI21_TeachingPractice
             }
             docUser.Save(this.UsersPath);
         }
-
         public void CommitChecks()
         {
             XmlWriter checksWriter = XmlWriter.Create(this.ChecksPath);
@@ -243,6 +248,7 @@ namespace PMI21_TeachingPractice
             this.CommitUsers();
             this.CommitChecks();
         }
+
         public void LoadOrders()
         {
             int id = -1;
@@ -310,6 +316,9 @@ namespace PMI21_TeachingPractice
             string login = "no_login";
             string password = "no_password";
             List<int> roles = new List<int>();
+
+            this.users.Clear();
+
             while (reader.Read())
             {
                 if (reader.Name == "UserId" && reader.HasAttributes)
@@ -334,7 +343,6 @@ namespace PMI21_TeachingPractice
                         line = line.Remove(0, line.IndexOf("|") + 1);
                     }
 
-                    this.users.Clear();
                     this.users.Add(new User(id, login, password, roles));
                 }
             }
