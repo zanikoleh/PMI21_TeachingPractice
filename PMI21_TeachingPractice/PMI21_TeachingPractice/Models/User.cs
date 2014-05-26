@@ -41,7 +41,7 @@ namespace PMI21_TeachingPractice
             this.Id = idNumber;
             this.Login = login;
             this.Password = password;
-            this.RolesId = roleId;
+            this.RolesId = new List<int>(roleId);
         }
 
         /// <summary>
