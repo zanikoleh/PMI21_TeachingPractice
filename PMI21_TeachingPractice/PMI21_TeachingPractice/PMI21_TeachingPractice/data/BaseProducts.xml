@@ -2,7 +2,7 @@
 <head>
   <ProductId product_id="1" />
   <ProductName>Cake</ProductName>
-  <ProductPrice>78.50</ProductPrice>
+  <ProductPrice>78</ProductPrice>
   <ProductAmount>50</ProductAmount>
   <ProductId product_id="2" />
   <ProductName>Bicycle</ProductName>
@@ -24,4 +24,12 @@
   <ProductName>Vodka</ProductName>
   <ProductPrice>100</ProductPrice>
   <ProductAmount>20</ProductAmount>
+  <ProductId product_id="7" />
+  <ProductName>milk</ProductName>
+  <ProductPrice>99</ProductPrice>
+  <ProductAmount>33</ProductAmount>
+  <ProductId product_id="47" />
+  <ProductName>beer</ProductName>
+  <ProductPrice>7747</ProductPrice>
+  <ProductAmount>70</ProductAmount>
 </head>

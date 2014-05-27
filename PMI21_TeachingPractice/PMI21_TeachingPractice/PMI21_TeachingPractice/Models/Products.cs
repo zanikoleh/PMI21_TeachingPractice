@@ -153,19 +153,14 @@ namespace PMI21_TeachingPractice
             DataBase dataBase;
             dataBase = DataBase.GetInstance();
             dataBase.Load();
-            bool found = false;
             foreach (Products prod in dataBase.Products)
             {
                 if (prod.PropProduct.Name == name)
                 {
-                    found = true;
                     return prod.PropProduct.Id;
                 }
             }
-            if (!found)
-            {
-                Console.WriteLine("No such ID in Base!");
-            }
+            Console.WriteLine("No such ID in Base!");
             return 0;
         }
 
