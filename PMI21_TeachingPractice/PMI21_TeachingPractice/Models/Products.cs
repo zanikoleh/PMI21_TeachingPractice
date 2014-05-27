@@ -84,6 +84,17 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        public Product PropProduct 
+        {
+            get
+            {
+                return this.product;
+            }
+            set
+            {
+                this.product = value;
+            }
+        }
         /// <summary>
         /// Sets fields for object from Xml file.
         /// </summary>

@@ -11,6 +11,7 @@
     <AssemblyName>PMI21_TeachingPractice</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -46,9 +46,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,18 +64,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\UserControl.cs" />
+    <Compile Include="Controllers\UserControls.cs" />
     <Compile Include="data\Constants.cs" />
     <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\FormOfOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\FormOfOrder.Designer.cs">
+      <DependentUpon>FormOfOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Products.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\OrderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\OrderForm.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Application.cs" />
     <Compile Include="Service\DataBase.cs" />
+    <Compile Include="Service\DataBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Service\DataBaseForm.Designer.cs">
+      <DependentUpon>DataBaseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Test Order.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +101,13 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\BaseChecks.xml" />
+    <Content Include="data\BaseOrders.xml" />
+    <Content Include="data\BaseProducts.xml" />
     <Content Include="data\BaseRoles.xml" />
     <Content Include="data\BaseUsers.xml" />
     <Content Include="data\Data.txt" />
+    <Content Include="data\Path.xml" />
     <Content Include="data\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +126,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Models\FormOfOrder.resx">
+      <DependentUpon>FormOfOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\OrderForm.resx" />
+    <EmbeddedResource Include="Service\DataBaseForm.resx">
+      <DependentUpon>DataBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

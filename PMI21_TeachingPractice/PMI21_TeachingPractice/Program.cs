@@ -11,6 +11,7 @@ namespace PMI21_TeachingPractice
     using System.Text;
     using System.Threading.Tasks;
     using System.Xml;
+    using PMI21_TeachingPractice.Service;
 
     /// <summary>
     /// Main program
@@ -23,8 +24,11 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {
-            Application.WorkFlow();
+            //Application.WorkFlow();
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             //Console.WriteLine(UserControl.GetUserById(3));
+            System.Windows.Forms.Application.Run(new DataBaseForm());
         }
     }
 }

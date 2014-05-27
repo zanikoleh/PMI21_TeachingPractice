@@ -35,7 +35,7 @@ namespace PMI21_TeachingPractice
         /// <param name="e">event data</param>
         private void NewUser_Click(object sender, EventArgs e)
         {
-            if ((login.Text.Length < 5) || UserControls.WrongSymbols(login.Text) || (password.Text.Length < 5) || UserControls.WrongSymbols(password.Text))
+            if ((login.Text.Length < 5) || (password.Text.Length < 5))
             {
                 MessageBox.Show("Wrong login or password. Not enought or wrong symbols");
             }
@@ -82,15 +82,15 @@ namespace PMI21_TeachingPractice
             this.label2.Hide();
             this.visible.Hide();
             this.back.Show();
-            List<User> list;
-            UserControls.LoadBaseUsers(out list);
-            foreach (User user in list)
-            {
-                this.usersList.Text = usersList.Text + user.ToString() + "\r\n";
-            }
+            //List<User> list;
+            //UserControls.LoadBaseUsers(out list);
+            //foreach (User user in list)
+            //{
+            //    this.usersList.Text = usersList.Text + user.ToString() + "\r\n";
+            //}
 
             this.usersList.ReadOnly = true;
-            list.Clear();
+            //list.Clear();
         }
 
         /// <summary>

@@ -3,13 +3,13 @@
   <UserId user_id="1" />
   <UserLogin>login1</UserLogin>
   <UserPassword>pas1</UserPassword>
-  <UserRole>1|2|1|2|3|</UserRole>
+  <UserRole>1|</UserRole>
   <UserId user_id="2" />
   <UserLogin>login2</UserLogin>
   <UserPassword>pas2</UserPassword>
-  <UserRole>1|2|1|2|3|</UserRole>
+  <UserRole>2|</UserRole>
   <UserId user_id="3" />
   <UserLogin>login3</UserLogin>
   <UserPassword>pas3</UserPassword>
-  <UserRole>1|2|3|4|5|</UserRole>
+  <UserRole>3|</UserRole>
 </head>

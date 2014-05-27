@@ -146,7 +146,7 @@ namespace PMI21_TeachingPractice
         /// <returns>price of product with searching id</returns>
         public double PriceById(int identifier)
         {
-            XmlTextReader reader = new XmlTextReader("XMLFile1.xml");
+            XmlTextReader reader = new XmlTextReader("..\\..\\data\\BaseProducts.xml");
             int tempId = 0;
             while (reader.Read())
             {
@@ -166,6 +166,26 @@ namespace PMI21_TeachingPractice
             }
 
             return 0.0;
+        }
+
+        /// <summary>
+        /// Gets ID of product name.
+        /// </summary>
+        /// <param name="name">Name of product</param>
+        /// <returns>ID of product with such name</returns>
+        public static int IdByName(string name)
+        {
+            DataBase dataBase;
+            dataBase = DataBase.GetInstance();
+            foreach (Products prod in dataBase.Products)
+            {
+                if (prod.PropProduct.name == name)
+                {
+                    return prod.PropProduct.id;
+                }
+            }
+            Console.WriteLine("No such ID in Base!");
+            return 0;
         }
 
         /// <summary>

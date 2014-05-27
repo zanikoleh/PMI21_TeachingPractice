@@ -47,7 +47,7 @@ namespace PMI21_TeachingPractice
         public Order(int identifier, Dictionary<int,int> products)
         {
             this.id = identifier;
-            this.products = products;
+            this.products = new Dictionary<int, int>(products);
         }
 
         /// <summary>
@@ -101,7 +101,6 @@ namespace PMI21_TeachingPractice
 
                 if (counter == 2)
                 {
-                    XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
                     productID = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
                     fullOrder = fullOrder.Remove(0, fullOrder.IndexOf(' ') + 1);
                     productAmount = int.Parse(fullOrder.Substring(0, fullOrder.IndexOf(' ')));
@@ -120,7 +119,6 @@ namespace PMI21_TeachingPractice
         /// <param name="amount">amount of product`s</param>
         public void AddProduct(int identifier, int amount)
         {
-            XmlTextReader reader = new XmlTextReader(@"XMLFile1.xml");
             this.products.Add(identifier,amount);
         }
 
@@ -178,6 +176,7 @@ namespace PMI21_TeachingPractice
                 newProduct.AppendChild(newAmount);
 
                 root.InsertAfter(newProduct, root.LastChild);
+                //newProduct.AppendChild(newProduct);
             }
         }
 

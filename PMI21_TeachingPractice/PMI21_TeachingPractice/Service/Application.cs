@@ -1,12 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+//-----------------------------------------------------------------------
+// <copyright file="Application.cs" company="PMI21_TeachingPractice">
+//     Copyright PMI21_TeachingPractice. All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace PMI21_TeachingPractice
 {
-    static public class Application
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Class which represents console application
+    /// </summary>
+    public static class Application
     {
         /// <summary>
         /// Delegate for containing 
@@ -16,7 +24,7 @@ namespace PMI21_TeachingPractice
         /// <summary>
         /// Main interface function
         /// </summary>
-        static public void WorkFlow()
+        public static void WorkFlow()
         {
             try
             {
@@ -29,6 +37,7 @@ namespace PMI21_TeachingPractice
                             User logged = Application.Login(0);
                             break;
                         }
+
                     case 0:
                         {
                             Environment.Exit(0);
@@ -48,7 +57,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="count">Counter of tries</param>
         /// <returns>User if logged null if not</returns>
-        static private User Login(int count)
+        private static User Login(int count)
         {
             try
             {
@@ -76,9 +85,7 @@ namespace PMI21_TeachingPractice
                         }
                     }
                 }
-                // Stops Receving Keys Once Enter is Pressed
                 while (key.Key != ConsoleKey.Enter);
-
                 Console.WriteLine();
                 if (UserControls.Identify(login, password) == null)
                 {
@@ -96,6 +103,7 @@ namespace PMI21_TeachingPractice
                                     Environment.Exit(0);
                                     return new User();
                                 }
+
                             default:
                                 {
                                     return Login(count + 1);
@@ -108,6 +116,7 @@ namespace PMI21_TeachingPractice
                         return new User();
                     }
                 }
+
                 return UserControls.Identify(login, password);
             }
             catch (FormatException)
@@ -120,32 +129,32 @@ namespace PMI21_TeachingPractice
         /// Special interface for logged user
         /// </summary>
         /// <param name="user">Logged user</param>
-        static private void LoggedInterface(User user)
+        private static void LoggedInterface(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
-
         }
 
         /// <summary>
-        /// Method for creating abbility list for user
+        /// Method for creating ability list for user
         /// </summary>
         /// <param name="user">Logged user</param>
-        /// <returns>list of UserAbbilities</returns>
-        static private List<UserAbbilities> BuildAbbilityList(User user)
+        /// <returns>list of UserAbilities</returns>
+        private static List<UserAbbilities> BuildAbbilityList(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
             foreach (int i in user.RolesId)
             {
                 AbbilitiesAdd(abbilities, UserControls.GetRoleById(i));
             }
+
             return abbilities;
         }
 
         /// <summary>
-        /// Adding abillities of role
+        /// Adding abilities of role
         /// </summary>
-        /// <param name="abbilities">list of UserAbillities</param>
-        /// <param name="role">Role</param>
+        /// <param name="abbilities">List of UserAbilities</param>
+        /// <param name="role">Needed role</param>
         private static void AbbilitiesAdd(List<UserAbbilities> abbilities, Role role)
         {
             if (role.Name.Equals("Admin"))
@@ -154,19 +163,18 @@ namespace PMI21_TeachingPractice
                 abbilities.Add(new UserAbbilities(DeleteUser));
                 abbilities.Add(new UserAbbilities(ShowAllUsers));
             }
+
             if (role.Name.Equals("Client"))
             {
                 abbilities.Add(new UserAbbilities(ShowProducts));
                 abbilities.Add(new UserAbbilities(PerformOrder));
             }
+
             if (role.Name.Equals("TradeAgent"))
             {
                 abbilities.Add(AddNewProduct);
-                //abbilities.Add(GetHistoryOfProducts);
-                //abbilities.Add(GetHistoryOfUsersActivity);
-                //abbilities.Add(Modify);
-
-                
+                abbilities.Add(GetHistoryOfProducts);
+                abbilities.Add(Modify);                
             }
         }
 
@@ -195,6 +203,7 @@ namespace PMI21_TeachingPractice
                             adding = false;
                             break;
                         }
+
                     case 1:
                         {
                             Console.WriteLine("Enter roles id:");
@@ -207,14 +216,15 @@ namespace PMI21_TeachingPractice
                             {
                                 Console.WriteLine("Something went wrong maybe id is incorrect");
                             }
+
                             break;
                         }
+
                     default:
                         {
                             break;
                         }
                 }
-
             }
         }
 
@@ -241,14 +251,14 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void ShowAllUsers()
         {
-            List<User> AllUsers = new List<User>();
-            if (UserControls.LoadBaseUsers(out AllUsers))
-            {
-                foreach (User user in AllUsers)
-                {
-                    Console.WriteLine(user.ToString());
-                }
-            }
+            List<User> allUsers = new List<User>();
+            ////if (UserControls.LoadBaseUsers(out AllUsers))
+            ////{
+            ////    foreach (User user in AllUsers)
+            ////    {
+            ////        Console.WriteLine(user.ToString());
+            ////    }
+            ////}
         }
 
         /// <summary>
@@ -258,9 +268,9 @@ namespace PMI21_TeachingPractice
         {
             DataBase db = DataBase.GetInstance();
             db.LoadProducts();
-            List<Product> products = new List<Product>();
+            List<Products> products = new List<Products>();
             products = db.Products;
-            foreach (Product product in products)
+            foreach (Products product in products)
             {
                 Console.WriteLine(product.ToString()); 
             }
@@ -274,44 +284,58 @@ namespace PMI21_TeachingPractice
             int id;
             string name;
             double price;
+            int amount;
+            
             Console.WriteLine("Input id of product");
             id = Convert.ToInt32(Console.ReadLine());
+            
             Console.WriteLine("Input name of product");
             name = Console.ReadLine();
+            
             Console.WriteLine("Input price of product");
             price = Convert.ToDouble(Console.ReadLine());
-            Product product = new Product(id, name, price);
+
+            Console.WriteLine("Input amount of product");
+            amount = int.Parse(Console.ReadLine());
+            
+            Products product = new Products(id, name, price, amount);
             DataBase db = DataBase.GetInstance();
             db.Add(product);
         }
 
+        /// <summary>
+        /// Method to perform new order for current user
+        /// </summary>
         private static void PerformOrder()
         {
-            Order order=new Order();
-            bool ordering=true;
+            Order order = new Order();
+            bool ordering = true;
             try
             {
-                while(ordering)
+                while (ordering)
                 {
                     Console.WriteLine("Enter 1 to add new product 0 to end order:");
-                    char option=Convert.ToChar(Console.ReadLine());
-                    switch(option)
+                    char option = Convert.ToChar(Console.ReadLine());
+                    switch (option)
                     {
                         case '0':
                             {
-                                ordering=false;
+                                ordering = false;
                                 break;
                             }
+
                         case '1':
                             {
-                                DataBase database=DataBase.Instance;
-                                database.SetConnections(Constants.dataBasePath);
+                                DataBase database = DataBase.Instance;
+                                database.SetConnections("..\\..\\data\\Path.xml");
+                                //Constants.dataBasePath
                                 database.LoadProducts();
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
-                                //order.AddProduct(database.GetProductById(id),1);
+                                ////order.AddProduct(database.GetProductById(id),1);
                                 break;
                             }
+
                         default:
                             {
                                 throw new Exception();
@@ -321,43 +345,81 @@ namespace PMI21_TeachingPractice
             }
             catch (Exception e)
             {
-                Console.WriteLine("");
+                Console.WriteLine(string.Empty);
             }
         }
+
+        /// <summary>
+        /// Method to modify product
+        /// </summary>
+        private static void Modify()
+        {
+            Console.WriteLine("Input name of product to modify");
+            string name = Console.ReadLine();
+            int id = Product.IdByName(name);
+            //// Needs to create list of Products in DataBase to modify amount of products.
+
+            //// Console.WriteLine("Input amount to add products (- means delete)");
+            //// int amount = Convert.ToInt32(Console.ReadLine());
+            //// DataBase dataBase;
+            ////dataBase = DataBase.GetInstance();
+            ////foreach (Products prods in dataBase.Products)
+            ////{
+            ////    if (prods.id == id)
+            ////    {
+            ////        prods.Amount += amount;
+            ////    }
+            }
 
         /// <summary>
         /// Print list of products changing.
         /// </summary>
         private static void GetHistoryOfProducts()
         {
-            Console.WriteLine("Input name of poduct");
-            string name = Console.ReadLine();
-            //int id = Products().IdByName(name);
-            //Order order = new Order().ReturnOrderById(id);
-            //order.Write();
+            Console.WriteLine("Input id of poduct");
+            int id = int.Parse(Console.ReadLine());
+            List<Order> orders = DataBase.GetInstance().Orders;
+            List<KeyValuePair<int, int> > AmountOfChangingOfProduct = new List<KeyValuePair<int, int>>();
+
+            foreach (var order in orders)
+            {
+                foreach (var product in order.List)
+                {
+                    if (product.Key == id)
+                        AmountOfChangingOfProduct.Add(product);
+                }
+            }
+
+            foreach (var item in AmountOfChangingOfProduct)
+            {
+                Console.WriteLine("Buying with id " + item.Key.ToString() + " products in " + item.Value.ToString() + " order");
+            }
         }
 
         /// <summary>
-        /// 
+        /// Gives history of user activity
         /// </summary>
         private static void GetHistoryOfUsersActivity()
         {
-            Console.WriteLine("Input name of poduct");
+            Console.WriteLine("Input name of user");
             string name = Console.ReadLine();
-            int id = 0; // UserControl().GetUserIdByName(name);
+            int id = DataBase.Instance.GetUserIdByName(name); 
+            
             User user = UserControls.GetUserById(id);
             List<Check> checks = DataBase.Instance.Checks;
-            List<Check> usersChecks = new List<Check>();
+            List<Check> userChecks = new List<Check>();
             foreach (var item in checks)
             {
                 if (item.IdUser == user.Id)
-                    usersChecks.Add(item);
+                {
+                    userChecks.Add(item);
+                }
             }
 
-            foreach (var item in usersChecks)
+            foreach (var item in userChecks)
             {
-                // 
-                // Console.WriteLine(item.ToString());
+                 Console.WriteLine("User " + name + " create order with id " + item.IdOrder.ToString() 
+                     + item.Time.ToString() );
             }
         }
     }
