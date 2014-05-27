@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------
-// <copyright file="DataBase.cs" company="PMI21_TeachingPractice">
+// <copyright file="Application.cs" company="PMI21_TeachingPractice">
 //     Copyright PMI21_TeachingPractice. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
@@ -7,987 +7,483 @@ namespace PMI21_TeachingPractice
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Xml;
-    using System.Xml.Linq;
 
     /// <summary>
-    /// Class which represents Data Base.
+    /// Class which represents console application
     /// </summary>
-    public class DataBase
+    public static class Application
     {
         /// <summary>
-        /// Instance of Data Base
+        /// Delegate for containing 
         /// </summary>
-        private static DataBase dataBaseInstance = null;
+        public delegate void UserAbbilities(User user);
 
         /// <summary>
-        /// List of orders.
+        /// Main interface function
         /// </summary>
-        private List<Order> orders;
-
-        /// <summary>
-        /// List of products.
-        /// </summary>
-        private List<Products> products;
-
-        /// <summary>
-        /// List of roles.
-        /// </summary>
-        private List<Role> roles;
-
-        /// <summary>
-        /// List of users.
-        /// </summary>
-        private List<User> users;
-
-        /// <summary>
-        /// List of checks.
-        /// </summary>
-        private List<Check> checks;
-
-        /// <summary>
-        /// Path to orders
-        /// </summary>
-        private string ordersPath;
-
-        /// <summary>
-        /// Path to products
-        /// </summary>
-        private string productsPath;
-
-        /// <summary>
-        /// Path to users
-        /// </summary>
-        private string usersPath;
-
-        /// <summary>
-        /// Path to checks
-        /// </summary>
-        private string checksPath;
-
-        /// <summary>
-        /// Path to roles
-        /// </summary>
-        private string rolesPath;
-
-        /// <summary>
-        /// Users orders
-        /// </summary>
-        private Dictionary<int, List<int>> usersOrders;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataBase" /> .
-        /// </summary>
-        private DataBase()
+        public static void WorkFlow()
         {
-            this.orders = new List<Order>();
-            this.products = new List<Products>();
-            this.users = new List<User>();
-            this.ordersPath = string.Empty;
-            this.productsPath = string.Empty;
-            this.usersPath = string.Empty;
-            this.checksPath = string.Empty;
-            this.checks = new List<Check>();
-            this.usersOrders = new Dictionary<int, List<int>>();
-            this.roles = new List<Role>();
-        }
-
-        /// <summary>
-        /// Gets instance of Data Base.
-        /// </summary>
-        public static DataBase Instance
-        {
-            get
+            try
             {
-                if (dataBaseInstance == null)
+                Console.WriteLine("Type 1 to login type 0 to exit:");
+                int start = Convert.ToInt32(Console.ReadLine());
+                switch (start)
                 {
-                    dataBaseInstance = new DataBase();
+                    case 1:
+                        {
+                            User logged = Application.Login(0);
+                            LoggedInterface(logged);
+                            break;
+                        }
+
+                    case 0:
+                        {
+                            Environment.Exit(0);
+                            break;
+                        }
                 }
-
-                return dataBaseInstance;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("You chose wrong option");
+                WorkFlow();
             }
         }
 
         /// <summary>
-        /// Gets list of Orders.
+        /// Login interface
         /// </summary>
-        public List<Order> Orders
+        /// <param name="count">Counter of tries</param>
+        /// <returns>User if logged null if not</returns>
+        private static User Login(int count)
         {
-            get
+            try
             {
-                return this.orders;
-            }
-        }
-
-        /// <summary>
-        /// Gets list of Products.
-        /// </summary>
-        public List<Products> Products
-        {
-            get
-            {
-                return this.products;
-            }
-        }
-
-        /// <summary>
-        ///  Gets list of Users.
-        /// </summary>
-        public List<User> Users
-        {
-            get
-            {
-                return this.users;
-            }
-        }
-
-        /// <summary>
-        ///  Gets list of Checks.
-        /// </summary>
-        public List<Check> Checks
-        {
-            get
-            {
-                return this.checks;
-            }
-        }
-
-        /// <summary>
-        ///  Gets list of Roles.
-        /// </summary>
-        public List<Role> Roles
-        {
-            get
-            {
-                return this.roles;
-            }
-        }
-
-        /// <summary>
-        /// Gets path to orders.
-        /// </summary>
-        private string OrdersPath
-        {
-            get
-            {
-                return this.ordersPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets path to products.
-        /// </summary>
-        private string ProductsPath
-        {
-            get
-            {
-                return this.productsPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets path to users.
-        /// </summary>
-        private string UsersPath
-        {
-            get
-            {
-                return this.usersPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets path to checks.
-        /// </summary>
-        private string ChecksPath
-        {
-            get
-            {
-                return this.checksPath;
-            }
-        }
-
-        /// <summary>
-        /// Gets path to roles.
-        /// </summary>
-        private string RolesPath
-        {
-            get
-            {
-                return this.rolesPath;
-            }
-        }
-
-        /// <summary>
-        /// Get instance of Data Base
-        /// </summary>
-        /// <returns>instance of Data Base</returns>
-        public static DataBase GetInstance()
-        {
-            if (dataBaseInstance == null)
-            {
-                dataBaseInstance = new DataBase();
-            }
-
-            return dataBaseInstance;
-        }
-
-        /// <summary>
-        /// Set connections.
-        /// </summary
-        /// <param name="path">Path to file.</param>
-        public void SetConnections(string path)
-        {
-            XmlTextReader reader = new XmlTextReader(path);
-            while (reader.Read())
-            {
-                if (reader.Name == "OrdersPath")
+                Console.WriteLine("login:");
+                string login = Console.ReadLine();
+                Console.WriteLine("password:");
+                ConsoleKeyInfo key;
+                string password = string.Empty;
+                do
                 {
-                    string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))            
+                    key = Console.ReadKey(true);
+
+                    // Backspace Should Not Work
+                    if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
                     {
-                        this.ordersPath = temp;
+                        password += key.KeyChar;
+                        Console.Write("*");
                     }
                     else
                     {
-                        throw new ArgumentException("String is not a path");
+                        if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                        {
+                            password = password.Substring(0, (password.Length - 1));
+                            Console.Write("\b \b");
+                        }
                     }
                 }
-
-                if (reader.Name == "ProductsPath")
+                while (key.Key != ConsoleKey.Enter);
+                Console.WriteLine();
+                if (UserControls.Identify(login, password) == null)
                 {
-                    string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))                    
+                    if (count < 3)
                     {
-                        this.productsPath = temp;
+                        Console.WriteLine("Wrong login or password");
+                        Console.WriteLine("Press 0 to exit");
+                        string message = "You have only " + (3 - count).ToString() + " more attempts";
+                        Console.WriteLine(message);
+                        char choice = Convert.ToChar(Console.ReadLine());
+                        switch (choice)
+                        {
+                            case '0':
+                                {
+                                    Environment.Exit(0);
+                                    return new User();
+                                }
+
+                            default:
+                                {
+                                    return Login(count + 1);
+                                }
+                        }
                     }
                     else
                     {
-                        throw new ArgumentException("String is not a path");
+                        Environment.Exit(0);
+                        return new User();
                     }
                 }
 
-                if (reader.Name == "UsersPath")
+                return UserControls.Identify(login, password);
+            }
+            catch (FormatException)
+            {
+                return Login(count + 1);
+            }
+        }
+
+        /// <summary>
+        /// Special interface for logged user
+        /// </summary>
+        /// <param name="user">Logged user</param>
+        private static void LoggedInterface(User user)
+        {
+            List<UserAbbilities> abbilities = new List<UserAbbilities>();
+            abbilities = BuildAbbilityList(user);
+            bool working = true;
+            bool find = false;
+            while (working)
+            {
+                Console.WriteLine("Write methods for list of method exit to exit or name of method");
+                find = false;
+                string option = Console.ReadLine();
+                if (option.Equals("methods"))
                 {
-                    string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))                    
+                    find = true;
+                    foreach (var abillity in abbilities)
                     {
-                        this.usersPath = temp;
+                        Console.WriteLine(abillity.Method.Name);
+                        option = string.Empty;
                     }
-                    else
+                }
+                if (option.Equals("exit"))
+                {
+                    find = true;
+                    working = false;
+                    option = string.Empty;
+                }
+                if (!option.Equals(string.Empty))
+                {
+                    foreach (var abillity in abbilities)
                     {
-                        throw new ArgumentException("String is not a path");
+                        if (abillity.Method.Name.Equals(option))
+                        {
+                            find = true;
+                            abillity(user);
+                        }
                     }
-                }
-
-                if (reader.Name == "ChecksPath")
-                {
-                    string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))                   
+                    if (!find)
                     {
-                        this.checksPath = temp;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("String is not a path");
-                    }
-                }
-
-                if (reader.Name == "RolesPath")
-                {
-                    string temp = reader.ReadElementContentAsString();
-                    if (File.Exists(temp))
-                    {
-                        this.rolesPath = temp;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("String is not a path");
+                        Console.WriteLine("There is no method with such name");
                     }
                 }
             }
         }
 
         /// <summary>
-        /// Add new order to Data Base
+        /// Method for creating ability list for user
         /// </summary>
-        /// <param name="newOrder">New order.</param>
-        public void Add(Order newOrder)
+        /// <param name="user">Logged user</param>
+        /// <returns>list of UserAbilities</returns>
+        private static List<UserAbbilities> BuildAbbilityList(User user)
         {
-            this.orders.Add(newOrder);
-        }
-
-        /// <summary>
-        /// Add new product to Data Base
-        /// </summary>
-        /// <param name="newProduct">New product.</param>
-        public void Add(Products newProduct)
-        {
-            this.products.Add(newProduct);
-        }
-
-        /// <summary>
-        /// Add new user to Data Base
-        /// </summary>
-        /// <param name="newUser">New user.</param>
-        public void Add(User newUser)
-        {
-            this.users.Add(newUser);
-        }
-
-        /// <summary>
-        /// Add new check to Data Base
-        /// </summary>
-        /// <param name="newCheck">New check.</param>
-        public void Add(Check newCheck)
-        {
-            this.checks.Add(newCheck);
-        }
-
-        /// <summary>
-        /// Add new check to Data Base
-        /// </summary>
-        /// <param name="newCheck">New check.</param>
-        public void Add(Role newRole)
-        {
-            this.roles.Add(newRole);
-        }
-
-        /// <summary>
-        /// Method Commit
-        /// </summary>
-        public void Commit()
-        {
-            this.CommitProducts();
-            this.CommitOrders();
-            this.CommitUsers();
-            this.CommitChecks();
-            this.CommitRoles();
-        }
-
-        /// <summary>
-        /// Load data of orders,users and products
-        /// </summary>
-        public void Load()
-        {
-            this.LoadOrders();
-            this.LoadProducts();
-            this.LoadUsers();
-            this.LoadRoles();
-        }
-
-        /// <summary>
-        /// return order by id
-        /// </summary>
-        /// <param name="id">id of order</param>
-        /// <returns> Order</returns>
-        public Order GetOrderById(int id)
-        {
-            Order retOrd = new Order();
-            bool found = false;
-            foreach (Order ord in this.Orders)
+            List<UserAbbilities> abbilities = new List<UserAbbilities>();
+            foreach (int i in user.RolesId)
             {
-                if (ord.ID == id)
-                {
-                    retOrd = ord;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
+                AbbilitiesAdd(abbilities, DataBase.Instance.GetRoleById(i));
             }
 
-            if (found)
+            return abbilities;
+        }
+
+        /// <summary>
+        /// Adding abilities of role
+        /// </summary>
+        /// <param name="abbilities">List of UserAbilities</param>
+        /// <param name="role">Needed role</param>
+        private static void AbbilitiesAdd(List<UserAbbilities> abbilities, Role role)
+        {
+            if (role.Name.Equals("Admin"))
             {
-                return retOrd;
+                abbilities.Add(new UserAbbilities(AddNewUser));
+                abbilities.Add(new UserAbbilities(DeleteUser));
+                abbilities.Add(new UserAbbilities(ShowAllUsers));
+            }
+
+            if (role.Name.Equals("Client"))
+            {
+                abbilities.Add(new UserAbbilities(ShowProducts));
+                abbilities.Add(new UserAbbilities(PerformOrder));
+            }
+
+            if (role.Name.Equals("TradeAgent"))
+            {
+                abbilities.Add(AddNewProduct);
+                abbilities.Add(GetHistoryOfProducts);
+                abbilities.Add(Modify);
+                abbilities.Add(GetHistoryOfUsersActivity);
+            }
+        }
+
+        /// <summary>
+        /// Adding of new user
+        /// </summary>
+        private static void AddNewUser(User user)
+        {
+            string login;
+            string password;
+            Console.WriteLine("Write login for new user:");
+            login = Console.ReadLine();
+            Console.WriteLine("Password: ");
+            password = Console.ReadLine();
+            UserControls.AddNewUser(login, password);
+			User user1 = UserControls.Identify(login, password);            bool adding = true;
+            while (adding)
+            {
+                Console.WriteLine("Enter 0 to stop adding 1 to add new role to user any other symbol to show available roles");
+                char c = Convert.ToChar(Console.ReadLine());
+                switch (c)
+                {
+                    case '0':
+                        {
+                            adding = false;
+                            break;
+                        }
+
+                    case '1':
+                        {
+                            Console.WriteLine("Enter roles id:");
+                            int roleid = Convert.ToInt32(Console.ReadLine());
+                            if (UserControls.AddUsersRole(user1.Id,roleid))
+                            {
+                                Console.WriteLine("Role added successfully");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Something went wrong maybe id is incorrect");
+                            }
+
+                            break;
+                        }
+
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deleting user from base.
+        /// </summary>
+        private static void DeleteUser(User user)
+        {
+            Console.WriteLine("Input ID user to delete.");
+            int idDel = new int();
+            idDel = Convert.ToInt32(Console.ReadLine());
+            if (UserControls.DeleteUser(idDel))
+            {
+                Console.WriteLine("Success!");
             }
             else
             {
-                throw new ArgumentException("No user with id: >" + id.ToString() + "< found");
+                Console.WriteLine("Wrong ID!");
             }
         }
 
         /// <summary>
-        /// return user by id
+        /// Prints list of users.
         /// </summary>
-        /// <param name = "id">id of user</param>
-        /// <returns>user</returns>
-        public User GetUserById(int id)
+        private static void ShowAllUsers(User user)
         {
-            User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
+            List<User> allUsers = new List<User>();
+            allUsers = DataBase.Instance.Users;
+            foreach (User u in allUsers)
             {
-                if (usr.Id == id)
-                {
-                    retUsr = usr;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return retUsr;
-            }
-            else
-            {
-                throw new ArgumentException("No order with id: >" + id.ToString() + "< found");
-            }
-        }
-
-
-        /// <summary>
-        /// return userID by name
-        /// </summary>
-        /// <param name = "id">name of user</param>
-        /// <returns>userID</returns>
-        public int GetUserIdByName(string name)
-        {
-            User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
-            {
-                if (usr.Login == name)
-                {
-                    retUsr = usr;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return retUsr.Id;
-            }
-            else
-            {
-                throw new ArgumentException("No order with name: >" + name + "< found");
-            }
-        }
-
-
-        /// <summary>
-        /// return product by id
-        /// </summary>
-        /// <param name="id">id of product</param>
-        /// <returns>product</returns>
-        public Product GetProductById(int id)
-        {
-            Product getPrd = new Product();
-            bool found = false;
-            foreach (Products prd in this.Products)
-            {
-                if (prd.PropProduct.Id == id)
-                {
-                    getPrd = prd.PropProduct;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return getPrd;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
+                Console.WriteLine(u.ToString());
             }
         }
 
         /// <summary>
-        /// return role by id
+        /// Prints list of products.
         /// </summary>
-        /// <param name="id">id of role</param>
-        /// <returns>role</returns>
-        public Role GetRoleById(int id)
+        private static void ShowProducts(User user)
         {
-            Role getRol = new Role();
-            bool found = false;
-            //foreach (Role rol in this.Roles)
-            //{
-            //    if (rol.Id == id)
-            //    {
-            //        getRol = rol;
-            //        found = true;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        continue;
-            //    }
-            //}
-            if (id == 1) getRol = new Role(id, "Admin");
-            else
-                if (id == 2) getRol = new Role(id, "Client");
-                else
-                    if (id == 3) getRol = new Role(id, "TradeAgent");
-            if (id >= 1 && id <= 3) found = true;
-            if (found)
+            DataBase db = DataBase.GetInstance();
+            db.LoadProducts();
+            List<Products> products = new List<Products>();
+
+            products = db.Products;
+            foreach (Products product in products)
             {
-                return getRol;
-            }
-            else
-            {
-                throw new ArgumentException("No role with id: >" + id.ToString() + "< found");
+                product.Write();
             }
         }
 
         /// <summary>
-        /// return price of product by id
+        /// Adds new product to DataBase.
         /// </summary>
-        /// <param name = "id"> id of product</param>
-        /// <returns>price</returns>
-        public double GetPriceById(int id)
+        private static void AddNewProduct(User user)
         {
-            double price = 0;
-            bool found = false;
-            foreach (Products prd in this.Products)
-            {
-                if (prd.PropProduct.Id == id)
-                {
-                    price = prd.PropProduct.Price;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return price;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
-            }
-        }
-
-        /// <summary>
-        /// return name of product by id
-        /// </summary>
-        /// <param name="id">id of product</param>
-        /// <returns>name</returns>
-        public string GetNameById(int id)
-        {
-            string name = string.Empty;
-            bool found = false;
-            foreach (Products prd in this.Products)
-            {
-                if (prd.PropProduct.Id == id)
-                {
-                    name = prd.PropProduct.Name;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return name;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
-            }
-        }
-
-        /// <summary>
-        /// return id of product by login
-        /// </summary>
-        /// <param name = "login" > login </param>
-        /// <returns>id of product</returns>
-        public int GetIdByLogin(string login)
-        {
-            int ident = 0;
-            /// User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
-            {
-                if (usr.Login == login)
-                {
-                    ident = usr.Id;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return ident;
-            }
-            else
-            {
-                throw new ArgumentException("No order with login: >" + login + "< found");
-            }
-        }
-
-        /// <summary>
-        /// Commit orders
-        /// </summary>
-        public void CommitOrders()
-        {
-            XmlWriter ordersWriter = XmlWriter.Create(this.OrdersPath);
-            ordersWriter.WriteStartElement("head");
-            ordersWriter.WriteFullEndElement();
-            ordersWriter.Close();
-            XmlDocument docOrder = new XmlDocument();
-            docOrder.Load(this.OrdersPath);
-            foreach (Order ord in this.Orders)
-            {
-                ord.SaveOrder(docOrder);
-            }
-
-            docOrder.Save(this.OrdersPath);
-        }
-
-        /// <summary>
-        /// Commit products
-        /// </summary>
-        public void CommitProducts()
-        {
-            XmlWriter productsWriter = XmlWriter.Create(this.ProductsPath);
-            productsWriter.WriteStartElement("head");
-            productsWriter.WriteFullEndElement();
-            productsWriter.Close();
-            XmlDocument docProduct = new XmlDocument();
-            docProduct.Load(this.ProductsPath);
-            foreach (Products prd in this.Products)
-            {
-                DataBase.SaveProductDB(docProduct, prd.PropProduct);
-            }
-
-            docProduct.Save(this.ProductsPath);
-        }
-
-        /// <summary>
-        /// Commit users
-        /// </summary>
-        public void CommitUsers()
-        {
-            XmlWriter usersWriter = XmlWriter.Create(this.UsersPath);
-            usersWriter.WriteStartElement("head");
-            usersWriter.WriteFullEndElement();
-            usersWriter.Close();
-            XmlDocument docUser = new XmlDocument();
-            docUser.Load(this.UsersPath);
-            foreach (User usr in this.Users)
-            {
-                DataBase.SaveUserDB(docUser, usr);
-            }
-
-            docUser.Save(this.UsersPath);
-        }
-
-        /// <summary>
-        /// Commit checks
-        /// </summary>
-        public void CommitChecks()
-        {
-            XmlWriter checksWriter = XmlWriter.Create(this.ChecksPath);
-            checksWriter.WriteStartElement("head");
-            checksWriter.WriteFullEndElement();
-            checksWriter.Close();
-            XmlDocument docCheck = new XmlDocument();
-            docCheck.Load(this.ChecksPath);
-            foreach (Check ch in this.Checks)
-            {
-                ch.SaveCheckDB(docCheck);
-            }
-
-            docCheck.Save(this.ChecksPath);
-        }
-
-        /// <summary>
-        /// commit roless
-        /// </summary>
-        public void CommitRoles()
-        {
-            XmlWriter rolesWriter = XmlWriter.Create(this.RolesPath);
-            rolesWriter.WriteStartElement("head");
-            rolesWriter.WriteFullEndElement();
-            rolesWriter.Close();
-            XmlDocument docRole = new XmlDocument();
-            docRole.Load(this.RolesPath);
-            foreach (Role rol in this.Roles)
-            {
-                DataBase.SaveRoleDB(docRole, rol);
-            }
-
-            docRole.Save(this.RolesPath);
-        }
-
-        /// <summary>
-        /// Load Orders
-        /// </summary>
-        public void LoadOrders()
-        {
-            int id = -1;
-            int amount = -1;
-            int ident = -1;
-            Dictionary<int, int> dict = new Dictionary<int, int>(); 
-            XmlTextReader reader = new XmlTextReader(this.OrdersPath);
-            int i = 0;
-            this.orders.Clear();
-            while (reader.Read())
-            {
-                if (reader.Name == "userId" && reader.HasAttributes)
-                {
-                    if (i != 0)
-                    {
-                        this.orders.Add(new Order(id, dict));
-                        dict.Clear();
-                        /// omg, facepalm 
-                        //Console.WriteLine(i);
-                    }
-
-                    i++;
-                    id = Convert.ToInt32(reader.GetAttribute("name_id"));
-                }
-
-                if (reader.Name == "amount")
-                {
-                    amount = reader.ReadElementContentAsInt();
-                    dict[ident] = amount;
-                }
-
-                if (reader.Name == "id")
-                {
-                    ident = reader.ReadElementContentAsInt();
-                }
-            }
-
-            this.orders.Add(new Order(id, dict));
-            reader.Close();
-        }
-
-        /// <summary>
-        /// Load Products
-        /// </summary>
-        public void LoadProducts()
-        {
-            XmlTextReader reader = new XmlTextReader(this.ProductsPath);
-            Product p = new Product();
-            int id = -1;
-            string name = "no_name";
-            double price = -1.0;
-            int amount = 0;
-            this.products.Clear();
-            while (reader.Read())
-            {
-                if (reader.Name == "ProductId" && reader.HasAttributes)
-                {
-                    id = Convert.ToInt32(reader.GetAttribute("product_id"));
-                }
-
-                if (reader.Name == "ProductName")
-                {
-                    name = reader.ReadElementContentAsString();
-                }
-
-                if (reader.Name == "ProductPrice")
-                {
-                    price = reader.ReadElementContentAsDouble();
-                    
-                    //this.products.Add(new Product(id, name, price));                   
-                    //// what the genial and magic WriteLine() ???
-                    //Console.WriteLine(1);
-                }
-
-                if (reader.Name == "ProductAmount")
-                {
-                    amount = reader.ReadElementContentAsInt();
-                    this.products.Add(new Products(id, name, price, amount));
-                }
-            }
-
-            reader.Close();
-        }
-
-        /// <summary>
-        /// Load Users
-        /// </summary>
-        public void LoadUsers()
-        {
-            XmlTextReader reader = new XmlTextReader(this.UsersPath);
-            int id = -1;
-            string login = "no_login";
-            string password = "no_password";
-            List<int> roles = new List<int>();
-            this.users.Clear();
-            while (reader.Read())
-            {
-                if (reader.Name == "UserId" && reader.HasAttributes)
-                {
-                    id = Convert.ToInt32(reader.GetAttribute("user_id"));
-                }
-
-                if (reader.Name == "UserLogin")
-                {
-                    login = reader.ReadElementContentAsString();
-                }
-
-                if (reader.Name == "UserPassword")
-                {
-                    password = reader.ReadElementContentAsString();
-                }
-
-                if (reader.Name == "UserRole")
-                {
-                    string line = reader.ReadElementContentAsString();
-                    List<int> tempList = new List<int>();
-                    roles.Clear();
-                    while (line.IndexOf("|") != -1)
-                    {
-                        roles.Add(Convert.ToInt32(line.Substring(0, line.IndexOf("|"))));
-                        line = line.Remove(0, line.IndexOf("|") + 1);
-                    }
-
-                  
-                    this.users.Add(new User(id, login, password, roles));
-                }
-            }
-
-            reader.Close();
-        }
-
-        /// <summary>
-        /// Load Roles
-        /// </summary>
-        public void LoadRoles()
-        {
-            XmlTextReader reader = new XmlTextReader(this.RolesPath);
-
-            int id = -1;
-            string name = "no_name";
-            this.roles.Clear();
-            while (reader.Read())
-            {
-                if (reader.Name == "RoleId" && reader.HasAttributes)
-                {
-                    id = Convert.ToInt32(reader.GetAttribute("role_id"));
-                }
-
-                if (reader.Name == "RoleName")
-                {
-                    name = reader.ReadElementContentAsString();
-                }
-                if (id != -1 && name != "no_name")
-                {
-                    this.roles.Add(new Role(id, name));
-                    id = -1;
-                    name = "no_name";
-                }
-            }
-
+            int id;
+            string name;
+            double price;
+            int amount;
             
+            Console.WriteLine("Input id of product");
+            id = Convert.ToInt32(Console.ReadLine());
+            
+            Console.WriteLine("Input name of product");
+            name = Console.ReadLine();
+            
+            Console.WriteLine("Input price of product");
+            price = Convert.ToDouble(Console.ReadLine());
 
-            reader.Close();
+            Console.WriteLine("Input amount of product");
+            amount = int.Parse(Console.ReadLine());
+            
+            Products product = new Products(id, name, price, amount);
+            DataBase db = DataBase.GetInstance();
+            db.Add(product);
         }
 
         /// <summary>
-        /// Save product to Data Base
+        /// Method to perform new order for current user
         /// </summary>
-        /// <param name="doc">document</param>
-        /// <param name="myProduct">product which we save to Data Base</param>
-        private static void SaveProductDB(XmlDocument doc, Product myProduct)
+        private static void PerformOrder(User user)
         {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("ProductId");
-            XmlAttribute attrID = doc.CreateAttribute("product_id");
-            attrID.Value = myProduct.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
-            XmlElement prodName = doc.CreateElement("ProductName");
-            XmlElement prodPrice = doc.CreateElement("ProductPrice");
-            XmlText productName = doc.CreateTextNode(myProduct.Name);
-            XmlText productPrice = doc.CreateTextNode(myProduct.Price.ToString());
-            prodName.AppendChild(productName);
-            prodPrice.AppendChild(productPrice);
-            root.InsertAfter(prodName, root.LastChild);
-            root.InsertAfter(prodPrice, root.LastChild);
-        }
-
-        /// <summary>
-        /// Save user to Data Base
-        /// </summary>
-        /// <param name="doc">document</param>
-        /// <param name="myUser">user whom we save to Data Base</param>
-        private static void SaveUserDB(XmlDocument doc, User myUser)
-        {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("UserId");
-            XmlAttribute attrID = doc.CreateAttribute("user_id");
-            attrID.Value = myUser.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
-            XmlElement userLogin = doc.CreateElement("UserLogin");
-            XmlElement userPassword = doc.CreateElement("UserPassword");
-            XmlElement userRole = doc.CreateElement("UserRole");
-            XmlText usLog = doc.CreateTextNode(myUser.Login);
-            XmlText usPass = doc.CreateTextNode(myUser.Password);
-            string temp = string.Empty;
-            foreach (int i in myUser.RolesId)
+            Order order = new Order();
+            Ordering(order);
+            Console.WriteLine("Press 1 to perform order any other symbol to clear order");
+            char c = Convert.ToChar(Console.ReadLine());
+            if (c == '1')
             {
-                temp = temp + i.ToString() + "|";
+                Check check = new Check(order.ID, user.Id);
+                DataBase.Instance.Add(check);
+                DataBase.Instance.Commit();
+            }
+            else
+            {
+                PerformOrder(user);
+                }
+        }
+
+        private static void Ordering(Order order)
+        {
+            bool ordering = true;
+            try
+            {
+                while (ordering)
+                {
+                    Console.WriteLine("Enter 1 to add new product 0 to end order any other symbol to show products:");
+                    char option = Convert.ToChar(Console.ReadLine());
+                    switch (option)
+                    {
+                        case '0':
+                            {
+                                ordering = false;
+                                break;
+                            }
+
+                        case '1':
+                            {
+                                DataBase.Instance.SetConnections(Constants.PATH);
+                                Console.WriteLine("Enter id of product:");
+                                int id = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Enter amount of product:");
+                                int amount = Convert.ToInt32(Console.ReadLine());
+                                DataBase.Instance.GetProductById(id);
+                                order.AddProduct(id, amount);
+                                break;
+                            }
+
+                        default:
+                            {
+                                ShowProducts(new User());
+                                break;
+                            }
+                    }
+                }
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+                Ordering(order);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Wrong id or amount");
+            }
+        }
+
+        /// <summary>
+        /// Method to modify product
+        /// </summary>
+        private static void Modify(User user)
+        {
+            Console.WriteLine("Input name of product to modify");
+            string name = Console.ReadLine();
+            int id = Product.IdByName(name);
+
+            Console.WriteLine("Input amount to add products (- means delete)");
+            int amount = Convert.ToInt32(Console.ReadLine());
+            DataBase dataBase;
+            dataBase = DataBase.GetInstance();
+            foreach (Products prods in dataBase.Products)
+            {
+                if (prods.PropProduct.Id == id)
+                {
+                    prods.Amount += amount;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Print list of products changing.
+        /// </summary>
+        private static void GetHistoryOfProducts(User user)
+        {
+            Console.WriteLine("Input id of poduct");
+            int id = int.Parse(Console.ReadLine());
+            List<Order> orders = DataBase.GetInstance().Orders;
+            List<KeyValuePair<int, int> > AmountOfChangingOfProduct = new List<KeyValuePair<int, int>>();
+            
+            foreach (var order in orders)
+            {
+                foreach (var product in order.List)
+                {
+                    if (product.Key == id)
+                        AmountOfChangingOfProduct.Add(product);
+                }
             }
 
-            XmlText usRole = doc.CreateTextNode(temp);
-            userLogin.AppendChild(usLog);
-            userPassword.AppendChild(usPass);
-            userRole.AppendChild(usRole);
-            root.InsertAfter(userLogin, root.LastChild);
-            root.InsertAfter(userPassword, root.LastChild);
-            root.InsertAfter(userRole, root.LastChild);
+            foreach (var item in AmountOfChangingOfProduct)
+            {
+                Console.WriteLine("Buying id " + item.Key.ToString() + " products in " + item.Value.ToString() + " amount");
+            }
+            Console.WriteLine("End history of product with id " + id.ToString());
         }
 
         /// <summary>
-        /// Save role to Data Base
+        /// Gives history of user activity
         /// </summary>
-        /// <param name="doc">document</param>
-        /// <param name="myRole">user whom we save to Data Base</param>
-        private static void SaveRoleDB(XmlDocument doc, Role myRole)
-        {
-            XmlNode root = doc.DocumentElement;
-            XmlElement newID = doc.CreateElement("RoleId");
-            XmlAttribute attrID = doc.CreateAttribute("role_id");
-            attrID.Value = myRole.Id.ToString();
-            newID.SetAttributeNode(attrID);
-            root.InsertAfter(newID, root.LastChild);
-            XmlElement roleName = doc.CreateElement("RoleName");
-            XmlText rolName = doc.CreateTextNode(myRole.Name);
-            roleName.AppendChild(rolName);
-            root.InsertAfter(roleName, root.LastChild);
+		private static void GetHistoryOfUsersActivity(User user){
+            Console.WriteLine("Input name of user");
+            string name = Console.ReadLine();
+            int id = DataBase.Instance.GetUserIdByName(name); 
+            
+            User tempUser = UserControls.GetUserById(id);
+            List<Check> checks = DataBase.Instance.Checks;
+            List<Check> userChecks = new List<Check>();
+            foreach (var item in checks)
+            {
+                if (item.IdUser == tempUser.Id)
+                {
+                    userChecks.Add(item);
+                }
+            }
+
+            foreach (var item in userChecks)
+            {
+                 Console.WriteLine("User " + name + " create order with id " + item.IdOrder.ToString() 
+                     + item.Time.ToString() );
+            }
+            Console.WriteLine("End of history of user " + tempUser.Login + " activity");
         }
     }
 }
