@@ -231,25 +231,24 @@ namespace PMI21_TeachingPractice
             Console.WriteLine("Password: ");
             password = Console.ReadLine();
             UserControls.AddNewUser(login, password);
-            user = UserControls.Identify(login, password);
-            bool adding = true;
+			User user1 = UserControls.Identify(login, password);            bool adding = true;
             while (adding)
             {
                 Console.WriteLine("Enter 0 to stop adding 1 to add new role to user any other symbol to show available roles");
-                int c = Console.Read();
+                char c = Convert.ToChar(Console.ReadLine());
                 switch (c)
                 {
-                    case 0:
+                    case '0':
                         {
                             adding = false;
                             break;
                         }
 
-                    case 1:
+                    case '1':
                         {
                             Console.WriteLine("Enter roles id:");
                             int roleid = Convert.ToInt32(Console.ReadLine());
-                            if (UserControls.AddUsersRole(user.Id, roleid))
+                            if (UserControls.AddUsersRole(user1.Id,roleid))
                             {
                                 Console.WriteLine("Role added successfully");
                             }
@@ -293,13 +292,11 @@ namespace PMI21_TeachingPractice
         private static void ShowAllUsers(User user)
         {
             List<User> allUsers = new List<User>();
-            ////if (UserControls.LoadBaseUsers(out AllUsers))
-            ////{
-            ////    foreach (User user in AllUsers)
-            ////    {
-            ////        Console.WriteLine(user.ToString());
-            ////    }
-            ////}
+            allUsers = DataBase.Instance.Users;
+            foreach (User u in allUsers)
+            {
+                Console.WriteLine(u.ToString());
+            }
         }
 
         /// <summary>
@@ -310,10 +307,11 @@ namespace PMI21_TeachingPractice
             DataBase db = DataBase.GetInstance();
             db.LoadProducts();
             List<Products> products = new List<Products>();
+
             products = db.Products;
             foreach (Products product in products)
             {
-                Console.WriteLine(product.ToString()); 
+                product.Write();
             }
         }
 
@@ -350,12 +348,29 @@ namespace PMI21_TeachingPractice
         private static void PerformOrder(User user)
         {
             Order order = new Order();
+            Ordering(order);
+            Console.WriteLine("Press 1 to perform order any other symbol to clear order");
+            char c = Convert.ToChar(Console.ReadLine());
+            if (c == '1')
+            {
+                Check check = new Check(order.ID, user.Id);
+                DataBase.Instance.Add(check);
+                DataBase.Instance.Commit();
+            }
+            else
+            {
+                PerformOrder(user);
+                }
+        }
+
+        private static void Ordering(Order order)
+        {
             bool ordering = true;
             try
             {
                 while (ordering)
                 {
-                    Console.WriteLine("Enter 1 to add new product 0 to end order:");
+                    Console.WriteLine("Enter 1 to add new product 0 to end order any other symbol to show products:");
                     char option = Convert.ToChar(Console.ReadLine());
                     switch (option)
                     {
@@ -367,26 +382,32 @@ namespace PMI21_TeachingPractice
 
                         case '1':
                             {
-                                DataBase database = DataBase.Instance;
-                                database.SetConnections("..\\..\\data\\Path.xml");
-                                //Constants.dataBasePath
-                                database.LoadProducts();
+                                DataBase.Instance.SetConnections(Constants.PATH);
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
-                                ////order.AddProduct(database.GetProductById(id),1);
+                                Console.WriteLine("Enter amount of product:");
+                                int amount = Convert.ToInt32(Console.ReadLine());
+                                DataBase.Instance.GetProductById(id);
+                                order.AddProduct(id, amount);
                                 break;
                             }
 
                         default:
                             {
-                                throw new Exception();
+                                ShowProducts(new User());
+                                break;
                             }
                     }
                 }
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-                Console.WriteLine(string.Empty);
+                Console.WriteLine(e.Message);
+                Ordering(order);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Wrong id or amount");
             }
         }
 
@@ -425,7 +446,7 @@ namespace PMI21_TeachingPractice
             int id = int.Parse(Console.ReadLine());
             List<Order> orders = DataBase.GetInstance().Orders;
             List<KeyValuePair<int, int> > AmountOfChangingOfProduct = new List<KeyValuePair<int, int>>();
-
+            
             foreach (var order in orders)
             {
                 foreach (var product in order.List)
@@ -437,16 +458,15 @@ namespace PMI21_TeachingPractice
 
             foreach (var item in AmountOfChangingOfProduct)
             {
-                Console.WriteLine("Buying with id " + item.Key.ToString() + " products in " + item.Value.ToString() + " order");
+                Console.WriteLine("Buying id " + item.Key.ToString() + " products in " + item.Value.ToString() + " amount");
             }
-            Console.WriteLine("End of history of product with id " + id.ToString());
+            Console.WriteLine("End history of product with id " + id.ToString());
         }
 
         /// <summary>
         /// Gives history of user activity
         /// </summary>
-        private static void GetHistoryOfUsersActivity(User user)
-        {
+		private static void GetHistoryOfUsersActivity(User user){
             Console.WriteLine("Input name of user");
             string name = Console.ReadLine();
             int id = DataBase.Instance.GetUserIdByName(name); 
