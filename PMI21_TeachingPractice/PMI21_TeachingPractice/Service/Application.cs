@@ -35,6 +35,7 @@ namespace PMI21_TeachingPractice
                     case 1:
                         {
                             User logged = Application.Login(0);
+                            LoggedInterface(logged);
                             break;
                         }
 
@@ -132,6 +133,45 @@ namespace PMI21_TeachingPractice
         private static void LoggedInterface(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
+            abbilities = BuildAbbilityList(user);
+            bool working = true;
+            bool find = false;
+            while (working)
+            {
+                Console.WriteLine("Write methods for list of method exit to exit or name of method");
+                find = false;
+                string option = Console.ReadLine();
+                if (option.Equals("methods"))
+                {
+                    find = true;
+                    foreach (var abillity in abbilities)
+                    {
+                        Console.WriteLine(abillity.Method.Name);
+                        option = string.Empty;
+                    }
+                }
+                if (option.Equals("exit"))
+                {
+                    find = true;
+                    working = false;
+                    option = string.Empty;
+                }
+                if (!option.Equals(string.Empty))
+                {
+                    foreach (var abillity in abbilities)
+                    {
+                        if (abillity.Method.Name.Equals(option))
+                        {
+                            find = true;
+                            abillity(user);
+                        }
+                    }
+                    if (!find)
+                    {
+                        Console.WriteLine("There is no method with such name");
+                    }
+                }
+            }
         }
 
         /// <summary>
