@@ -1,1 +1,9 @@
-<xml>
+<?xml version="1.0" encoding="utf-8"?>
+<head>
+  <RoleId role_id="1" />
+  <RoleName>Admin</RoleName>
+  <RoleId role_id="2" />
+  <RoleName>Client</RoleName>
+  <RoleId role_id="3" />
+  <RoleName>TradeAgent</RoleName>
+</head>
