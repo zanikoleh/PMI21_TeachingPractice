@@ -684,7 +684,7 @@ namespace PMI21_TeachingPractice
             docProduct.Load(this.ProductsPath);
             foreach (Products prd in this.Products)
             {
-                DataBase.SaveProductDB(docProduct, prd.PropProduct);
+                DataBase.SaveProductDB(docProduct, prd);
             }
 
             docProduct.Save(this.ProductsPath);
@@ -758,6 +758,7 @@ namespace PMI21_TeachingPractice
             Dictionary<int, int> dict = new Dictionary<int, int>(); 
             XmlTextReader reader = new XmlTextReader(this.OrdersPath);
             int i = 0;
+            this.orders.Clear();
             while (reader.Read())
             {
                 if (reader.Name == "userId" && reader.HasAttributes)
@@ -801,6 +802,7 @@ namespace PMI21_TeachingPractice
             string name = "no_name";
             double price = -1.0;
             int amount = 0;
+            this.products.Clear();
             while (reader.Read())
             {
                 if (reader.Name == "ProductId" && reader.HasAttributes)
@@ -821,9 +823,10 @@ namespace PMI21_TeachingPractice
                     //// what the genial and magic WriteLine() ???
                     //Console.WriteLine(1);
                 }
-
+                                   
                 if (reader.Name == "ProductAmount")
                 {
+                    
                     amount = reader.ReadElementContentAsInt();
                     this.products.Add(new Products(id, name, price, amount));
                 }
@@ -888,6 +891,7 @@ namespace PMI21_TeachingPractice
 
             int id = -1;
             string name = "no_name";
+            this.roles.Clear();
             while (reader.Read())
             {
                 if (reader.Name == "RoleId" && reader.HasAttributes)
@@ -917,18 +921,24 @@ namespace PMI21_TeachingPractice
         /// </summary>
         /// <param name="doc">document</param>
         /// <param name="myProduct">product which we save to Data Base</param>
-        private static void SaveProductDB(XmlDocument doc, Product myProduct)
+        private static void SaveProductDB(XmlDocument doc, Products myProduct)
         {
             XmlNode root = doc.DocumentElement;
             XmlElement newID = doc.CreateElement("ProductId");
             XmlAttribute attrID = doc.CreateAttribute("product_id");
-            attrID.Value = myProduct.Id.ToString();
+            
+            attrID.Value = myProduct.PropProduct.Id.ToString();
             newID.SetAttributeNode(attrID);
             root.InsertAfter(newID, root.LastChild);
+            
             XmlElement prodName = doc.CreateElement("ProductName");
             XmlElement prodPrice = doc.CreateElement("ProductPrice");
-            XmlText productName = doc.CreateTextNode(myProduct.Name);
-            XmlText productPrice = doc.CreateTextNode(myProduct.Price.ToString());
+            XmlText productName = doc.CreateTextNode(myProduct.PropProduct.Name);
+            XmlText productPrice = doc.CreateTextNode(myProduct.PropProduct.Price.ToString());
+
+            XmlElement prodAmount = doc.CreateElement("ProductAmount");
+            XmlText productAmount = doc.CreateTextNode(myProduct.Amount.ToString());
+
             prodName.AppendChild(productName);
             prodPrice.AppendChild(productPrice);
             root.InsertAfter(prodName, root.LastChild);
