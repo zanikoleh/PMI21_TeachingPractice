@@ -421,7 +421,7 @@ namespace PMI21_TeachingPractice
             int id = int.Parse(Console.ReadLine());
             List<Order> orders = DataBase.GetInstance().Orders;
             List<KeyValuePair<int, int> > AmountOfChangingOfProduct = new List<KeyValuePair<int, int>>();
-
+            
             foreach (var order in orders)
             {
                 foreach (var product in order.List)
@@ -433,9 +433,9 @@ namespace PMI21_TeachingPractice
 
             foreach (var item in AmountOfChangingOfProduct)
             {
-                Console.WriteLine("Buying with id " + item.Key.ToString() + " products in " + item.Value.ToString() + " order");
+                Console.WriteLine("Buying id " + item.Key.ToString() + " products in " + item.Value.ToString() + " amount");
             }
-            Console.WriteLine("End of history of product with id " + id.ToString());
+            Console.WriteLine("End history of product with id " + id.ToString());
         }
 
         /// <summary>
