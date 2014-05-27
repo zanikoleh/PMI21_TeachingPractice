@@ -766,7 +766,8 @@ namespace PMI21_TeachingPractice
                     {
                         this.orders.Add(new Order(id, dict));
                         dict.Clear();
-                        Console.WriteLine(i);
+                        /// omg, facepalm 
+                        //Console.WriteLine(i);
                     }
 
                     i++;
