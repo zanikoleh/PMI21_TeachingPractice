@@ -118,18 +118,6 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
-        /// Add new Role to database.
-        /// </summary>
-        /// <param name="roleId">Id of new Role.</param>
-        /// <param name="roleName">Name of new Role.</param>
-        /// <returns>True if ok, false otherwise.</returns>
-        public static bool AddNewRole(int roleId, string roleName)
-        {
-            //At progress
-            return false;
-        }
-
-        /// <summary>
         /// Method removes user's role 
         /// </summary>
         /// <param name="userId">User's idNumber</param>
