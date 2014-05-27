@@ -384,7 +384,7 @@ namespace PMI21_TeachingPractice
 
             foreach (var item in AmountOfChangingOfProduct)
             {
-                Console.WriteLine("Buy {0} products in {1} order", item.Key, item.Value);
+                Console.WriteLine("Buying with id " + item.Key.ToString() + " products in " + item.Value.ToString() + " order");
             }
         }
 
@@ -393,23 +393,25 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void GetHistoryOfUsersActivity()
         {
-            Console.WriteLine("Input name of poduct");
+            Console.WriteLine("Input name of user");
             string name = Console.ReadLine();
-            int id = 0; // UserControl().GetUserIdByName(name);
+            int id = DataBase.Instance.GetUserIdByName(name); 
+            
             User user = UserControls.GetUserById(id);
             List<Check> checks = DataBase.Instance.Checks;
-            List<Check> usersChecks = new List<Check>();
+            List<Check> userChecks = new List<Check>();
             foreach (var item in checks)
             {
                 if (item.IdUser == user.Id)
                 {
-                    usersChecks.Add(item);
+                    userChecks.Add(item);
                 }
             }
 
-            foreach (var item in usersChecks)
+            foreach (var item in userChecks)
             {
-                // Console.WriteLine(item.ToString());
+                 Console.WriteLine("User " + name + " create order with id " + item.IdOrder.ToString() 
+                     + item.Time.ToString() );
             }
         }
     }
