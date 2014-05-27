@@ -34,28 +34,30 @@
             this.IDinput = new System.Windows.Forms.TextBox();
             this.PASSWORD = new System.Windows.Forms.Label();
             this.PASSWORDinput = new System.Windows.Forms.TextBox();
-            this.Menu = new System.Windows.Forms.ComboBox();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.AgentMenu = new System.Windows.Forms.ComboBox();
+            this.NameOfRole = new System.Windows.Forms.Label();
+            this.ClientMenu = new System.Windows.Forms.ComboBox();
+            this.TradeAgentMenu = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // OK
             // 
             this.OK.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.OK.Location = new System.Drawing.Point(111, 236);
+            this.OK.Location = new System.Drawing.Point(113, 235);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(75, 23);
             this.OK.TabIndex = 0;
             this.OK.Text = "Connect";
             this.OK.UseVisualStyleBackColor = true;
-            this.OK.Click += new System.EventHandler(this.button1_Click);
+            this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
             // Text
             // 
             this.Text.AutoSize = true;
-            this.Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Text.Location = new System.Drawing.Point(67, 34);
+            this.Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Text.Location = new System.Drawing.Point(64, 46);
             this.Text.Name = "Text";
-            this.Text.Size = new System.Drawing.Size(174, 18);
+            this.Text.Size = new System.Drawing.Size(213, 24);
             this.Text.TabIndex = 1;
             this.Text.Text = "Data Base connection";
             // 
@@ -75,7 +77,7 @@
             this.IDinput.Name = "IDinput";
             this.IDinput.Size = new System.Drawing.Size(100, 20);
             this.IDinput.TabIndex = 3;
-            this.IDinput.Text = "login1";
+            this.IDinput.Text = "login3";
             // 
             // PASSWORD
             // 
@@ -94,35 +96,75 @@
             this.PASSWORDinput.PasswordChar = '*';
             this.PASSWORDinput.Size = new System.Drawing.Size(100, 20);
             this.PASSWORDinput.TabIndex = 5;
-            this.PASSWORDinput.Text = "password1";
+            this.PASSWORDinput.Text = "pas3";
             // 
-            // Menu
+            // AgentMenu
             // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Menu.FormattingEnabled = true;
-            this.Menu.Items.AddRange(new object[] {
-            "Admin",
-            "Client",
-            "TradeAgent"});
-            this.Menu.Location = new System.Drawing.Point(12, 10);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(100, 24);
-            this.Menu.TabIndex = 6;
-            this.Menu.Visible = false;
+            this.AgentMenu.BackColor = System.Drawing.Color.White;
+            this.AgentMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.AgentMenu.FormattingEnabled = true;
+            this.AgentMenu.Items.AddRange(new object[] {
+            "Add New User",
+            "Delete User",
+            "Show All Users"});
+            this.AgentMenu.Location = new System.Drawing.Point(12, 7);
+            this.AgentMenu.Name = "AgentMenu";
+            this.AgentMenu.Size = new System.Drawing.Size(154, 24);
+            this.AgentMenu.TabIndex = 6;
+            this.AgentMenu.Visible = false;
+            // 
+            // NameOfRole
+            // 
+            this.NameOfRole.AutoSize = true;
+            this.NameOfRole.BackColor = System.Drawing.Color.White;
+            this.NameOfRole.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.NameOfRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NameOfRole.Location = new System.Drawing.Point(172, 7);
+            this.NameOfRole.Name = "NameOfRole";
+            this.NameOfRole.Size = new System.Drawing.Size(2, 22);
+            this.NameOfRole.TabIndex = 7;
+            // 
+            // ClientMenu
+            // 
+            this.ClientMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ClientMenu.FormattingEnabled = true;
+            this.ClientMenu.Items.AddRange(new object[] {
+            "Show Products",
+            "Perform Order"});
+            this.ClientMenu.Location = new System.Drawing.Point(12, 7);
+            this.ClientMenu.Name = "ClientMenu";
+            this.ClientMenu.Size = new System.Drawing.Size(154, 24);
+            this.ClientMenu.TabIndex = 9;
+            // 
+            // TradeAgentMenu
+            // 
+            this.TradeAgentMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TradeAgentMenu.FormattingEnabled = true;
+            this.TradeAgentMenu.Items.AddRange(new object[] {
+            "Add New Product",
+            "Get History Of Products",
+            "Modify"});
+            this.TradeAgentMenu.Location = new System.Drawing.Point(12, 7);
+            this.TradeAgentMenu.Name = "TradeAgentMenu";
+            this.TradeAgentMenu.Size = new System.Drawing.Size(154, 24);
+            this.TradeAgentMenu.TabIndex = 10;
             // 
             // DataBaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 302);
-            this.Controls.Add(this.Menu);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ClientSize = new System.Drawing.Size(326, 302);
+            this.Controls.Add(this.ClientMenu);
+            this.Controls.Add(this.NameOfRole);
+            this.Controls.Add(this.AgentMenu);
             this.Controls.Add(this.PASSWORDinput);
             this.Controls.Add(this.PASSWORD);
             this.Controls.Add(this.IDinput);
             this.Controls.Add(this.ID);
             this.Controls.Add(this.Text);
             this.Controls.Add(this.OK);
+            this.Controls.Add(this.TradeAgentMenu);
             this.Name = "DataBaseForm";
             this.Load += new System.EventHandler(this.DataBaseForm_Load);
             this.ResumeLayout(false);
@@ -138,7 +180,9 @@
         private System.Windows.Forms.TextBox IDinput;
         private System.Windows.Forms.Label PASSWORD;
         private System.Windows.Forms.TextBox PASSWORDinput;
-        private System.Windows.Forms.ComboBox Menu;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.ComboBox AgentMenu;
+        private System.Windows.Forms.Label NameOfRole;
+        private System.Windows.Forms.ComboBox ClientMenu;
+        private System.Windows.Forms.ComboBox TradeAgentMenu;
     }
 }
