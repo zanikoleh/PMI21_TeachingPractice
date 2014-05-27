@@ -44,7 +44,7 @@ namespace PMI21_TeachingPractice.Service
         private void chooseAdmin() {
             IDinput.Visible = false;
             PASSWORDinput.Visible = false;
-            OK.Visible = false;
+            //OK.Visible = false;
             ID.Visible = false;
             PASSWORD.Visible = false;
             Text.Visible = false;
@@ -57,7 +57,7 @@ namespace PMI21_TeachingPractice.Service
         {
             IDinput.Visible = false;
             PASSWORDinput.Visible = false;
-            OK.Visible = false;
+            //OK.Visible = false;
             ID.Visible = false;
             PASSWORD.Visible = false;
             Text.Visible = false;
@@ -84,6 +84,29 @@ namespace PMI21_TeachingPractice.Service
         /// </summary>
         private void OK_Click(object sender, EventArgs e)
         {
+            if (ClientMenu.Visible == true)
+            {
+                switch (ClientMenu.Text)
+                {
+                    case "Perform Order":
+                        //TODO
+                        break;
+                    case "Show Products":
+                        {
+                            FormOrder form = new FormOrder();
+                            DataBase db = DataBase.GetInstance();
+                            form.ident = db.GetIdByLogin(this.IDinput.Text);
+                            form.ShowDialog();
+                            break;
+                        }
+                    case "TradeAgent":
+                        //TODO
+                        break;
+                }
+            }
+            else
+            {
+
                 User s = PMI21_TeachingPractice.UserControls.Identify(IDinput.Text, PASSWORDinput.Text);
                 if (s != null)
                 {
@@ -109,8 +132,9 @@ namespace PMI21_TeachingPractice.Service
                                 break;
                             }
                     }
-                   // ChangeWindow();
+                    // ChangeWindow();
                 }
+            }
         }
     }
 }
