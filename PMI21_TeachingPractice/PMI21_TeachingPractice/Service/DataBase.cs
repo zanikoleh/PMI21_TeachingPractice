@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="DataBase.cs" company="PMI21_TeachingPractice">
 //     Copyright PMI21_TeachingPractice. All rights reserved.
 // </copyright>
@@ -445,6 +445,41 @@ namespace PMI21_TeachingPractice
                 throw new ArgumentException("No order with id: >" + id.ToString() + "< found");
             }
         }
+
+
+        /// <summary>
+        /// return userID by name
+        /// </summary>
+        /// <param name = "id">name of user</param>
+        /// <returns>userID</returns>
+        public int GetUserIdByName(string name)
+        {
+            User retUsr = new User();
+            bool found = false;
+            foreach (User usr in this.Users)
+            {
+                if (usr.Login == name)
+                {
+                    retUsr = usr;
+                    found = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            if (found)
+            {
+                return retUsr.Id;
+            }
+            else
+            {
+                throw new ArgumentException("No order with name: >" + name + "< found");
+            }
+        }
+
 
         /// <summary>
         /// return product by id
