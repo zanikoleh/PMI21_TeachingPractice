@@ -25,18 +25,37 @@
         private void buttonOrders_Click(object sender, EventArgs e)
         {
             DataBase temp = DataBase.GetInstance();
-            Order orders = temp.GetOrderById(this.ident);
-            foreach (KeyValuePair<int, int> elem in orders.List)
+            temp.SetConnections("...\\PMI21_TeachingPractice\\data\\Path.xml");
+            temp.Load();
+            if (temp.Orders[0].ID != -1)
             {
-                textBoxOrders.Text += "Name: " + temp.GetNameById(elem.Key) + "Count: " + elem.Value + "Price: " + temp.GetPriceById(elem.Key) * elem.Value + "\r\n";
+                Order orders = temp.GetOrderById(this.ident);
+                foreach (KeyValuePair<int, int> elem in orders.List)
+                {
+                    textBoxOrders.Text += "Name: " + temp.GetNameById(elem.Key) + "Count: " + elem.Value + "Price: " + temp.GetPriceById(elem.Key) * elem.Value + "\r\n";
+                }
+            }
+            else
+            {
+                this.textBoxOrders.Text = "No order`s";
             }
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+        /*private void buttonAdd_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.EnableVisualStyles();
-            OrderForm form = new OrderForm();
-            form.ShowDialog();
+            System.Windows.Forms.Application.Exit();
+            System.Windows.Forms.Application.Run(new OrderForm());
+            
+        }*/
+
+        private void FormOrder_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
