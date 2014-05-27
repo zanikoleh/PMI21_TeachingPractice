@@ -447,12 +447,12 @@ namespace PMI21_TeachingPractice
             string name = Console.ReadLine();
             int id = DataBase.Instance.GetUserIdByName(name); 
             
-            user = UserControls.GetUserById(id);
+            User tempUser = UserControls.GetUserById(id);
             List<Check> checks = DataBase.Instance.Checks;
             List<Check> userChecks = new List<Check>();
             foreach (var item in checks)
             {
-                if (item.IdUser == user.Id)
+                if (item.IdUser == tempUser.Id)
                 {
                     userChecks.Add(item);
                 }
@@ -463,7 +463,7 @@ namespace PMI21_TeachingPractice
                  Console.WriteLine("User " + name + " create order with id " + item.IdOrder.ToString() 
                      + item.Time.ToString() );
             }
-            Console.WriteLine("End of history of user " + user.Login + " activity");
+            Console.WriteLine("End of history of user " + tempUser.Login + " activity");
         }
     }
 }
