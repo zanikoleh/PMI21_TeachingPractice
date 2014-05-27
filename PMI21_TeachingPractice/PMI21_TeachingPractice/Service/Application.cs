@@ -368,11 +368,24 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void GetHistoryOfProducts()
         {
-            Console.WriteLine("Input name of poduct");
-            string name = Console.ReadLine();
-            ////int id = Products().IdByName(name);
-            ////Order order = new Order().ReturnOrderById(id);
-            ////order.Write();
+            Console.WriteLine("Input id of poduct");
+            int id = int.Parse(Console.ReadLine());
+            List<Order> orders = DataBase.GetInstance().Orders;
+            List<KeyValuePair<int, int> > AmountOfChangingOfProduct = new List<KeyValuePair<int, int>>();
+
+            foreach (var order in orders)
+            {
+                foreach (var product in order.List)
+                {
+                    if (product.Key == id)
+                        AmountOfChangingOfProduct.Add(product);
+                }
+            }
+
+            foreach (var item in AmountOfChangingOfProduct)
+            {
+                Console.WriteLine("Buy {0} products in {1} order", item.Key, item.Value);
+            }
         }
 
         /// <summary>
