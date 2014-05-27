@@ -214,7 +214,8 @@ namespace PMI21_TeachingPractice
             {
                 abbilities.Add(AddNewProduct);
                 abbilities.Add(GetHistoryOfProducts);
-                abbilities.Add(Modify);                
+                abbilities.Add(Modify);
+                abbilities.Add(GetHistoryOfUsersActivity);
             }
         }
 
@@ -230,8 +231,7 @@ namespace PMI21_TeachingPractice
             Console.WriteLine("Password: ");
             password = Console.ReadLine();
             UserControls.AddNewUser(login, password);
-            User user1 = UserControls.Identify(login, password);
-            bool adding = true;
+			User user1 = UserControls.Identify(login, password);            bool adding = true;
             while (adding)
             {
                 Console.WriteLine("Enter 0 to stop adding 1 to add new role to user any other symbol to show available roles");
@@ -432,23 +432,23 @@ namespace PMI21_TeachingPractice
             {
                 Console.WriteLine("Buying with id " + item.Key.ToString() + " products in " + item.Value.ToString() + " order");
             }
+            Console.WriteLine("End of history of product with id " + id.ToString());
         }
 
         /// <summary>
         /// Gives history of user activity
         /// </summary>
-        private static void GetHistoryOfUsersActivity(User user1)
-        {
+		private static void GetHistoryOfUsersActivity(User user)        {
             Console.WriteLine("Input name of user");
             string name = Console.ReadLine();
             int id = DataBase.Instance.GetUserIdByName(name); 
             
-            User user = UserControls.GetUserById(id);
+            User tempUser = UserControls.GetUserById(id);
             List<Check> checks = DataBase.Instance.Checks;
             List<Check> userChecks = new List<Check>();
             foreach (var item in checks)
             {
-                if (item.IdUser == user.Id)
+                if (item.IdUser == tempUser.Id)
                 {
                     userChecks.Add(item);
                 }
@@ -459,6 +459,7 @@ namespace PMI21_TeachingPractice
                  Console.WriteLine("User " + name + " create order with id " + item.IdOrder.ToString() 
                      + item.Time.ToString() );
             }
+            Console.WriteLine("End of history of user " + tempUser.Login + " activity");
         }
     }
 }
