@@ -523,20 +523,25 @@ namespace PMI21_TeachingPractice
         {
             Role getRol = new Role();
             bool found = false;
-            foreach (Role rol in this.Roles)
-            {
-                if (rol.Id == id)
-                {
-                    getRol = rol;
-                    found = true;
-                    break;
-                }
+            //foreach (Role rol in this.Roles)
+            //{
+            //    if (rol.Id == id)
+            //    {
+            //        getRol = rol;
+            //        found = true;
+            //        break;
+            //    }
+            //    else
+            //    {
+            //        continue;
+            //    }
+            //}
+            if (id == 1) getRol = new Role(id, "Admin");
+            else
+                if (id == 2) getRol = new Role(id, "Client");
                 else
-                {
-                    continue;
-                }
-            }
-
+                    if (id == 3) getRol = new Role(id, "TradeAgent");
+            if (id >= 1 && id <= 3) found = true;
             if (found)
             {
                 return getRol;
