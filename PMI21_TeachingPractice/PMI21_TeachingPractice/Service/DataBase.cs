@@ -714,7 +714,7 @@ namespace PMI21_TeachingPractice
         {
             int id = -1;
             int amount = -1;
-            int price = -1;
+            int ident = -1;
             Dictionary<int, int> dict = new Dictionary<int, int>(); 
             XmlTextReader reader = new XmlTextReader(this.OrdersPath);
             int i = 0;
@@ -736,12 +736,12 @@ namespace PMI21_TeachingPractice
                 if (reader.Name == "amount")
                 {
                     amount = reader.ReadElementContentAsInt();
+                    dict[ident] = amount;
                 }
 
-                if (reader.Name == "price")
+                if (reader.Name == "id")
                 {
-                    price = reader.ReadElementContentAsInt();
-                    dict[price] = amount;
+                    ident = reader.ReadElementContentAsInt();
                 }
             }
 
