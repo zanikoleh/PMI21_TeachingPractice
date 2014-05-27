@@ -326,20 +326,22 @@ namespace PMI21_TeachingPractice
             int amount;
             
             Console.WriteLine("Input id of product");
-            id = Convert.ToInt32(Console.ReadLine());
+            id = int.Parse(Console.ReadLine());
             
             Console.WriteLine("Input name of product");
             name = Console.ReadLine();
             
             Console.WriteLine("Input price of product");
-            price = Convert.ToDouble(Console.ReadLine());
+            price = double.Parse(Console.ReadLine());
 
             Console.WriteLine("Input amount of product");
             amount = int.Parse(Console.ReadLine());
             
             Products product = new Products(id, name, price, amount);
             DataBase db = DataBase.GetInstance();
+            db.LoadProducts();
             db.Add(product);
+            db.Commit();
         }
 
         /// <summary>

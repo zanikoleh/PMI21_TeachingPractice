@@ -933,16 +933,19 @@ namespace PMI21_TeachingPractice
             
             XmlElement prodName = doc.CreateElement("ProductName");
             XmlElement prodPrice = doc.CreateElement("ProductPrice");
-            XmlText productName = doc.CreateTextNode(myProduct.PropProduct.Name);
-            XmlText productPrice = doc.CreateTextNode(myProduct.PropProduct.Price.ToString());
-
             XmlElement prodAmount = doc.CreateElement("ProductAmount");
+
+            XmlText productName = doc.CreateTextNode(myProduct.PropProduct.Name);
+            XmlText productPrice = doc.CreateTextNode(myProduct.PropProduct.Price.ToString());            
             XmlText productAmount = doc.CreateTextNode(myProduct.Amount.ToString());
 
             prodName.AppendChild(productName);
             prodPrice.AppendChild(productPrice);
+            prodAmount.AppendChild(productAmount);
+
             root.InsertAfter(prodName, root.LastChild);
             root.InsertAfter(prodPrice, root.LastChild);
+            root.InsertAfter(prodAmount, root.LastChild);
         }
 
         /// <summary>
