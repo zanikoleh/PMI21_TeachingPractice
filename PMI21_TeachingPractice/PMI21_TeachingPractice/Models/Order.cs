@@ -47,7 +47,7 @@ namespace PMI21_TeachingPractice
         public Order(int identifier, Dictionary<int,int> products)
         {
             this.id = identifier;
-            this.products = products;
+            this.products = new Dictionary<int, int>(products);
         }
 
         /// <summary>
