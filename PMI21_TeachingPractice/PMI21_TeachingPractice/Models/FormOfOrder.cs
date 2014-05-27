@@ -24,8 +24,7 @@
 
         private void buttonOrders_Click(object sender, EventArgs e)
         {
-            DataBase temp = DataBase.GetInstance();
-            temp.SetConnections("...\\PMI21_TeachingPractice\\data\\Path.xml");
+            DataBase temp = DataBase.Instance;
             temp.Load();
             if (temp.Orders[0].ID != -1)
             {
