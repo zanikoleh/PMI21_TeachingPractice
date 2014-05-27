@@ -397,18 +397,22 @@ namespace PMI21_TeachingPractice
         {
             Console.WriteLine("Input name of product to modify");
             string name = Console.ReadLine();
-            int id = Product.IdByName(name);
+            int id = Products.IdByName(name);
 
-            Console.WriteLine("Input amount to add products (- means delete)");
-            int amount = Convert.ToInt32(Console.ReadLine());
-            DataBase dataBase;
-            dataBase = DataBase.GetInstance();
-            foreach (Products prods in dataBase.Products)
+            if (id != 0)
             {
-                if (prods.PropProduct.Id == id)
+                Console.WriteLine("Input amount to add products (- means delete)");
+                int amount = Convert.ToInt32(Console.ReadLine());
+                DataBase dataBase;
+                dataBase = DataBase.GetInstance();
+                foreach (Products prods in dataBase.Products)
                 {
-                    prods.Amount += amount;
+                    if (prods.PropProduct.Id == id)
+                    {
+                        prods.Amount += amount;
+                    }
                 }
+                dataBase.CommitProducts();
             }
         }
 

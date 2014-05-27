@@ -144,6 +144,32 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Gets ID of product name.
+        /// </summary>
+        /// <param name="name">Name of product</param>
+        /// <returns>ID of product with such name</returns>
+        public static int IdByName(string name)
+        {
+            DataBase dataBase;
+            dataBase = DataBase.GetInstance();
+            dataBase.Load();
+            bool found = false;
+            foreach (Products prod in dataBase.Products)
+            {
+                if (prod.PropProduct.Name == name)
+                {
+                    found = true;
+                    return prod.PropProduct.Id;
+                }
+            }
+            if (!found)
+            {
+                Console.WriteLine("No such ID in Base!");
+            }
+            return 0;
+        }
+
+        /// <summary>
         /// Fills xml file with data.
         /// </summary>
         /// <param name="writer">Writer module of file which will be filled with data.</param>
