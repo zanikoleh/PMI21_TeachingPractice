@@ -774,7 +774,7 @@ namespace PMI21_TeachingPractice
             {
                 if (reader.Name == "OrderId" && reader.HasAttributes)
                 {
-                    idOrder = Convert.ToInt32(reader.GetAttribute("user_id"));
+                    idOrder = Convert.ToInt32(reader.GetAttribute("order_id"));
                 }
 
                 if (reader.Name == "UserId")
