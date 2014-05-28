@@ -51,7 +51,6 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private void AddToCartButton_Click(object sender, EventArgs e)
         {
-            bool found = false;
             if (this.ProductsList.SelectedItems.Count == 0)
             {
                 MessageBox.Show("No selected products!");
@@ -83,23 +82,14 @@ namespace PMI21_TeachingPractice
                             this.Cart[4, k].Value = Convert.ToString(temp3);
                             this.TotalPrice();
                             this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
-                            found = true;
-                            break;
+                            return;
                         }
                     }
                 }
-                if (!found)
-                {
-                    string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price), "1", Convert.ToString(tempProd.PropProduct.Price) };
-                    this.Cart.Rows.Add(rowElement);
-                    this.TotalPrice();
-                    this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
-                }
-
-                if (found)
-                {
-                    found = false;
-                }
+                string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price), "1", Convert.ToString(tempProd.PropProduct.Price) };
+                this.Cart.Rows.Add(rowElement);
+                this.TotalPrice();
+                this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
             }
             this.ProductsList.SelectedItems.Clear();
             if (!this.SubmitButton.Enabled)
@@ -249,7 +239,12 @@ namespace PMI21_TeachingPractice
                 order.AddProduct(Convert.ToInt32(id), Convert.ToInt32(amount));
                 this.dataBase.Add(order);
             }
+
+            Check check = new Check(this.dataBase.Checks.Count, this.idOfLoggedUser);
+
             this.dataBase.CommitOrders();
+            this.dataBase.Add(check);
+            this.dataBase.CommitChecks();
             this.Cart.Rows.Clear();
             this.SubmitButton.Enabled = false;
             this.ClearCartButton.Enabled = false;
