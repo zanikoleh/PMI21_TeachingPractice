@@ -388,17 +388,23 @@ namespace PMI21_TeachingPractice
         /// <returns> Order if such exists, NULL otherwise.</returns>
         public Order GetOrderById(int id)
         {
-            Order toReturn = null;
-
+            Order toReturn = new Order();
+            toReturn.ID = id;
+            List<Order> orders = new List<Order>();
             foreach (Order order in this.orders)
             {
                 if (order.ID == id)
                 {
-                    toReturn = new Order(order);
-                    break;
+                    orders.Add(order);
                 }
             }
-
+            if (orders.Count != 0)
+            {
+                for (int i = 0; i < orders.Count; i++)
+                {
+                    toReturn.Merge(orders[i].List);
+                }
+            }
             return toReturn;
         }
 
