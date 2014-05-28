@@ -130,36 +130,6 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
-        /// Gets price by id
-        /// </summary>
-        /// <param name="identifier"> id of searching product</param>
-        /// <param name="reader">fie to read</param>
-        /// <returns>price of product with searching id</returns>
-        public double PriceById(int identifier)
-        {
-            XmlTextReader reader = new XmlTextReader("XMLFile1.xml");
-            int tempId = 0;
-            while (reader.Read())
-            {
-                if (reader.Name == "id")
-                {
-                    tempId = reader.ReadElementContentAsInt();
-                }
-
-                if (reader.Name == "price")
-                {
-                    this.product.Price = reader.ReadElementContentAsDouble();
-                    if (identifier == tempId)
-                    {
-                        return this.product.Price;
-                    }
-                }
-            }
-
-            return 0.0;
-        }
-
-        /// <summary>
         /// Fills xml file with data.
         /// </summary>
         /// <param name="writer">Writer module of file which will be filled with data.</param>
