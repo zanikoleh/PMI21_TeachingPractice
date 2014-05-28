@@ -93,6 +93,25 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// merge orders
+        /// </summary>
+        /// <param name="dict">orders</param>
+        public void Merge(Dictionary<int, int> dict)
+        {
+            foreach (KeyValuePair<int, int> pair in dict)
+            {
+                if (this.List.ContainsKey(pair.Key))
+                {
+                    this.List[pair.Key] += pair.Value;
+                }
+                else
+                {
+                    this.List[pair.Key] = pair.Value;
+                }
+            }
+        }
+
+        /// <summary>
         /// makes order from text file
         /// </summary>
         /// <param name="fullOrder">line of order </param>
