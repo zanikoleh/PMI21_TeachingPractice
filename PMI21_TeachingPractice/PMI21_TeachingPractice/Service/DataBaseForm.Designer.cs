@@ -300,6 +300,7 @@
             this.showProductsMenuItem.Name = "showProductsMenuItem";
             this.showProductsMenuItem.Size = new System.Drawing.Size(199, 24);
             this.showProductsMenuItem.Text = "Show Products";
+            this.showProductsMenuItem.Click += new System.EventHandler(ShowProducts);
             // 
             // performOrderMenuItem
             // 

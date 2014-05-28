@@ -45,6 +45,15 @@ namespace PMI21_TeachingPractice.Service
             Menu.Visible = true;
         }
 
+        private void ShowProducts(object sender, EventArgs e)
+        {
+            FormOrder form = new FormOrder();
+            DataBase db = DataBase.GetInstance();
+            form.ident = db.GetUserIdByLogin(this.IDinput.Text);
+            form.ShowDialog();
+
+        }
+
         /// <summary>
         /// Agree
         /// </summary>
