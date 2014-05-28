@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <head>
   <ProductId product_id="1" />
   <ProductName>Cake</ProductName>
   <ProductPrice>78</ProductPrice>
-  <ProductAmount>50</ProductAmount>
+  <ProductAmount>65</ProductAmount>
   <ProductId product_id="2" />
   <ProductName>Bicycle</ProductName>
   <ProductPrice>3500</ProductPrice>
@@ -31,5 +31,5 @@
   <ProductId product_id="47" />
   <ProductName>beer</ProductName>
   <ProductPrice>7747</ProductPrice>
-  <ProductAmount>70</ProductAmount>
+  <ProductAmount>15</ProductAmount>
 </head>

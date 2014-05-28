@@ -12,4 +12,8 @@
   <UserLogin>login3</UserLogin>
   <UserPassword>pas3</UserPassword>
   <UserRole>3|</UserRole>
+  <UserId user_id="4" />
+  <UserLogin>azazalol</UserLogin>
+  <UserPassword>lol1</UserPassword>
+  <UserRole>2|</UserRole>
 </head>
