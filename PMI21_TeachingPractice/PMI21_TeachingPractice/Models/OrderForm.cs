@@ -34,6 +34,9 @@ namespace PMI21_TeachingPractice
             this.ProductListInitialize();
         }
 
+        /// <summary>
+        /// This method loads the list of products from the database
+        /// </summary>
         private void ProductListInitialize()
         {
             foreach (Products i in this.dataBase.Products)
@@ -42,6 +45,9 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// This method adds the items into the cart if the button is clicked
+        /// </summary>
         private void AddToCartButton_Click(object sender, EventArgs e)
         {
             if (this.ProductsList.SelectedItems.Count == 0)
@@ -51,9 +57,38 @@ namespace PMI21_TeachingPractice
             }
             foreach (string i in this.ProductsList.SelectedItems)
             {
-                Products tempProd = new Products(dataBase.GetProductById(this.SelectedId(i)));
-                string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price),"1", Convert.ToString(tempProd.PropProduct.Price) };
+                Products tempProd = new Products(dataBase.GetProductById(this.IdOfSelectedProduct(i)));
+                for (int k = 0; k < this.Cart.Rows.Count; k++)
+                {
+                    if (Convert.ToString(this.Cart[1, k].Value) == Convert.ToString(tempProd.PropProduct.Id))
+                    {
+                        string temp = Convert.ToString(this.Cart[3, k].Value);
+                        int num = Convert.ToInt32(temp);
+
+                        if (num + 1 > 1000)
+                        {
+                            MessageBox.Show("Amount should be less than 1000!");
+                            break;
+                        }
+                        else
+                        {
+                            num += 1;
+                            this.Cart[3, k].Value = Convert.ToString(num);
+
+                            string temp1 = (string)this.Cart[3, k].Value;
+                            string temp2 = (string)this.Cart[2, k].Value;
+                            double temp3 = Convert.ToDouble(temp1) * Convert.ToDouble(temp2);
+                            this.Cart[4, k].Value = Convert.ToString(temp3);
+                            this.TotalPrice();
+                            this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
+                            return;
+                        }
+                    }
+                }
+                string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price), "1", Convert.ToString(tempProd.PropProduct.Price) };
                 this.Cart.Rows.Add(rowElement);
+                this.TotalPrice();
+                this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
             }
             this.ProductsList.SelectedItems.Clear();
             if (!this.SubmitButton.Enabled)
@@ -66,12 +101,16 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// This method checks if the amount of purchased items is more than zero and less than one thousand; counts the current price; 
+        /// is performed when the edition of the current cell was finished
+        /// </summary>
         private void Cart_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 3)
             {
                 string temp = (string)this.Cart.CurrentCell.Value;
-               
+
                 temp = this.LeaveOnlyNumbers(temp);
                 if (temp == null)
                 {
@@ -100,18 +139,28 @@ namespace PMI21_TeachingPractice
             }
         }
 
-        private int SelectedId(string selected)
+        /// <summary>
+        /// This method finds the id of selected product and converts it to string
+        /// </summary>
+        /// <param name="selected">the selected product</param>
+        /// <returns>the id of selected product converted to string</returns>
+        private int IdOfSelectedProduct(string selected)
         {
             string toConvert = selected.Substring(selected.IndexOf(')') + 1, selected.IndexOf(' ') - selected.IndexOf(')'));
             return Convert.ToInt32(toConvert);
         }
 
-        private string LeaveOnlyNumbers(string a)
+        /// <summary>
+        /// This method deletes the letters if the user types them in the "amount" row
+        /// </summary>
+        /// <param name="line">the line typed by the user</param>
+        /// <returns>only numbers</returns>
+        private string LeaveOnlyNumbers(string line)
         {
             string toReturn = null;
-            if (a != null)
+            if (line != null)
             {
-                foreach (char i in a)
+                foreach (char i in line)
                 {
                     if ((int)i >= 48 && (int)i <= 57)
                     {
@@ -123,6 +172,9 @@ namespace PMI21_TeachingPractice
             return toReturn;
         }
 
+        /// <summary>
+        /// Defines the total sum of the purchase
+        /// </summary>
         private void TotalPrice()
         {
             this.totalPrice = 0.0;
@@ -136,6 +188,9 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// This method defines the events that are performed when the user deletes the row
+        /// </summary>
         private void Cart_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
         {
             string temp = (string)e.Row.Cells[4].Value;
@@ -148,6 +203,9 @@ namespace PMI21_TeachingPractice
             }
         }
 
+        /// <summary>
+        /// This method provides edition of the "amount" column after the first click
+        /// </summary>
         private void Cart_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 3)
@@ -172,22 +230,24 @@ namespace PMI21_TeachingPractice
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             Order order = new Order();
-            for (int i = 0; i < this.Cart.Rows.Count;i++)
+            for (int i = 0; i < this.Cart.Rows.Count; i++)
             {
                 string id = (string)this.Cart[1, i].Value;
                 string amount = (string)this.Cart[3, i].Value;
                 order.AddProduct(Convert.ToInt32(id), Convert.ToInt32(amount));
-                this.dataBase.Add(order);   
+                this.dataBase.Add(order);
             }
-                this.dataBase.CommitOrders();
-                this.Cart.Rows.Clear();
-                this.SubmitButton.Enabled = false;
-                this.ClearCartButton.Enabled = false;
-                MessageBox.Show("Operation successfil!");
+            this.dataBase.CommitOrders();
+            this.Cart.Rows.Clear();
+            this.SubmitButton.Enabled = false;
+            this.ClearCartButton.Enabled = false;
+            MessageBox.Show("Operation successfull!");
         }
 
         private void ClearCartButton_Click(object sender, EventArgs e)
         {
+            this.totalPrice = 0.0;
+            this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
             this.Cart.Rows.Clear();
             this.SubmitButton.Enabled = false;
             this.ClearCartButton.Enabled = false;
