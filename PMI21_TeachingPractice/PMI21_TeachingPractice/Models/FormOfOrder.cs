@@ -22,10 +22,28 @@
             InitializeComponent();
         }
 
-        private void buttonOrders_Click(object sender, EventArgs e)
+        
+
+        private void FormOrder_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBack_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void backToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void listOfOrdersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DataBase temp = DataBase.Instance;
             temp.Load();
+            this.textBoxOrders.Text = string.Empty;
             if (temp.Orders[0].ID != -1)
             {
                 Order orders = temp.GetOrderById(this.ident);
@@ -38,23 +56,6 @@
             {
                 this.textBoxOrders.Text = "No order`s";
             }
-        }
-
-        /*private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.Application.Exit();
-            System.Windows.Forms.Application.Run(new OrderForm());
-            
-        }*/
-
-        private void FormOrder_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonBack_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }
