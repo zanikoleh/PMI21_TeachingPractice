@@ -539,9 +539,9 @@ namespace PMI21_TeachingPractice
             ordersWriter.Close();
             XmlDocument docOrder = new XmlDocument();
             docOrder.Load(this.OrdersPath);
-            foreach (Order ord in this.Orders)
+            foreach (Order order in this.Orders)
             {
-                ord.SaveOrder(docOrder);
+                DataBase.SaveOrderDB(docOrder, order);
             }
 
             docOrder.Save(this.OrdersPath);
@@ -825,6 +825,41 @@ namespace PMI21_TeachingPractice
             
 
             reader.Close();
+        }
+
+        /// <summary>
+        /// writes to xml document
+        /// </summary>
+        /// <param name="doc"> xml document</param>
+        private static void SaveOrderDB(XmlDocument doc, Order myOrder)
+        {
+            Product temp = new Product();
+            XmlNode root = doc.DocumentElement;
+            XmlElement newID = doc.CreateElement("userId");
+            XmlAttribute attrID = doc.CreateAttribute("name_id");
+            attrID.Value = Convert.ToString(myOrder.ID);
+            newID.SetAttributeNode(attrID);
+            root.InsertAfter(newID, root.LastChild);
+
+            foreach (KeyValuePair<int, int> pair in myOrder.List)
+            {
+                XmlElement newProduct = doc.CreateElement("Product");
+                XmlElement newId = doc.CreateElement("id");
+                XmlText identifier = doc.CreateTextNode(pair.Key.ToString());
+                newId.AppendChild(identifier);
+                XmlElement newPrice = doc.CreateElement("price");
+                XmlText cost = doc.CreateTextNode((DataBase.Instance.GetPriceById(pair.Key) * pair.Value).ToString());
+                newPrice.AppendChild(cost);
+                newProduct.AppendChild(newId);
+                newProduct.AppendChild(newPrice);
+                XmlElement newAmount = doc.CreateElement("amount");
+                XmlText amountStr = doc.CreateTextNode(pair.Value.ToString());
+                newAmount.AppendChild(amountStr);
+                newProduct.AppendChild(newAmount);
+
+                root.InsertAfter(newProduct, root.LastChild);
+                //newProduct.AppendChild(newProduct);
+            }
         }
 
         /// <summary>
