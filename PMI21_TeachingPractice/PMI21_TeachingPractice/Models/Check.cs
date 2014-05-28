@@ -59,6 +59,19 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Initializes the instance of the <see cref="Check"/> class
+        /// </summary>
+        /// <param name="idOrderVal">id of order</param>
+        /// <param name="idUserVal">id of user</param>
+        /// <param name="time">time</param>
+        public Check(int idOrderVal, int idUserVal, DateTime time)
+        {
+            this.idOrder = idOrderVal;
+            this.idUser = idUserVal;
+            this.time = time;
+        }
+
+        /// <summary>
         ///  id user
         /// </summary>
         public int IdUser
