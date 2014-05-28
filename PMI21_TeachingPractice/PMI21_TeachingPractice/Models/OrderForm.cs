@@ -230,6 +230,7 @@ namespace PMI21_TeachingPractice
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             Order order = new Order();
+            //order.ID = FormOrder.ident;
             for (int i = 0; i < this.Cart.Rows.Count; i++)
             {
                 string id = (string)this.Cart[1, i].Value;

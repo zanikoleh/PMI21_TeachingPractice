@@ -24,10 +24,10 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {
-            Application.WorkFlow();
-            //System.Windows.Forms.Application.EnableVisualStyles();
-            //System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            //System.Windows.Forms.Application.Run(new DataBaseForm());
+            //Application.WorkFlow();
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.Run(new DataBaseForm());
         }
     }
 }
