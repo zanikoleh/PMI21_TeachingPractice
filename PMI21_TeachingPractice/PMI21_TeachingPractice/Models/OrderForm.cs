@@ -15,6 +15,7 @@ namespace PMI21_TeachingPractice
     {
         private DataBase dataBase;
         private double totalPrice = 0.0;
+        public int idOfLoggedUser;
 
         public OrderForm()
         {
@@ -230,7 +231,7 @@ namespace PMI21_TeachingPractice
         private void SubmitButton_Click(object sender, EventArgs e)
         {
             Order order = new Order();
-            //order.ID = FormOrder.ident;
+            order.ID = this.idOfLoggedUser;
             for (int i = 0; i < this.Cart.Rows.Count; i++)
             {
                 string id = (string)this.Cart[1, i].Value;

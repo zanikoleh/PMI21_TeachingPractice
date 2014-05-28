@@ -307,6 +307,7 @@
             this.performOrderMenuItem.Name = "performOrderMenuItem";
             this.performOrderMenuItem.Size = new System.Drawing.Size(199, 24);
             this.performOrderMenuItem.Text = "Perform Order";
+            this.performOrderMenuItem.Click += new System.EventHandler(PerformOrder);
             // 
             // TradeAgentMenu
             // 

@@ -54,6 +54,14 @@ namespace PMI21_TeachingPractice.Service
 
         }
 
+        private void PerformOrder(object sender, EventArgs e)
+        {
+            OrderForm form = new OrderForm();
+            DataBase dataBase = DataBase.GetInstance();
+            form.idOfLoggedUser = dataBase.GetUserIdByLogin(this.IDinput.Text);
+            form.ShowDialog();
+        }
+
         /// <summary>
         /// Agree
         /// </summary>
