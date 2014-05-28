@@ -182,9 +182,14 @@ namespace PMI21_TeachingPractice
         private static List<UserAbbilities> BuildAbbilityList(User user)
         {
             List<UserAbbilities> abbilities = new List<UserAbbilities>();
+
+            DataBase db = DataBase.GetInstance();
+            db.SetConnections(Constants.PATH);
+            db.Load();
+
             foreach (int i in user.RolesId)
             {
-                AbbilitiesAdd(abbilities, DataBase.Instance.GetRoleById(i));
+                AbbilitiesAdd(abbilities, db.GetRoleById(i));
             }
 
             return abbilities;
