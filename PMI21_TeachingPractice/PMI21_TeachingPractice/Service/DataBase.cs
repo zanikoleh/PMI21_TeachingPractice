@@ -377,6 +377,7 @@ namespace PMI21_TeachingPractice
             this.LoadOrders();
             this.LoadProducts();
             this.LoadUsers();
+            this.LoadChecks();
             this.LoadRoles();
         }
 
@@ -720,9 +721,9 @@ namespace PMI21_TeachingPractice
             checksWriter.Close();
             XmlDocument docCheck = new XmlDocument();
             docCheck.Load(this.ChecksPath);
-            foreach (Check ch in this.Checks)
+            foreach (Check check in this.Checks)
             {
-                ch.SaveCheckDB(docCheck);
+                DataBase.SaveCheckDB(docCheck, check);
             }
 
             docCheck.Save(this.ChecksPath);
@@ -883,6 +884,41 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Load checks
+        /// </summary>
+        public void LoadChecks()
+        {
+            XmlTextReader reader = new XmlTextReader(this.ChecksPath);
+            int idOrder = -1;
+            int idUser = -1;
+            DateTime time = new DateTime();
+            
+            this.checks.Clear();
+
+            while (reader.Read())
+            {
+                if (reader.Name == "OrderId" && reader.HasAttributes)
+                {
+                    idOrder = Convert.ToInt32(reader.GetAttribute("user_id"));
+                }
+
+                if (reader.Name == "UserId")
+                {
+                    idUser = Convert.ToInt32(reader.ReadElementContentAsString());
+                }
+
+                if (reader.Name == "Time")
+                {
+                    time = Convert.ToDateTime(reader.ReadElementContentAsString());
+
+                    this.checks.Add(new Check(idOrder, idUser, time));
+                }  
+            }
+
+            reader.Close();
+        }
+
+        /// <summary>
         /// Load Roles
         /// </summary>
         public void LoadRoles()
@@ -979,6 +1015,29 @@ namespace PMI21_TeachingPractice
             root.InsertAfter(userLogin, root.LastChild);
             root.InsertAfter(userPassword, root.LastChild);
             root.InsertAfter(userRole, root.LastChild);
+        }
+
+        /// <summary>
+        /// Save check to Data Base.
+        /// </summary>
+        /// <param name="doc">Document.</param>
+        /// <param name="check">Check which is saved to Data Base.</param>
+        private static void SaveCheckDB(XmlDocument doc, Check check)
+        {
+            XmlNode root = doc.DocumentElement;
+            XmlElement newID = doc.CreateElement("OrderId");
+            XmlAttribute attrID = doc.CreateAttribute("order_id");
+            attrID.Value = check.IdOrder.ToString();
+            newID.SetAttributeNode(attrID);
+            root.InsertAfter(newID, root.LastChild);
+            XmlElement userID = doc.CreateElement("UserId");
+            XmlElement time = doc.CreateElement("Time");
+            XmlText uIDval = doc.CreateTextNode(check.IdUser.ToString());
+            XmlText timeVal = doc.CreateTextNode(check.Time.ToString("o"));
+            userID.AppendChild(uIDval);
+            time.AppendChild(timeVal);
+            root.InsertAfter(userID, root.LastChild);
+            root.InsertAfter(time, root.LastChild);
         }
 
         /// <summary>
