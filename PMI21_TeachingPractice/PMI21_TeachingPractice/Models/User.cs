@@ -48,13 +48,12 @@ namespace PMI21_TeachingPractice
         /// Initializes a new instance of the <see cref="User"/> class.
         /// </summary>
         /// <param name="p">the instance of class User</param>
-       /// <see cref="User" /> class
         public User(User p)
         {
             this.Id = p.Id;
             this.Login = p.Login;
             this.Password = p.Password;
-            this.RolesId = p.RolesId;
+            this.RolesId =new List<int>(p.RolesId);
         }
 
         /// <summary>

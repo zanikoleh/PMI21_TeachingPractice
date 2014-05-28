@@ -452,7 +452,7 @@ namespace PMI21_TeachingPractice
         {
             Console.WriteLine("Input name of user");
             string name = Console.ReadLine();
-            int id = DataBase.Instance.GetUserIdByName(name); 
+            int id = DataBase.Instance.GetUserIdByLogin(name); 
             
             User tempUser = UserControls.GetUserById(id);
             List<Check> checks = DataBase.Instance.Checks;

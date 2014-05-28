@@ -382,275 +382,150 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
-        /// return order by id
+        /// Return order by id.
         /// </summary>
-        /// <param name="id">id of order</param>
-        /// <returns> Order</returns>
+        /// <param name="id">Id of order.</param>
+        /// <returns> Order if such exists, NULL otherwise.</returns>
         public Order GetOrderById(int id)
         {
-            Order retOrd = new Order();
-            bool found = false;
-            foreach (Order ord in this.Orders)
+            Order toReturn = null;
+
+            foreach (Order order in this.orders)
             {
-                if (ord.ID == id)
+                if (order.ID == id)
                 {
-                    retOrd = ord;
-                    found = true;
+                    toReturn = new Order(order);
                     break;
-                }
-                else
-                {
-                    continue;
                 }
             }
 
-            if (found)
-            {
-                return retOrd;
-            }
-            else
-            {
-                throw new ArgumentException("No user with id: >" + id.ToString() + "< found");
-            }
+            return toReturn;
         }
 
         /// <summary>
         /// return user by id
         /// </summary>
         /// <param name = "id">id of user</param>
-        /// <returns>user</returns>
+        /// <returns>User if such exists, NULL otherwise</returns>
         public User GetUserById(int id)
         {
-            User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
+            User toReturn = null;
+
+            foreach (User user in this.users)
             {
-                if (usr.Id == id)
+                if (user.Id == id)
                 {
-                    retUsr = usr;
-                    found = true;
+                    toReturn = new User(user);
                     break;
                 }
-                else
-                {
-                    continue;
-                }
             }
 
-            if (found)
-            {
-                return retUsr;
-            }
-            else
-            {
-                throw new ArgumentException("No order with id: >" + id.ToString() + "< found");
-            }
+            return toReturn;
         }
 
-
         /// <summary>
-        /// return userID by name
+        /// Gets id of user by user's login.
         /// </summary>
-        /// <param name = "id">name of user</param>
-        /// <returns>userID</returns>
-        public int GetUserIdByName(string name)
+        /// <param name = "login" >User's login.</param>
+        /// <returns>Id of user if such exists, -1 otherwise.</returns>
+        public int GetUserIdByLogin(string login)
         {
-            User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
+            int toReturn = -1;
+
+            foreach (User user in this.Users)
             {
-                if (usr.Login == name)
+                if (user.Login == login)
                 {
-                    retUsr = usr;
-                    found = true;
+                    toReturn = user.Id;
                     break;
                 }
-                else
-                {
-                    continue;
-                }
             }
 
-            if (found)
-            {
-                return retUsr.Id;
-            }
-            else
-            {
-                throw new ArgumentException("No order with name: >" + name + "< found");
-            }
+            return toReturn;
         }
 
-
         /// <summary>
-        /// return product by id
+        /// Return product by id
         /// </summary>
         /// <param name="id">id of product</param>
-        /// <returns>product</returns>
-        public Product GetProductById(int id)
+        /// <returns>Product if such exists, NULL otherwise</returns>
+        public Products GetProductById(int id)
         {
-            Product getPrd = new Product();
-            bool found = false;
-            foreach (Products prd in this.Products)
+            Products toReturn = null;
+
+            foreach (Products product in this.products)
             {
-                if (prd.PropProduct.Id == id)
+                if (product.PropProduct.Id == id)
                 {
-                    getPrd = prd.PropProduct;
-                    found = true;
+                    toReturn = new Products(product);
                     break;
-                }
-                else
-                {
-                    continue;
                 }
             }
 
-            if (found)
-            {
-                return getPrd;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
-            }
+            return toReturn;
         }
 
         /// <summary>
         /// return role by id
         /// </summary>
         /// <param name="id">id of role</param>
-        /// <returns>role</returns>
+        /// <returns>Role if such exists, NULL otherwise.</returns>
         public Role GetRoleById(int id)
         {
-            Role getRol = new Role();
-            bool found = false;
-            //foreach (Role rol in this.Roles)
-            //{
-            //    if (rol.Id == id)
-            //    {
-            //        getRol = rol;
-            //        found = true;
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        continue;
-            //    }
-            //}
-            if (id == 1) getRol = new Role(id, "Admin");
-            else
-                if (id == 2) getRol = new Role(id, "Client");
-                else
-                    if (id == 3) getRol = new Role(id, "TradeAgent");
-            if (id >= 1 && id <= 3) found = true;
-            if (found)
+            Role toReturn = null;
+
+            foreach (Role role in this.roles)
             {
-                return getRol;
+                if (role.Id == id)
+                {
+                    toReturn = new Role(role);
+                    break;
+                }
             }
-            else
-            {
-                throw new ArgumentException("No role with id: >" + id.ToString() + "< found");
-            }
+
+            return toReturn;
         }
 
         /// <summary>
         /// return price of product by id
         /// </summary>
         /// <param name = "id"> id of product</param>
-        /// <returns>price</returns>
+        /// <returns>Price of product if such exists, -1 otherwise.</returns>
         public double GetPriceById(int id)
         {
-            double price = 0;
-            bool found = false;
-            foreach (Products prd in this.Products)
+            double toReturn = -1;
+
+            foreach(Products product in this.products)
             {
-                if (prd.PropProduct.Id == id)
+                if (product.PropProduct.Id == id)
                 {
-                    price = prd.PropProduct.Price;
-                    found = true;
+                    toReturn = product.PropProduct.Price;
                     break;
-                }
-                else
-                {
-                    continue;
                 }
             }
 
-            if (found)
-            {
-                return price;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
-            }
+            return toReturn;
         }
 
         /// <summary>
         /// return name of product by id
         /// </summary>
         /// <param name="id">id of product</param>
-        /// <returns>name</returns>
+        /// <returns>Name if such exists, NULL otherwise.</returns>
         public string GetNameById(int id)
         {
-            string name = string.Empty;
-            bool found = false;
-            foreach (Products prd in this.Products)
+            string toReturn = null;
+
+            foreach (Products product in this.products)
             {
-                if (prd.PropProduct.Id == id)
+                if (product.PropProduct.Id == id)
                 {
-                    name = prd.PropProduct.Name;
-                    found = true;
+                    toReturn = product.PropProduct.Name;
                     break;
                 }
-                else
-                {
-                    continue;
-                }
             }
 
-            if (found)
-            {
-                return name;
-            }
-            else
-            {
-                throw new ArgumentException("No product with id: >" + id.ToString() + "< found");
-            }
-        }
-
-        /// <summary>
-        /// return id of product by login
-        /// </summary>
-        /// <param name = "login" > login </param>
-        /// <returns>id of product</returns>
-        public int GetIdByLogin(string login)
-        {
-            int ident = 0;
-            /// User retUsr = new User();
-            bool found = false;
-            foreach (User usr in this.Users)
-            {
-                if (usr.Login == login)
-                {
-                    ident = usr.Id;
-                    found = true;
-                    break;
-                }
-                else
-                {
-                    continue;
-                }
-            }
-
-            if (found)
-            {
-                return ident;
-            }
-            else
-            {
-                throw new ArgumentException("No order with login: >" + login + "< found");
-            }
+            return toReturn;
         }
 
         /// <summary>

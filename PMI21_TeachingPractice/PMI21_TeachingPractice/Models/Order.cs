@@ -51,6 +51,16 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Order"/> class
+        /// </summary>
+        /// <param name="order">Order to copy.</param>
+        public Order(Order order)
+        {
+            this.id = order.id;
+            this.products = new Dictionary<int, int>(order.products);
+        }
+
+        /// <summary>
         /// Gets or sets id
         /// </summary>
         public int ID
@@ -166,7 +176,7 @@ namespace PMI21_TeachingPractice
                 XmlText identifier = doc.CreateTextNode(pair.Key.ToString());
                 newId.AppendChild(identifier);
                 XmlElement newPrice = doc.CreateElement("price");
-                XmlText cost = doc.CreateTextNode((DataBase.GetInstance().GetPriceById(pair.Key)*pair.Value).ToString());
+                XmlText cost = doc.CreateTextNode((temp.PriceById(pair.Key)*pair.Value).ToString());
                 newPrice.AppendChild(cost);
                 newProduct.AppendChild(newId);
                 newProduct.AppendChild(newPrice);
@@ -179,7 +189,7 @@ namespace PMI21_TeachingPractice
                 //newProduct.AppendChild(newProduct);
             }
         }
-        
+
         /// <summary>
         /// gets order by id
         /// </summary>

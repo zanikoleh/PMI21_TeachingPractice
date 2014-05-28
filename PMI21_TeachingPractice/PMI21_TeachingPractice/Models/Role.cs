@@ -38,6 +38,16 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Role" /> class with values from Role from parameters box.
+        /// </summary>
+        /// <param name="role">Object of class Role.</param>
+        public Role(Role role)
+        {
+            this.Id = role.Id;
+            this.Name = role.Name;
+        }
+
+        /// <summary>
         /// Gets, sets role's id
         /// </summary>
         public int Id { get; private set; }

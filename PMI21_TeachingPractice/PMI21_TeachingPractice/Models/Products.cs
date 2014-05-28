@@ -47,6 +47,16 @@ namespace PMI21_TeachingPractice
             this.amount = amount;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Products" /> class with values from Product from parameters box.
+        /// </summary>
+        /// <param name="p">Object of class Product.</param>
+        public Products(Products products)
+        {
+            this.product = new Product(products.product);
+            this.amount = products.amount;
+        }
+
         public static int IdByName(string name)
         {
             DataBase dataBase;
@@ -72,16 +82,6 @@ namespace PMI21_TeachingPractice
         {
             this.product = product;
             this.amount = amount;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Products" /> class with values from Product from parameters box.
-        /// </summary>
-        /// <param name="p">Object of class Product.</param>
-        public Products(Products p)
-        {
-            this.product = p.product;
-            this.amount = p.amount;
         }
 
         /// <summary>

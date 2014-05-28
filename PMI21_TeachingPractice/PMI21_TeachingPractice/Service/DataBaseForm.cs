@@ -96,7 +96,7 @@ namespace PMI21_TeachingPractice.Service
                         {
                             FormOrder form = new FormOrder();
                             DataBase db = DataBase.GetInstance();
-                            form.ident = db.GetIdByLogin(this.IDinput.Text);
+                            form.ident = db.GetUserIdByLogin(this.IDinput.Text);
                             form.ShowDialog();
                             break;
                         }
@@ -113,7 +113,7 @@ namespace PMI21_TeachingPractice.Service
                 {
                     DataBase db = DataBase.Instance;
                     db.LoadRoles();
-                    int id = db.GetIdByLogin(IDinput.Text);
+                    int id = db.GetUserIdByLogin(IDinput.Text);
                     Role rol = db.GetRoleById(id);
                     switch (rol.Name)
                     {
