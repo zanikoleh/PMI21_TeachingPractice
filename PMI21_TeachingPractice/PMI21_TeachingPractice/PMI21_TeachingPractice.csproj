@@ -92,7 +92,6 @@
     <Compile Include="Service\DataBaseForm.Designer.cs">
       <DependentUpon>DataBaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Test Order.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
