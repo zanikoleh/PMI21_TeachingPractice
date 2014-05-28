@@ -23,8 +23,7 @@ namespace PMI21_TeachingPractice
         /// Main function
         /// </summary>
         public static void Main()
-        {
-            
+        {            
             DataBase.GetInstance().SetConnections(Constants.PATH);
             DataBase.GetInstance().Load();
             DataBase.GetInstance().LoadOrders();

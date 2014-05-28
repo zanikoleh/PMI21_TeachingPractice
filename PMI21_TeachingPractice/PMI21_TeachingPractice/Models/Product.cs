@@ -212,7 +212,7 @@ namespace PMI21_TeachingPractice
         {
             Console.Write("{0} ", this.id);
             Console.Write(this.name);
-            Console.Write("{0} ", this.price);
+            Console.Write(" {0} ", this.price);
         }
 
         /// <summary>
