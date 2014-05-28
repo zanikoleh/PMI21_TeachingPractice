@@ -31,111 +31,71 @@ namespace PMI21_TeachingPractice.Service
 
         private void DataBaseForm_Load(object sender, EventArgs e)
         {
-            NameOfRole.Visible = false;
-            AgentMenu.Visible = false;
-            ClientMenu.Visible = false;
-            TradeAgentMenu.Visible = false;
+            Menu.Visible = false;
         }
 
-        /// <summary>
-        /// Method to enter to the system
-        /// </summary>fsdsdf
-        
-        private void chooseAdmin() {
-            IDinput.Visible = false;
-            PASSWORDinput.Visible = false;
-            //OK.Visible = false;
-            ID.Visible = false;
-            PASSWORD.Visible = false;
-            Text.Visible = false;
-            NameOfRole.Visible = true;
-            NameOfRole.Text = "Agent";
-            AgentMenu.Visible = true;
-        }
-
-        private void chooseClient()
+        private void HideStartIcon()
         {
-            IDinput.Visible = false;
-            PASSWORDinput.Visible = false;
-            //OK.Visible = false;
-            ID.Visible = false;
-            PASSWORD.Visible = false;
             Text.Visible = false;
-            NameOfRole.Visible = true;
-            NameOfRole.Text = "Client";
-            ClientMenu.Visible = true;
-        }
-
-        private void chooseTradeAgent()
-        {
             IDinput.Visible = false;
             PASSWORDinput.Visible = false;
             OK.Visible = false;
             ID.Visible = false;
             PASSWORD.Visible = false;
-            Text.Visible = false;
-            NameOfRole.Visible = true;
-            NameOfRole.Text = "Trade Agent";
-            TradeAgentMenu.Visible = true;
+            Menu.Visible = true;
         }
 
         /// <summary>
         /// Agree
         /// </summary>
-        private void OK_Click(object sender, EventArgs e)
+        private void OK_Click_1(object sender, EventArgs e)
         {
-            if (ClientMenu.Visible == true)
+            User s = PMI21_TeachingPractice.UserControls.Identify(IDinput.Text, PASSWORDinput.Text);
+            if (s != null)
             {
-                switch (ClientMenu.Text)
+                DataBase db = DataBase.Instance;
+                db.LoadRoles();
+                //int id = db.GetUserIdByLogin(IDinput.Text);
+                //Role rol = db.GetRoleById(id);
+                List<Role> roles = new List<Role>();
+                //Text.Text = s.RolesId.Capacity;
+                foreach (var i in s.RolesId)
                 {
-                    case "Perform Order":
-                        OrderForm form1 = new OrderForm();
-                        form1.ShowDialog();
-                        break;
-                    case "Show Products":
-                        {
-                            FormOrder form = new FormOrder();
-                            DataBase db = DataBase.GetInstance();
-                            form.ident = db.GetUserIdByLogin(this.IDinput.Text);
-                            form.ShowDialog();
-                            break;
-                        }
-                    case "TradeAgent":
-                        //TODO
-                        break;
+                    roles.Add(db.GetRoleById(i));
                 }
-            }
-            else
-            {
-
-                User s = PMI21_TeachingPractice.UserControls.Identify(IDinput.Text, PASSWORDinput.Text);
-                if (s != null)
+                //foreach (Role i in roles)
+                //{
+                //    Text.Text += i.Name;
+                //}
+                if (roles != null)
                 {
-                    DataBase db = DataBase.Instance;
-                    db.LoadRoles();
-                    int id = db.GetUserIdByLogin(IDinput.Text);
-                    Role rol = db.GetRoleById(id);
-                    switch (rol.Name)
+                    foreach (Role i in roles)
                     {
-                        case "Admin":
-                            {
-                                chooseAdmin();
-                                break;
-                            }
-                        case "Client":
-                            {
-                                chooseClient();
-                                break;
-                            }
-                        case "TradeAgent":
-                            {
-                                chooseTradeAgent();
-                                break;
-                            }
+                        if (i.Name == "Admin")
+                        {
+                            HideStartIcon();
+                            AdminMenu.Visible = true;
+                        }
+                        if (i.Name == "Client")
+                        {
+                            HideStartIcon();
+                            ClientMenu.Visible = true;
+                        }
+                        if (i.Name == "TradeAgent")
+                        {
+                            HideStartIcon();
+                            TradeAgentMenu.Visible = true;
+                        }
                     }
-                    // ChangeWindow();
                 }
+
             }
         }
+
+        private void ExiteMenu_Click(object sender, EventArgs e)
+        {
+                Environment.Exit(0);
+        }
+
     }
 }
