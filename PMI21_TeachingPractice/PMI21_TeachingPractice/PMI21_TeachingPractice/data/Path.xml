@@ -1,8 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<head>
-  <OrdersPath>..\..\data\BaseOrders.xml</OrdersPath>
-  <ProductsPath>..\..\data\BaseProducts.xml</ProductsPath>
-  <UsersPath>..\..\data\BaseUsers.xml</UsersPath>
-  <ChecksPath>..\..\data\BaseChecks.xml</ChecksPath>
-  <RolesPath>..\..\data\BaseRoles.xml</RolesPath>
-</head>
