@@ -22,7 +22,7 @@ namespace PMI21_TeachingPractice
             dataBase = DataBase.GetInstance();
             try
             {
-                this.dataBase.SetConnections("..\\..\\data\\Path.xml");
+                this.dataBase = DataBase.GetInstance();
             }
             catch (ArgumentException p)
             {
@@ -38,7 +38,7 @@ namespace PMI21_TeachingPractice
         {
             foreach (Products i in this.dataBase.Products)
             {
-                this.ProductsList.Items.Add(i.PropProduct.Name + "\t-\t" + i.PropProduct.Price + " $");
+                this.ProductsList.Items.Add("(id)" + i.PropProduct.Id + " (name)" + i.PropProduct.Name + "\t-\t (price)" + i.PropProduct.Price + " $");
             }
         }
 
@@ -49,9 +49,9 @@ namespace PMI21_TeachingPractice
                 MessageBox.Show("No selected products!");
                 return;
             }
-            foreach (int i in this.ProductsList.SelectedIndices)
+            foreach (string i in this.ProductsList.SelectedItems)
             {
-                Products tempProd = new Products(this.dataBase.Products[i]);
+                Products tempProd = new Products(dataBase.GetProductById(this.SelectedId(i)));
                 string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price),"1", Convert.ToString(tempProd.PropProduct.Price) };
                 this.Cart.Rows.Add(rowElement);
             }
@@ -98,6 +98,12 @@ namespace PMI21_TeachingPractice
                 this.TotalPrice();
                 this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
             }
+        }
+
+        private int SelectedId(string selected)
+        {
+            string toConvert = selected.Substring(selected.IndexOf(')') + 1, selected.IndexOf(' ') - selected.IndexOf(')'));
+            return Convert.ToInt32(toConvert);
         }
 
         private string LeaveOnlyNumbers(string a)
