@@ -150,12 +150,12 @@ namespace PMI21_TeachingPractice
             int tempId = 0;
             while (reader.Read())
             {
-                if (reader.Name == "id")
+                if (reader.Name == "ProductId" && reader.HasAttributes)
                 {
-                    tempId = reader.ReadElementContentAsInt();
+                    tempId = Convert.ToInt32(reader.GetAttribute("product_id"));
                 }
 
-                if (reader.Name == "price")
+                if (reader.Name == "ProductPrice")
                 {
                     this.price = reader.ReadElementContentAsDouble();
                     if (identifier == tempId)
@@ -165,7 +165,7 @@ namespace PMI21_TeachingPractice
                 }
             }
 
-            return 0.0;
+            return -1;
         }
 
         /// <summary>

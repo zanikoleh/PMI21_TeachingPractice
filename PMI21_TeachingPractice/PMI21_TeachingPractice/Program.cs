@@ -27,7 +27,8 @@ namespace PMI21_TeachingPractice
             
             DataBase.GetInstance().SetConnections(Constants.PATH);
             DataBase.GetInstance().Load();
-  
+            DataBase.GetInstance().LoadOrders();
+            DataBase.GetInstance().CommitOrders();
             Application.WorkFlow();
             //System.Windows.Forms.Application.EnableVisualStyles();
             //System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);

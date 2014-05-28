@@ -3,34 +3,34 @@
   <userId name_id="1" />
   <Product>
     <id>1</id>
-    <price>0</price>
+    <price>780</price>
     <amount>10</amount>
   </Product>
   <Product>
     <id>2</id>
-    <price>0</price>
+    <price>49000</price>
     <amount>14</amount>
   </Product>
   <Product>
     <id>3</id>
-    <price>0</price>
+    <price>7000000</price>
     <amount>7</amount>
   </Product>
   <userId name_id="2" />
   <Product>
     <id>2</id>
-    <price>0</price>
+    <price>17500</price>
     <amount>5</amount>
   </Product>
   <Product>
     <id>3</id>
-    <price>0</price>
+    <price>8000000</price>
     <amount>8</amount>
   </Product>
   <userId name_id="5" />
   <Product>
     <id>3</id>
-    <price>0</price>
+    <price>9000000</price>
     <amount>9</amount>
   </Product>
   <Product>
