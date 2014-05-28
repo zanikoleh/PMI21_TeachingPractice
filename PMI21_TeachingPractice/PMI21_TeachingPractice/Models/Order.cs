@@ -166,7 +166,7 @@ namespace PMI21_TeachingPractice
                 XmlText identifier = doc.CreateTextNode(pair.Key.ToString());
                 newId.AppendChild(identifier);
                 XmlElement newPrice = doc.CreateElement("price");
-                XmlText cost = doc.CreateTextNode((temp.PriceById(pair.Key)*pair.Value).ToString());
+                XmlText cost = doc.CreateTextNode((DataBase.GetInstance().GetPriceById(pair.Key)*pair.Value).ToString());
                 newPrice.AppendChild(cost);
                 newProduct.AppendChild(newId);
                 newProduct.AppendChild(newPrice);
@@ -179,7 +179,7 @@ namespace PMI21_TeachingPractice
                 //newProduct.AppendChild(newProduct);
             }
         }
-
+        
         /// <summary>
         /// gets order by id
         /// </summary>
