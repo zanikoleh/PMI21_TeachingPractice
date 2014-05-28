@@ -181,17 +181,6 @@ namespace PMI21_TeachingPractice
         }
 
         /// <summary>
-        /// Get role from roles base by its idNumber.
-        /// </summary>
-        /// <param name="roleId">Role's idNumber</param>
-        /// <returns>Role if exist, null pointer otherwise</returns>
-        public static Role GetRoleById(int roleId)
-        {
-            //In progress.
-            return null;
-        }
-
-        /// <summary>
         /// Deletes a user from the database
         /// </summary>
         /// <param name="userId">id of the user to delete</param>
@@ -240,7 +229,18 @@ namespace PMI21_TeachingPractice
         /// <returns>True if the Id is found.</returns>
         private static bool CheckRoleExistence(int roleId)
         {
-            //In progress.
+            DataBase db = DataBase.GetInstance();
+            db.SetConnections(Constants.PATH);
+            db.LoadRoles();
+
+            foreach (Role role in db.Roles)
+            {
+                if (role.Id == roleId)
+                {
+                    return true;
+                }
+            }
+
             return false;
         }
     }
