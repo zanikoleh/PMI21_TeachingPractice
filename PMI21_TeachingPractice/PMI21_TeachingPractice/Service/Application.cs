@@ -357,7 +357,11 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void PerformOrder(User user)
         {
+            DataBase database = DataBase.Instance;
+            database.SetConnections("..\\..\\data\\Path.xml");
+            database.LoadProducts();
             Order order = new Order();
+            order.ID = user.Id;
             bool ordering = true;
             try
             {
@@ -375,13 +379,9 @@ namespace PMI21_TeachingPractice
 
                         case '1':
                             {
-                                DataBase database = DataBase.Instance;
-                                database.SetConnections("..\\..\\data\\Path.xml");
-                                //Constants.dataBasePath
-                                database.LoadProducts();
                                 Console.WriteLine("Enter id of product:");
                                 int id = Convert.ToInt32(Console.ReadLine());
-                                ////order.AddProduct(database.GetProductById(id),1);
+                                order.AddProduct(id, 1);
                                 break;
                             }
 
@@ -391,6 +391,8 @@ namespace PMI21_TeachingPractice
                             }
                     }
                 }
+                database.Add(order);
+                database.CommitOrders();
             }
             catch (Exception e)
             {
