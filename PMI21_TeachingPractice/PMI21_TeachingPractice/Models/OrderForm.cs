@@ -51,6 +51,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private void AddToCartButton_Click(object sender, EventArgs e)
         {
+            bool found = false;
             if (this.ProductsList.SelectedItems.Count == 0)
             {
                 MessageBox.Show("No selected products!");
@@ -82,14 +83,23 @@ namespace PMI21_TeachingPractice
                             this.Cart[4, k].Value = Convert.ToString(temp3);
                             this.TotalPrice();
                             this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
-                            return;
+                            found = true;
+                            break;
                         }
                     }
                 }
-                string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price), "1", Convert.ToString(tempProd.PropProduct.Price) };
-                this.Cart.Rows.Add(rowElement);
-                this.TotalPrice();
-                this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
+                if (!found)
+                {
+                    string[] rowElement = { Convert.ToString(tempProd.PropProduct.Name), Convert.ToString(tempProd.PropProduct.Id), Convert.ToString(tempProd.PropProduct.Price), "1", Convert.ToString(tempProd.PropProduct.Price) };
+                    this.Cart.Rows.Add(rowElement);
+                    this.TotalPrice();
+                    this.TotalPriceLabel.Text = "Total price: " + Convert.ToString(this.totalPrice);
+                }
+
+                if (found)
+                {
+                    found = false;
+                }
             }
             this.ProductsList.SelectedItems.Clear();
             if (!this.SubmitButton.Enabled)
