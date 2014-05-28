@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1386FD25-272A-411E-8AE0-8E3D82BBE39B}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PMI21_TeachingPractice</RootNamespace>
     <AssemblyName>PMI21_TeachingPractice</AssemblyName>
@@ -106,9 +106,7 @@
     <Content Include="data\BaseProducts.xml" />
     <Content Include="data\BaseRoles.xml" />
     <Content Include="data\BaseUsers.xml" />
-    <Content Include="data\Data.txt" />
     <Content Include="data\Path.xml" />
-    <Content Include="data\XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

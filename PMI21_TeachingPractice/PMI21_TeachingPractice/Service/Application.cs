@@ -292,14 +292,14 @@ namespace PMI21_TeachingPractice
         /// </summary>
         private static void ShowAllUsers(User user)
         {
-            List<User> allUsers = new List<User>();
-            ////if (UserControls.LoadBaseUsers(out AllUsers))
-            ////{
-            ////    foreach (User user in AllUsers)
-            ////    {
-            ////        Console.WriteLine(user.ToString());
-            ////    }
-            ////}
+            DataBase db = DataBase.GetInstance();
+            db.SetConnections(Constants.PATH);
+            db.LoadUsers();
+
+            foreach (User usr in db.Users)
+            {
+                Console.WriteLine(usr);
+            }
         }
 
         /// <summary>

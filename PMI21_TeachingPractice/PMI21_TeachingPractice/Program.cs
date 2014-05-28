@@ -24,15 +24,9 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {            
-            DataBase.GetInstance().SetConnections(Constants.PATH);
-            DataBase.GetInstance().Load();
-            DataBase.GetInstance().LoadOrders();
-            DataBase.GetInstance().CommitOrders();
-            Application.WorkFlow();
-            //System.Windows.Forms.Application.EnableVisualStyles();
-            //System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-            //Console.WriteLine(UserControl.GetUserById(3));
-            //System.Windows.Forms.Application.Run(new DataBaseForm());
+            System.Windows.Forms.Application.EnableVisualStyles();
+            System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Application.Run(new DataBaseForm());
         }
     }
 }
