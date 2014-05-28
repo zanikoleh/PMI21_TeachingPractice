@@ -24,7 +24,7 @@ namespace PMI21_TeachingPractice
         /// </summary>
         public static void Main()
         {
-            Application.WorkFlow();
+           // Application.WorkFlow();
             //System.Windows.Forms.Application.EnableVisualStyles();
             //System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
             //Console.WriteLine(UserControl.GetUserById(3));

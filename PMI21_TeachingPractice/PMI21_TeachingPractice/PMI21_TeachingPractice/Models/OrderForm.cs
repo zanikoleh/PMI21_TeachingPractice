@@ -190,8 +190,7 @@ namespace PMI21_TeachingPractice
         private void ExitButton_Click(object sender, EventArgs e)
         {
             this.Cart.Rows.Clear();
-
-            System.Windows.Forms.Application.Exit();
+            this.Close();
         }
     }
 }

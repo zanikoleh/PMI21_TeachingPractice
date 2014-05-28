@@ -89,7 +89,8 @@ namespace PMI21_TeachingPractice.Service
                 switch (ClientMenu.Text)
                 {
                     case "Perform Order":
-                        //TODO
+                        OrderForm form1 = new OrderForm();
+                        form1.ShowDialog();
                         break;
                     case "Show Products":
                         {
