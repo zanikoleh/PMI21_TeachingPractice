@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<head>
+  <UserId user_id="1" />
+  <UserLogin>login1</UserLogin>
+  <UserPassword>pas1</UserPassword>
+  <UserRole>1|</UserRole>
+  <UserId user_id="2" />
+  <UserLogin>login2</UserLogin>
+  <UserPassword>pas2</UserPassword>
+  <UserRole>2|</UserRole>
+  <UserId user_id="3" />
+  <UserLogin>login3</UserLogin>
+  <UserPassword>pas3</UserPassword>
+  <UserRole>3|</UserRole>
+</head>
