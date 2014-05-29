@@ -42,7 +42,10 @@ namespace PMI21_TeachingPractice
         {
             foreach (Products i in this.dataBase.Products)
             {
-                this.ProductsList.Items.Add("(id)" + i.PropProduct.Id + " (name)" + i.PropProduct.Name + "\t-\t (price)" + i.PropProduct.Price + " $");
+                if (i.Amount != 0)
+                {
+                    this.ProductsList.Items.Add("(id)" + i.PropProduct.Id + " (name)" + i.PropProduct.Name + "\t-\t (price)" + i.PropProduct.Price + " $");
+                }
             }
         }
 
@@ -66,10 +69,16 @@ namespace PMI21_TeachingPractice
                     {
                         string temp = Convert.ToString(this.Cart[3, k].Value);
                         int num = Convert.ToInt32(temp);
-
                         if (num + 1 > 1000)
                         {
                             MessageBox.Show("Amount should be less than 1000!");
+                            found = true;
+                            break;
+                        }
+                        else if (num + 1 > tempProd.Amount)
+                        {
+                            MessageBox.Show("The amount of products in the storage is not enough!");
+                            found = true;
                             break;
                         }
                         else
@@ -120,8 +129,8 @@ namespace PMI21_TeachingPractice
             if (e.ColumnIndex == 3)
             {
                 string temp = (string)this.Cart.CurrentCell.Value;
-
                 temp = this.LeaveOnlyNumbers(temp);
+                string currentId = Convert.ToString(this.Cart[1, this.Cart.CurrentCell.RowIndex].Value);
                 if (temp == null)
                 {
                     this.Cart.CurrentCell.Value = "1";
@@ -133,6 +142,11 @@ namespace PMI21_TeachingPractice
                 else if (Convert.ToDouble(temp) > 1000)
                 {
                     MessageBox.Show("Amount shoult be less than 1000!");
+                    this.Cart.CurrentCell.Value = "1";
+                }
+                else if (Convert.ToInt32(temp) > this.dataBase.GetProductById(Convert.ToInt32(currentId)).Amount)
+                {
+                    MessageBox.Show("The amount of products in the storage is not enough!");
                     this.Cart.CurrentCell.Value = "1";
                 }
                 else
